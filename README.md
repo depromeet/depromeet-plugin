@@ -60,14 +60,8 @@ codex plugin add depromeet-plugin@depromeet-plugins
 플러그인과 스킬을 추가하거나 로컬에서 실행하려면 [CONTRIBUTING.md](CONTRIBUTING.md)를 참고하세요.
 
 <a href="https://github.com/depromeet/depromeet-plugin/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=depromeet/depromeet-plugin" alt="Depromeet Plugin contributors" />
+  <img src="https://contrib.rocks/image?repo=depromeet%2Fdepromeet-plugin" alt="Depromeet Plugin contributors" />
 </a>
-
-<p align="center">
-  <a href="https://star-history.com/#depromeet/depromeet-plugin&Date">
-    <img src="https://api.star-history.com/svg?repos=depromeet/depromeet-plugin&type=Date" alt="Depromeet Plugin star history chart" width="880" />
-  </a>
-</p>
 
 ## 라이선스
 
