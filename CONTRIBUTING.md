@@ -16,6 +16,16 @@ Depromeet Plugin Marketplace에는 플러그인, 스킬, 문서, 버그 수정�
 
 플러그인을 추가하면 `.claude-plugin/marketplace.json`과 `.agents/plugins/marketplace.json`에 모두 같은 순서로 등록합니다. 두 런타임 매니페스트를 함께 유지하고, Claude 매니페스트·Codex 매니페스트·Claude 마켓플레이스 항목의 버전을 같은 값으로 맞추세요.
 
+## 버전 올리기
+
+`plugins/<plugin-name>/` 아래의 배포 내용을 추가·변경·삭제하면 같은 PR에서 해당 플러그인의 버전을 반드시 올려야 합니다. 다음 세 위치의 버전을 기준 브랜치보다 높은 같은 값으로 변경하세요.
+
+- `plugins/<plugin-name>/.claude-plugin/plugin.json`
+- `plugins/<plugin-name>/.codex-plugin/plugin.json`
+- `.claude-plugin/marketplace.json`의 대상 플러그인 `version`
+
+루트 문서, GitHub 템플릿 또는 테스트만 변경한 경우에는 버전을 올리지 않아도 됩니다.
+
 ## 이름과 문서
 
 플러그인과 스킬 디렉터리 이름은 소문자 kebab-case를 사용합니다. 플러그인 이름은 디렉터리 이름과 두 매니페스트의 `name`이 일치해야 합니다. 스킬의 frontmatter에는 `name`과 `description`을 작성하고, 실제 사용자가 이해할 수 있는 지침을 본문에 남기세요.
