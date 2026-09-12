@@ -1,0 +1,22 @@
+name: Check plugin versions
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check-plugin-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check changed plugin versions
+        run: >-
+          python3 .github/scripts/check_plugin_versions.py
+          "${{ github.event.pull_request.base.sha }}"
+          "${{ github.event.pull_request.head.sha }}"
