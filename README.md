@@ -12,12 +12,24 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 │   └── depromeet-plugin/
 │       ├── .claude-plugin/plugin.json
 │       ├── .codex-plugin/plugin.json
-│       └── skills/example-skill/SKILL.md
+│       └── skills/create-slides/
+│           ├── SKILL.md
+│           ├── agents/openai.yaml
+│           ├── assets/layout-skeleton.html
+│           └── references/
 ├── CLAUDE.md
 └── CONTRIBUTING.md
 ```
 
-`example-skill`의 이름·설명·본문은 교체 대상입니다. 실제 기능을 추가할 때는 스킬 이름을 바꾸고, 해당 `SKILL.md`의 안내 문구를 작업 지침으로 대체하세요.
+## 제공 스킬
+
+### `create-slides`
+
+발표 목적과 자료를 바탕으로 Depromeet 스타일의 HTML 슬라이드를 만듭니다. 레이아웃 스켈레톤과 모든 페이지의 실제 문구·배치를 차례로 확인한 뒤 최종 `index.html`을 생성합니다.
+
+```text
+Use create-slides to turn these notes into a Depromeet-style HTML presentation.
+```
 
 ## 새 플러그인 추가
 

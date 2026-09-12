@@ -1,20 +1,20 @@
 {
   "name": "depromeet-plugin",
-  "version": "0.1.0",
-  "description": "Depromeet 팀이 Claude Code와 Codex에서 함께 사용하는 플러그인입니다.",
+  "version": "0.2.0",
+  "description": "Depromeet 스타일의 HTML 발표 슬라이드를 만드는 Claude Code와 Codex용 플러그인입니다.",
   "author": {
     "name": "depromeet"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Depromeet Plugin",
-    "shortDescription": "Depromeet 팀을 위한 플러그인",
-    "longDescription": "Depromeet 팀의 작업 흐름을 Claude Code와 Codex에서 함께 사용하기 위한 플러그인입니다.",
+    "shortDescription": "Depromeet 스타일의 HTML 슬라이드 생성",
+    "longDescription": "레이아웃과 모든 페이지의 콘텐츠를 확인한 뒤 Depromeet 스타일의 브라우저 기반 HTML 발표 슬라이드를 만드는 플러그인입니다.",
     "developerName": "depromeet",
     "category": "Productivity",
     "capabilities": ["Interactive"],
     "defaultPrompt": [
-      "Depromeet 팀 작업에 사용할 수 있는 스킬을 보여 주세요."
+      "Use create-slides to turn my material into a Depromeet-style HTML presentation."
     ]
   }
 }
