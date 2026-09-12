@@ -1,0 +1,43 @@
+name: 플러그인 제안
+description: 새 Depromeet 플러그인 아이디어를 제안하세요.
+title: "[Plugin]: "
+body:
+  - type: input
+    id: name
+    attributes:
+      label: 제안 플러그인 이름
+      placeholder: lowercase-kebab-case
+    validations:
+      required: true
+  - type: textarea
+    id: users
+    attributes:
+      label: 대상 사용자
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 해결하려는 문제
+    validations:
+      required: true
+  - type: textarea
+    id: skills
+    attributes:
+      label: 포함할 스킬
+      placeholder: 스킬 이름과 각 스킬의 역할을 작성하세요.
+    validations:
+      required: true
+  - type: textarea
+    id: distinction
+    attributes:
+      label: 기존 플러그인과의 차이
+    validations:
+      required: true
+  - type: textarea
+    id: platform_considerations
+    attributes:
+      label: Claude와 Codex 고려 사항
+      placeholder: 두 플랫폼의 차이 또는 공통 요구 사항을 작성하세요.
+    validations:
+      required: true

@@ -1,0 +1,51 @@
+name: 버그 신고
+description: 플러그인 또는 스킬에서 발생한 문제를 알려주세요.
+title: "[Bug]: "
+body:
+  - type: dropdown
+    id: platform
+    attributes:
+      label: 발생 플랫폼
+      options:
+        - Claude
+        - Codex
+        - Both
+    validations:
+      required: true
+  - type: input
+    id: cli_version
+    attributes:
+      label: CLI 버전
+      description: 선택 사항입니다.
+      placeholder: "예: claude --version 또는 codex --version 결과"
+  - type: input
+    id: component
+    attributes:
+      label: 플러그인 또는 스킬
+      placeholder: "예: depromeet-plugin / example-skill"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 재현 방법
+      placeholder: 문제를 재현할 수 있는 순서를 작성하세요.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대한 결과
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 실제 결과
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 로그 또는 추가 정보
+      description: 선택 사항입니다. 민감한 정보는 제거해 주세요.
