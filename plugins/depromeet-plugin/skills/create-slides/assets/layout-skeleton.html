@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Depromeet 슬라이드 레이아웃 확인</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      color: #191f28;
+      background: #eef1f5;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    header, main, footer { width: min(1440px, 100%); margin: auto; padding: 32px; }
+    header { padding-bottom: 8px; }
+    h1 { margin: 8px 0 12px; font-size: clamp(32px, 5vw, 52px); letter-spacing: -.04em; }
+    p { line-height: 1.65; word-break: keep-all; }
+    nav { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+    nav a { padding: 9px 14px; border-radius: 999px; color: #174e7c; background: #fff; text-decoration: none; }
+    nav a:focus-visible, a:focus-visible { outline: 4px solid #1769aa; outline-offset: 3px; }
+    .notice { max-width: 920px; color: #4e5968; }
+    .layout { margin: 32px 0 64px; }
+    .layout > h2 { margin: 0 0 8px; font-size: 28px; }
+    .layout > p { margin: 0 0 16px; color: #4e5968; }
+    .viewport { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 22px; background: #fff; box-shadow: 0 18px 50px rgba(25,31,40,.14); }
+    .stage { position: absolute; inset: 0 auto auto 0; width: 1920px; height: 1080px; transform-origin: top left; overflow: hidden; }
+    .blue { color: #fff; background: linear-gradient(180deg, #5aafff, #80c2ff); }
+    .light { color: #191f28; background: #f9f9f9; }
+    .dark { color: #f9fafb; background: #191f28; }
+    .meta { position: absolute; top: 90px; left: 90px; font-size: 22px; font-weight: 700; letter-spacing: .02em; }
+    .page { position: absolute; right: 90px; bottom: 64px; font-size: 22px; font-weight: 700; }
+    .region { outline: 3px dashed rgba(23,105,170,.48); outline-offset: -3px; }
+    .blue .region, .dark .region { outline-color: rgba(255,255,255,.5); }
+    .tag { display: inline-flex; align-items: center; min-height: 38px; padding: 6px 12px; border-radius: 10px; color: #174e7c; background: rgba(255,255,255,.88); font-size: 18px; font-weight: 700; }
+    .dark .tag { color: #f9fafb; background: rgba(90,175,255,.2); }
+    .cover-title { position: absolute; left: 90px; top: 300px; width: 1320px; padding: 36px; font-size: 96px; font-weight: 700; line-height: 1.12; letter-spacing: -.045em; }
+    .cover-subtitle { position: absolute; left: 126px; top: 650px; width: 1000px; font-size: 34px; line-height: 1.5; }
+    .contact { position: absolute; right: 90px; bottom: 72px; width: 470px; padding: 24px; font-size: 24px; text-align: right; }
+    .divider-number { position: absolute; top: 300px; left: 780px; width: 360px; padding: 24px; text-align: center; font-size: 34px; }
+    .divider-title { position: absolute; top: 430px; left: 360px; width: 1200px; padding: 30px; text-align: center; font-size: 80px; font-weight: 700; }
+    .heading { position: absolute; top: 120px; left: 90px; right: 90px; padding: 24px; font-size: 64px; font-weight: 700; line-height: 1.2; }
+    .body { position: absolute; top: 315px; left: 90px; right: 90px; bottom: 120px; display: flex; gap: 32px; }
+    .narrative { flex: 0 0 34%; padding: 42px; font-size: 30px; color: #4e5968; }
+    .cards { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; padding: 22px; }
+    .card { border-radius: 28px; padding: 38px; background: #e6e8eb; }
+    .card strong { display: block; margin-top: 26px; font-size: 82px; color: #333d4b; }
+    .visual { flex: 0 0 60%; display: grid; place-items: center; border-radius: 30px; background: #ebeff5; color: #4e5968; font-size: 32px; }
+    .explanation { flex: 1; padding: 42px; font-size: 30px; color: #4e5968; }
+    .dark .body { gap: 40px; }
+    .screens { flex: 0 0 42%; display: grid; place-items: center; border-radius: 30px; background: #333d4b; color: #b1b8c1; font-size: 30px; }
+    .proof { flex: 1; display: grid; gap: 20px; }
+    .proof-item { padding: 30px; border-radius: 24px; background: #252d38; font-size: 27px; }
+    .proof-item b { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-right: 16px; border-radius: 12px; color: #191f28; background: #5aafff; }
+    .legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; margin: 18px 0 0; }
+    .legend div { padding: 12px 0; border-bottom: 1px solid #cfd6df; color: #4e5968; }
+    .legend code { color: #174e7c; }
+    @media (max-width: 700px) {
+      header, main, footer { padding: 20px 14px; }
+      .legend { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>DEPROMEET · LAYOUT REVIEW</strong>
+    <h1>슬라이드 구조를 먼저 확인합니다</h1>
+    <p class="notice">아래 문구와 숫자는 배치 확인을 위한 예시입니다. 현재 발표에 필요한 레이아웃만 남기고, 영역 이름과 비율을 확정한 뒤 실제 페이지 내용을 계획합니다.</p>
+    <nav aria-label="레이아웃 목록">
+      <a href="#L01">L01 표지</a><a href="#L02">L02 섹션</a><a href="#L03">L03 정보 카드</a><a href="#L04">L04 설명과 시각 자료</a><a href="#L05">L05 사례와 근거</a>
+    </nav>
+  </header>
+  <main>
+    <section class="layout" id="L01">
+      <h2>L01 · 파란 표지</h2><p>발표의 주제와 맥락을 소개합니다.</p>
+      <div class="viewport"><div class="stage blue">
+        <div class="meta">DEPROMEET · PRESENTATION</div>
+        <div class="region cover-title"><span class="tag">1 · title</span><br>함께 만드는<br>다음 가능성</div>
+        <div class="region cover-subtitle"><span class="tag">2 · subtitle</span><br>예시 문구 · 발표 목적을 한 문장으로 설명합니다.</div>
+        <div class="region contact"><span class="tag">3 · contact</span><br>발표자 · 날짜</div>
+      </div></div>
+      <div class="legend"><div><code>title</code> 가장 큰 핵심 제목</div><div><code>subtitle</code> 목적과 범위</div><div><code>contact</code> 발표 정보</div></div>
+    </section>
+
+    <section class="layout" id="L02">
+      <h2>L02 · 파란 섹션 구분</h2><p>큰 이야기의 전환점을 표시합니다.</p>
+      <div class="viewport"><div class="stage blue">
+        <div class="meta">SECTION</div>
+        <div class="region divider-number"><span class="tag">1 · number</span><br>01</div>
+        <div class="region divider-title"><span class="tag">2 · title</span><br>우리가 해결할 문제</div>
+        <div class="page">02</div>
+      </div></div>
+      <div class="legend"><div><code>number</code> 섹션 순서</div><div><code>title</code> 섹션 메시지</div></div>
+    </section>
+
+    <section class="layout" id="L03">
+      <h2>L03 · 설명과 정보 카드</h2><p>맥락을 설명하고 핵심 수치를 카드로 연결합니다.</p>
+      <div class="viewport"><div class="stage light">
+        <div class="meta">OVERVIEW</div><div class="page">03</div>
+        <div class="region heading"><span class="tag">1 · title</span><br>한눈에 보는 핵심 정보</div>
+        <div class="body">
+          <div class="region narrative"><span class="tag">2 · narrative</span><p>예시 설명입니다. 데이터의 기준과 의미를 먼저 제시합니다.</p></div>
+          <div class="region cards"><div class="card">항목 A<strong>00</strong></div><div class="card">항목 B<strong>00%</strong></div><div class="card">항목 C<strong>00</strong></div><div class="card">항목 D<strong>00</strong></div></div>
+        </div>
+      </div></div>
+      <div class="legend"><div><code>title</code> 페이지 결론</div><div><code>narrative</code> 조건과 해석</div><div><code>cards</code> 근거가 있는 값과 라벨</div></div>
+    </section>
+
+    <section class="layout" id="L04">
+      <h2>L04 · 설명과 시각 자료</h2><p>텍스트와 그림, 표 또는 다이어그램을 나란히 보여줍니다.</p>
+      <div class="viewport"><div class="stage light">
+        <div class="meta">APPROACH</div><div class="page">04</div>
+        <div class="region heading"><span class="tag">1 · title</span><br>어떻게 작동하는지 설명합니다</div>
+        <div class="body">
+          <div class="region explanation"><span class="tag">2 · explanation</span><p>예시 설명입니다. 시각 자료에서 봐야 할 지점을 짚습니다.</p></div>
+          <div class="region visual"><span><span class="tag">3 · visual</span><br><br>그림 · 표 · 다이어그램 영역</span></div>
+        </div>
+      </div></div>
+      <div class="legend"><div><code>explanation</code> 개념과 읽는 순서</div><div><code>visual</code> 승인된 시각 자료</div></div>
+    </section>
+
+    <section class="layout" id="L05">
+      <h2>L05 · 어두운 사례와 근거</h2><p>제품 화면이나 실행 사례와 설명을 연결합니다.</p>
+      <div class="viewport"><div class="stage dark">
+        <div class="meta">PROOF</div><div class="page">05</div>
+        <div class="region heading"><span class="tag">1 · title</span><br>실제 접점에서 확인한 변화</div>
+        <div class="body">
+          <div class="region screens"><span><span class="tag">2 · media</span><br><br>승인된 화면 또는 이미지</span></div>
+          <div class="region proof"><div class="proof-item"><b>1</b>근거와 관찰을 설명합니다.</div><div class="proof-item"><b>2</b>배치와 실행 조건을 설명합니다.</div><div class="proof-item"><b>3</b>예상 효과는 측정 결과와 구분합니다.</div></div>
+        </div>
+      </div></div>
+      <div class="legend"><div><code>media</code> 승인된 화면과 캡션</div><div><code>proof</code> 근거·배치·예상 효과</div></div>
+    </section>
+  </main>
+  <footer><p>다음 단계: 필요한 레이아웃과 영역을 확인한 뒤 모든 페이지의 실제 문구와 배치를 계획합니다.</p></footer>
+  <script>
+    const viewports = document.querySelectorAll('.viewport');
+    function fitStages() {
+      viewports.forEach((viewport) => {
+        const stage = viewport.querySelector('.stage');
+        stage.style.transform = `scale(${viewport.clientWidth / 1920})`;
+      });
+    }
+    fitStages();
+    window.addEventListener('resize', fitStages);
+    if ('ResizeObserver' in window) {
+      const observer = new ResizeObserver(fitStages);
+      viewports.forEach((viewport) => observer.observe(viewport));
+    }
+  </script>
+</body>
+</html>
