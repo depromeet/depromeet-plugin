@@ -1,0 +1,20 @@
+{
+  "name": "depromeet-plugins",
+  "interface": {
+    "displayName": "depromeet"
+  },
+  "plugins": [
+    {
+      "name": "depromeet-plugin",
+      "source": {
+        "source": "local",
+        "path": "./plugins/depromeet-plugin"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

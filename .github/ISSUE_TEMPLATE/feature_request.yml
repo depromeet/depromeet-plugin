@@ -1,0 +1,35 @@
+name: 기능 제안
+description: 플러그인 또는 스킬의 개선 아이디어를 제안하세요.
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 해결하려는 문제
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: 원하는 결과
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: 대상 구성 요소
+      placeholder: 플러그인, 스킬 또는 마켓플레이스
+    validations:
+      required: true
+  - type: checkboxes
+    id: platforms
+    attributes:
+      label: 영향 플랫폼
+      options:
+        - label: Claude
+        - label: Codex
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 대안 또는 추가 맥락
+      description: 선택 사항입니다.
