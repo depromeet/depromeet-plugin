@@ -33,6 +33,12 @@ presentation. Replace example labels with representative sample content while
 keeping it clearly marked as illustrative.
 
 Use the chosen profile's palette, type, hierarchy, and geometry from the start.
+Follow the profile's font acquisition instructions before reviewing the
+skeleton. Load the acquired fonts locally in the copied stylesheet and keep
+their license notices with the deck. Record the actual font, source, license,
+and load state in `style-profile.md`. If acquisition or loading fails, tell the
+user that a fallback font is in use before requesting layout confirmation.
+If loading cannot be verified, say so without claiming a successful load.
 The user may change colors, proportions, region names, or layout choices in the
 skeleton. Open the actual skeleton in a browser and obtain confirmation before
 planning final pages. Record the selected profile and approved changes in the

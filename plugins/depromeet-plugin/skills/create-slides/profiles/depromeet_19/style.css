@@ -27,7 +27,7 @@
   --gradient-black-blue: linear-gradient(180deg, #1247AA 0%, #0C0E15 100%);
   --gradient-white-blue: linear-gradient(180deg, #FFFFFF 0%, #3C7AFF 100%);
   --gradient-sky-blue-white: radial-gradient(circle, #B9CDF2 0%, #F6F9FF 100%);
-  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  font-family: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   color: var(--gray-950);
   background: var(--gray-100);
 }
