@@ -15,6 +15,10 @@ content or a factual claim.
   stage geometry, spacing, component appearance, and review-only styling.
 - [layout-skeleton.html](layout-skeleton.html) is the browser-visible set of
   layout specimens and region names. It loads `style.css` beside itself.
+- [design-overview.png](design-overview.png) shows the 12 families with the
+  current colors and typography; [layout-overview.png](layout-overview.png)
+  shows their content regions and reading order. Both are quick references
+  rendered from the HTML specimens, not separate layout specifications.
 - This file defines when to use each visual mode, how to place an optional
   3D object, and how to adapt the source guide to slides. Do not add
   profile-specific defaults to the common workflow.
@@ -25,6 +29,8 @@ Use the HTML skeleton as the browser-visible source of truth for all 12
 families. L01 shows both cover and chapter specimens. Its CSS orbit is an
 asset-free placeholder; it does not imply that the original 3D image is
 bundled or licensed for redistribution.
+The overview images show the L01 cover specimen; open the HTML skeleton to
+inspect its chapter variant.
 
 When preparing a deck, copy both the skeleton and stylesheet into its output
 directory. Keep their relative link working. Select only the layouts needed,
