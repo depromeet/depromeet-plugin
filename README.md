@@ -15,7 +15,12 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 │       └── skills/create-slides/
 │           ├── SKILL.md
 │           ├── agents/openai.yaml
-│           ├── assets/layout-skeleton.html
+│           ├── profiles/
+│           │   ├── INDEX.md
+│           │   └── depromeet_19/
+│           │       ├── PROFILE.md
+│           │       ├── style.css
+│           │       └── layout-skeleton.html
 │           └── references/
 ├── CLAUDE.md
 └── CONTRIBUTING.md
@@ -25,7 +30,9 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 
 ### `create-slides`
 
-발표 목적과 자료를 바탕으로 Depromeet 스타일의 HTML 슬라이드를 만듭니다. 레이아웃 스켈레톤과 모든 페이지의 실제 문구·배치를 차례로 확인한 뒤 최종 `index.html`을 생성합니다.
+발표 목적과 자료를 바탕으로 선택한 프로필의 HTML 슬라이드를 만듭니다. 기본 프로필은 `depromeet_19`이며, 19기 디자인 가이드의 색상·서체를 슬라이드에 맞게 적용합니다. 프로필이 스타일과 레이아웃을 소유하고, 공통 스킬은 검토·제작 절차를 담당합니다. 레이아웃 스켈레톤과 모든 페이지의 실제 문구·배치를 차례로 확인한 뒤 최종 `index.html`을 생성합니다.
+
+[depromeet_19 레이아웃 미리보기](docs/previews/depromeet_19/README.md)
 
 ```text
 Use create-slides to turn these notes into a Depromeet-style HTML presentation.

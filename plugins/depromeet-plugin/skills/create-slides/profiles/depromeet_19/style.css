@@ -1,0 +1,86 @@
+:root {
+  color-scheme: light;
+  --blue-100: #B9CDF2;
+  --blue-200: #8BACEA;
+  --blue-300: #5C8BE2;
+  --blue-400: #2D6AD9;
+  --blue-500: #1659D5;
+  --blue-800: #092455;
+  --blue-900: #04122B;
+  --gray-50: #F7F8FA;
+  --gray-100: #F2F3F6;
+  --gray-200: #EAEBEE;
+  --gray-300: #DCDEE3;
+  --gray-400: #D1D3D8;
+  --gray-500: #ADB1BA;
+  --gray-600: #90939C;
+  --gray-700: #626774;
+  --gray-800: #363C4C;
+  --gray-900: #202739;
+  --gray-950: #121418;
+  --black: #111111;
+  --white: #FFFFFF;
+  --white-004: rgb(255 255 255 / 4%);
+  --white-010: rgb(255 255 255 / 10%);
+  --white-030: rgb(255 255 255 / 30%);
+  --black-004: rgb(0 0 0 / 4%);
+  --gradient-black-blue: linear-gradient(180deg, #1247AA 0%, #0C0E15 100%);
+  --gradient-white-blue: linear-gradient(180deg, #FFFFFF 0%, #3C7AFF 100%);
+  --gradient-sky-blue-white: radial-gradient(circle, #B9CDF2 0%, #F6F9FF 100%);
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color: var(--gray-950);
+  background: var(--gray-100);
+}
+* { box-sizing: border-box; }
+body { margin: 0; }
+header, main, footer { width: min(1440px, 100%); margin: auto; padding: 32px; }
+header { padding-bottom: 8px; }
+h1 { margin: 8px 0 12px; font-size: clamp(32px, 5vw, 52px); letter-spacing: .01em; }
+p { line-height: 1.65; word-break: keep-all; }
+nav { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
+nav a { padding: 9px 14px; border-radius: 999px; color: var(--blue-800); background: var(--white); text-decoration: none; }
+nav a:focus-visible, a:focus-visible { outline: 4px solid var(--blue-500); outline-offset: 3px; }
+.notice { max-width: 920px; color: var(--gray-700); }
+.layout { margin: 32px 0 64px; }
+.layout > h2 { margin: 0 0 8px; font-size: 28px; }
+.layout > p { margin: 0 0 16px; color: var(--gray-700); }
+.viewport { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 22px; background: var(--white); box-shadow: 0 18px 50px rgba(18,20,24,.14); }
+.stage { position: absolute; inset: 0 auto auto 0; width: 1920px; height: 1080px; transform-origin: top left; overflow: hidden; }
+.blue { color: var(--white); background: var(--blue-500); }
+.light { color: var(--gray-950); background: var(--gray-50); }
+.dark { color: var(--white); background: var(--gray-950); }
+.meta { position: absolute; top: 90px; left: 90px; font-family: "Instrument Sans", "Pretendard", sans-serif; font-size: 22px; font-weight: 700; letter-spacing: .01em; }
+.page { position: absolute; right: 90px; bottom: 64px; font-family: "Instrument Sans", "Pretendard", sans-serif; font-size: 22px; font-weight: 700; }
+.region { outline: 3px dashed rgba(22,89,213,.48); outline-offset: -3px; }
+.blue .region, .dark .region { outline-color: rgba(255,255,255,.5); }
+.tag { display: inline-flex; align-items: center; min-height: 38px; padding: 6px 12px; border-radius: 10px; color: var(--blue-800); background: rgba(255,255,255,.88); font-family: "Instrument Sans", "Pretendard", sans-serif; font-size: 18px; font-weight: 700; }
+.dark .tag { color: var(--white); background: rgba(185,205,242,.2); }
+.latin-only { font-family: "Instrument Sans", "Pretendard", sans-serif; }
+.display-latin { font-family: "Space Grotesk", "Instrument Sans", sans-serif; }
+.slogan-latin { font-family: "Space Mono", monospace; font-style: italic; }
+.cover-title { position: absolute; left: 90px; top: 300px; width: 1320px; padding: 36px; font-size: 96px; font-weight: 700; line-height: 1.4; letter-spacing: .01em; }
+.cover-subtitle { position: absolute; left: 126px; top: 810px; width: 1000px; font-size: 34px; line-height: 1.4; }
+.contact { position: absolute; right: 90px; bottom: 72px; width: 470px; padding: 24px; font-size: 24px; text-align: right; }
+.divider-number { position: absolute; top: 300px; left: 780px; width: 360px; padding: 24px; font-family: "Instrument Sans", "Pretendard", sans-serif; text-align: center; font-size: 34px; }
+.divider-title { position: absolute; top: 430px; left: 360px; width: 1200px; padding: 30px; text-align: center; font-size: 80px; font-weight: 700; line-height: 1.4; letter-spacing: .01em; }
+.heading { position: absolute; top: 120px; left: 90px; right: 90px; padding: 24px; font-size: 64px; font-weight: 700; line-height: 1.4; letter-spacing: .01em; }
+.body { position: absolute; top: 350px; left: 90px; right: 90px; bottom: 120px; display: flex; gap: 32px; }
+.narrative { flex: 0 0 34%; padding: 42px; font-size: 30px; line-height: 1.6; letter-spacing: -.01em; color: var(--gray-700); }
+.cards { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; padding: 22px; }
+.card { border-radius: 28px; padding: 38px; background: var(--gray-200); }
+.card strong { display: block; margin-top: 26px; font-family: "Instrument Sans", "Pretendard", sans-serif; font-size: 82px; color: var(--gray-800); }
+.visual { flex: 0 0 60%; display: grid; place-items: center; border-radius: 30px; background: var(--gray-100); color: var(--gray-700); font-size: 32px; }
+.explanation { flex: 1; padding: 42px; font-size: 30px; line-height: 1.6; letter-spacing: -.01em; color: var(--gray-700); }
+.dark .body { gap: 40px; }
+.screens { flex: 0 0 42%; display: grid; place-items: center; border-radius: 30px; background: var(--gray-800); color: var(--gray-400); font-size: 30px; }
+.proof { flex: 1; display: grid; gap: 20px; }
+.proof-item { padding: 30px; border-radius: 24px; background: var(--gray-900); font-size: 27px; }
+.proof-item b { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-right: 16px; border-radius: 12px; font-family: "Instrument Sans", "Pretendard", sans-serif; color: var(--white); background: var(--blue-500); }
+.legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; margin: 18px 0 0; }
+.legend div { padding: 12px 0; border-bottom: 1px solid var(--gray-400); color: var(--gray-700); }
+.legend code { color: var(--blue-800); }
+@media (max-width: 700px) {
+  header, main, footer { padding: 20px 14px; }
+  .legend { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }

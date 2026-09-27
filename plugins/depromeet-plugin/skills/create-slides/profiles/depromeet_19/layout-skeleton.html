@@ -4,64 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Depromeet 슬라이드 레이아웃 확인</title>
-  <style>
-    :root {
-      color-scheme: light;
-      font-family: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-      color: #191f28;
-      background: #eef1f5;
-    }
-    * { box-sizing: border-box; }
-    body { margin: 0; }
-    header, main, footer { width: min(1440px, 100%); margin: auto; padding: 32px; }
-    header { padding-bottom: 8px; }
-    h1 { margin: 8px 0 12px; font-size: clamp(32px, 5vw, 52px); letter-spacing: -.04em; }
-    p { line-height: 1.65; word-break: keep-all; }
-    nav { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0; }
-    nav a { padding: 9px 14px; border-radius: 999px; color: #174e7c; background: #fff; text-decoration: none; }
-    nav a:focus-visible, a:focus-visible { outline: 4px solid #1769aa; outline-offset: 3px; }
-    .notice { max-width: 920px; color: #4e5968; }
-    .layout { margin: 32px 0 64px; }
-    .layout > h2 { margin: 0 0 8px; font-size: 28px; }
-    .layout > p { margin: 0 0 16px; color: #4e5968; }
-    .viewport { position: relative; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 22px; background: #fff; box-shadow: 0 18px 50px rgba(25,31,40,.14); }
-    .stage { position: absolute; inset: 0 auto auto 0; width: 1920px; height: 1080px; transform-origin: top left; overflow: hidden; }
-    .blue { color: #fff; background: linear-gradient(180deg, #5aafff, #80c2ff); }
-    .light { color: #191f28; background: #f9f9f9; }
-    .dark { color: #f9fafb; background: #191f28; }
-    .meta { position: absolute; top: 90px; left: 90px; font-size: 22px; font-weight: 700; letter-spacing: .02em; }
-    .page { position: absolute; right: 90px; bottom: 64px; font-size: 22px; font-weight: 700; }
-    .region { outline: 3px dashed rgba(23,105,170,.48); outline-offset: -3px; }
-    .blue .region, .dark .region { outline-color: rgba(255,255,255,.5); }
-    .tag { display: inline-flex; align-items: center; min-height: 38px; padding: 6px 12px; border-radius: 10px; color: #174e7c; background: rgba(255,255,255,.88); font-size: 18px; font-weight: 700; }
-    .dark .tag { color: #f9fafb; background: rgba(90,175,255,.2); }
-    .cover-title { position: absolute; left: 90px; top: 300px; width: 1320px; padding: 36px; font-size: 96px; font-weight: 700; line-height: 1.12; letter-spacing: -.045em; }
-    .cover-subtitle { position: absolute; left: 126px; top: 650px; width: 1000px; font-size: 34px; line-height: 1.5; }
-    .contact { position: absolute; right: 90px; bottom: 72px; width: 470px; padding: 24px; font-size: 24px; text-align: right; }
-    .divider-number { position: absolute; top: 300px; left: 780px; width: 360px; padding: 24px; text-align: center; font-size: 34px; }
-    .divider-title { position: absolute; top: 430px; left: 360px; width: 1200px; padding: 30px; text-align: center; font-size: 80px; font-weight: 700; }
-    .heading { position: absolute; top: 120px; left: 90px; right: 90px; padding: 24px; font-size: 64px; font-weight: 700; line-height: 1.2; }
-    .body { position: absolute; top: 315px; left: 90px; right: 90px; bottom: 120px; display: flex; gap: 32px; }
-    .narrative { flex: 0 0 34%; padding: 42px; font-size: 30px; color: #4e5968; }
-    .cards { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; padding: 22px; }
-    .card { border-radius: 28px; padding: 38px; background: #e6e8eb; }
-    .card strong { display: block; margin-top: 26px; font-size: 82px; color: #333d4b; }
-    .visual { flex: 0 0 60%; display: grid; place-items: center; border-radius: 30px; background: #ebeff5; color: #4e5968; font-size: 32px; }
-    .explanation { flex: 1; padding: 42px; font-size: 30px; color: #4e5968; }
-    .dark .body { gap: 40px; }
-    .screens { flex: 0 0 42%; display: grid; place-items: center; border-radius: 30px; background: #333d4b; color: #b1b8c1; font-size: 30px; }
-    .proof { flex: 1; display: grid; gap: 20px; }
-    .proof-item { padding: 30px; border-radius: 24px; background: #252d38; font-size: 27px; }
-    .proof-item b { display: inline-grid; place-items: center; width: 44px; height: 44px; margin-right: 16px; border-radius: 12px; color: #191f28; background: #5aafff; }
-    .legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 24px; margin: 18px 0 0; }
-    .legend div { padding: 12px 0; border-bottom: 1px solid #cfd6df; color: #4e5968; }
-    .legend code { color: #174e7c; }
-    @media (max-width: 700px) {
-      header, main, footer { padding: 20px 14px; }
-      .legend { grid-template-columns: 1fr; }
-    }
-    @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
@@ -140,7 +83,7 @@
     function fitStages() {
       viewports.forEach((viewport) => {
         const stage = viewport.querySelector('.stage');
-        stage.style.transform = `scale(${viewport.clientWidth / 1920})`;
+        stage.style.transform = `scale(${viewport.clientWidth / stage.offsetWidth})`;
       });
     }
     fitStages();

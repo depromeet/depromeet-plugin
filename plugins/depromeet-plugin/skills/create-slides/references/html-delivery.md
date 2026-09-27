@@ -5,7 +5,7 @@ Read this only after the layout skeleton and complete page plan are confirmed.
 ## Implementation
 
 - Prefer plain HTML with inline CSS and JavaScript so the deck needs no build step.
-- Use a 1920×1080, 16:9 stage unless the user requests another ratio.
+- Use the selected profile's stage size and ratio unless the user requests another.
 - Scale the complete stage uniformly instead of reflowing confirmed geometry.
 - Use semantic slide sections, `lang`, and stable page, layout, and region IDs.
 - Provide previous and next controls plus left and right arrow-key navigation.
@@ -27,7 +27,7 @@ and keep processed assets separate.
 
 ## Browser verification
 
-Inspect every page at 1920×1080 and a smaller desktop viewport. Also check a phone
+Inspect every page at the profile's presentation size and a smaller desktop viewport. Also check a phone
 viewport when mobile viewing is requested. Confirm:
 
 - Page count, order, and content match `page-plan.md`.
@@ -35,7 +35,7 @@ viewport when mobile viewing is requested. Confirm:
 - Fonts and assets load without console errors.
 - Contrast and keyboard focus remain visible.
 - First and last page bounds and navigation work.
-- Resize behavior preserves the approved 16:9 geometry.
+- Resize behavior preserves the approved profile geometry.
 - No illustrative skeleton content appears in the final deck.
 
 Fix cosmetic defects inside the confirmed design and render again. If a fix needs

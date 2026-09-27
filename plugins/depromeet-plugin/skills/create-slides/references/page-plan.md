@@ -15,8 +15,8 @@ List every page in order:
 
 | Page / revision | Layout / revision | Purpose | Review state |
 | --- | --- | --- | --- |
-| P01 / 1 | L01 / 1 | Introduce the presentation | proposed |
-| P02 / 1 | L03 / 1 | Explain the first key point | proposed |
+| P01 / 1 | selected layout / 1 | Introduce the presentation | proposed |
+| P02 / 1 | selected layout / 1 | Explain the first key point | proposed |
 
 The overview is navigation. It does not replace the full page specifications.
 
@@ -34,10 +34,10 @@ Use this region table:
 
 | Region ID / name | Exact displayed content | Position and extent | Emphasis / reading order | Source or asset |
 | --- | --- | --- | --- | --- |
-| `context` / Section label | Partnership | L03 top label | Small / 1 | Presentation brief |
-| `title` / Page title | What we can build together | L03 full-width heading | Largest / 2 | Proposed framing |
-| `narrative` / Explanation | Exact paragraph shown on the page | L03 left 34% | Body / 3 | Supplied notes, p. 2 |
-| `evidence` / Information cards | Card 1 title and value; Card 2 title and value | L03 right 66% | Cards / 4 | Supplied data |
+| `context` / Section label | Section name | Top label in selected layout | Small / 1 | Presentation brief |
+| `title` / Page title | Main point of this page | Heading in selected layout | Largest / 2 | Proposed framing |
+| `narrative` / Explanation | Exact paragraph shown on the page | Left narrative region in selected layout | Body / 3 | Supplied notes, p. 2 |
+| `evidence` / Information cards | Card 1 title and value; Card 2 title and value | Card region in selected layout | Cards / 4 | Supplied data |
 
 For a chart, include its data, labels, units, and chart form. For a table, include
 every visible header and cell. For an image, provide its path, crop, caption, and

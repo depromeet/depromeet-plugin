@@ -5,8 +5,8 @@ future revisions.
 
 | Artifact | Purpose |
 | --- | --- |
-| `layout-skeleton.html` | Browser-visible layout specimens and region glossary |
-| `style-profile.md` | Concrete Depromeet tokens and approved adaptations |
+| `layout-skeleton.html` and required profile assets | Browser-visible layout specimens and region glossary |
+| `style-profile.md` | Selected profile, concrete tokens, and approved adaptations |
 | `page-plan.md` | Complete page copy, placement, sources, and review state |
 | `index.html` and optional `assets/` | Final presentation and dependencies |
 
@@ -21,7 +21,7 @@ Show only layouts needed by the current narrative. Each specimen includes:
 - Optional regions and the condition under which they may be omitted.
 
 Open the runnable HTML for review. Ask the user to confirm the region names,
-roles, proportions, and Depromeet style direction. Keep review labels and region
+roles, proportions, and selected profile direction. Keep review labels and region
 borders out of the final presentation.
 
 ## Complete page review
@@ -37,8 +37,8 @@ Track the state at the top of `page-plan.md`:
 | Scope | Revision | State | User confirmation |
 | --- | --- | --- | --- |
 | Layouts and region glossary | 1 | proposed | None yet |
-| Depromeet style profile | 1 | proposed | None yet |
-| Pages P01–P05 | 1 | not reviewed | None yet |
+| Selected style profile | 1 | proposed | None yet |
+| Pages in this deck | 1 | not reviewed | None yet |
 
 Use `proposed`, `changes requested`, or `confirmed`. Record the user's actual
 response and its scope. Do not infer confirmation from silence.
