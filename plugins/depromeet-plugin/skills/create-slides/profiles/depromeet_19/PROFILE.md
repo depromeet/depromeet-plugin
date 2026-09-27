@@ -5,7 +5,9 @@ It combines the supplied design guide's palette and typography with a
 banner-inspired slide treatment: a dark, central-object opening, dark chapter
 and statement pages, and white content pages. The star field and gradients are
 CSS adaptations, not official design-guide requirements. The source PDFs,
-source banner, 3D object, and font binaries are not distributed with this skill.
+source banner, reusable 3D image file, and font binaries are not distributed
+with this skill. The design overview includes the user-supplied 3D object in
+its cover preview only.
 The 12 layout families are structural choices; their example copy is not deck
 content or a factual claim.
 
@@ -16,7 +18,8 @@ content or a factual claim.
 - [layout-skeleton.html](layout-skeleton.html) is the browser-visible set of
   layout specimens and region names. It loads `style.css` beside itself.
 - [design-overview.png](design-overview.png) shows the 12 families with the
-  current colors and typography; [layout-overview.png](layout-overview.png)
+  current colors, typography, and a rasterized 3D cover example;
+  [layout-overview.png](layout-overview.png)
   shows their content regions and reading order. Both are quick references
   rendered from the HTML specimens, not separate layout specifications.
 - This file defines when to use each visual mode, how to place an optional
@@ -27,8 +30,8 @@ content or a factual claim.
 
 Use the HTML skeleton as the browser-visible source of truth for all 12
 families. L01 shows both cover and chapter specimens. Its CSS orbit is an
-asset-free placeholder; it does not imply that the original 3D image is
-bundled or licensed for redistribution.
+asset-free placeholder; the 3D cover example in the overview PNG does not
+provide a reusable image file or permission to reuse the original asset.
 The overview images show the L01 cover specimen; open the HTML skeleton to
 inspect its chapter variant.
 
