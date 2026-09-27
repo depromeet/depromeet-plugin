@@ -8,9 +8,9 @@
 </head>
 <body>
   <header>
-    <div class="eyebrow">DEPROMEET 19 · 12 LAYOUT FAMILIES · 구조 검토용</div>
-    <h1>Depromeet 19 · 12개 레이아웃 구조</h1>
-    <p class="intro">발표 내용의 관계에 따라 고르는 12개 기본형입니다. 점선은 영역의 경계, 번호는 읽는 순서입니다. 문구·수치·일정은 모두 구조를 보여주기 위한 예시이며, 비율과 명칭은 함께 조정할 수 있습니다.</p>
+    <div class="eyebrow">DEPROMEET 19 · 12 LAYOUT FAMILIES · 디자인 검토용</div>
+    <h1>표지는 짙게, 본문은 밝게</h1>
+    <p class="intro">B안의 중앙 오브젝트 표지를 기준으로 한 12개 기본형입니다. 표지와 챕터·핵심 문장은 짙은 남색, 설명과 도표는 흰색을 사용합니다. 문구와 수치는 구조를 보여주기 위한 예시이며, 점선과 영역 이름은 검토용으로만 표시합니다.</p>
 <nav aria-label="레이아웃 목록"><a href="#L01" data-pick="0">L01 · 시작·구획 전환</a><a href="#L02" data-pick="1">L02 · 설명 + 시각 자료</a><a href="#L03" data-pick="2">L03 · 비교</a><a href="#L04" data-pick="3">L04 · 큰 시각 자료 + 해석</a><a href="#L05" data-pick="4">L05 · 목차·전체 개요</a><a href="#L06" data-pick="5">L06 · 핵심 문장·질문·인용</a><a href="#L07" data-pick="6">L07 · 병렬 항목</a><a href="#L08" data-pick="7">L08 · 핵심 수치</a><a href="#L09" data-pick="8">L09 · 과정·단계</a><a href="#L10" data-pick="9">L10 · 타임라인·로드맵</a><a href="#L11" data-pick="10">L11 · 관계·계층</a><a href="#L12" data-pick="11">L12 · 요약·다음 행동</a></nav><div class="controls"><button id="single" aria-pressed="true">한 장씩 보기</button><button id="all" aria-pressed="false">전체 보기</button><button id="prev" aria-label="이전 레이아웃">← 이전</button><span id="position" aria-live="polite"></span><button id="next" aria-label="다음 레이아웃">다음 →</button></div>
     <p class="review-note">이름과 배치를 확인한 뒤 대화에서 의견을 남겨주세요. 예: “L02의 설명 영역을 넓혀줘.” 모바일에서는 아래의 영역 설명을 함께 확인하고, 전체 비율은 가로 화면에서 확인하세요.</p>
     <noscript><p>레이아웃 축소 표시는 JavaScript가 필요합니다. JavaScript를 켜거나 데스크톱 브라우저에서 열어주세요. 영역 설명은 아래에서 읽을 수 있습니다.</p></noscript>
@@ -19,18 +19,29 @@
     <!-- Select only the needed layout families. Adapt regions to the actual brief. -->
     <section class="layout-card" id="L01" data-layout-id="L01" aria-labelledby="L01-heading">
       <div class="layout-heading"><h2 id="L01-heading">L01 · 시작·구획 전환</h2><span>1920 × 1080 · 16:9</span></div>
-      <p class="layout-description">발표의 주제와 맥락을 소개하는 구성입니다. 시선은 위에서 아래로 이동합니다.</p>
-      <div class="preview-window"><div class="layout-stage" aria-label="시작형 레이아웃 예시">
-        <div class="region context" data-region-id="context"><span class="region-label">1 · 맥락 라벨 <code>context</code></span></div>
-        <div class="region opener-title" data-region-id="title"><span class="region-label">2 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 함께 정할<br>다음 방향</p></div>
-        <div class="region subtitle" data-region-id="subtitle"><span class="region-label">3 · 부제 <code>subtitle</code></span><p>예시: 이 발표가 다룰 범위를 한 문장으로 소개합니다.</p></div>
-        <div class="region sources" data-region-id="byline"><span class="region-label">4 · 발표 정보 <code>byline</code></span><p>예시: 발표자 · 날짜</p></div>
+      <p class="layout-description">B안 표지는 중앙 3D 오브젝트와 왼쪽 아래 제목을 사용합니다. 챕터는 같은 배경에서 오브젝트를 오른쪽으로 옮깁니다. 이미지가 제공되지 않으면 CSS 궤도 장식을 사용합니다.</p>
+      <div class="preview-window"><div class="layout-stage cover-stage" aria-label="B안 발표 표지 예시">
+        <div class="region context" data-region-id="context"><span class="region-label">1 · 맥락 라벨 <code>context</code></span><p>DEPROMEET 19 / PRESENTATION</p></div>
+        <div class="hero-art" data-region-id="hero-asset" role="img" aria-label="사용자가 제공할 3D 오브젝트 자리. 이미지가 없으면 궤도 장식 사용"><span>2 · 3D 오브젝트 자리 <code>hero-asset</code><br><small>사용자 제공 이미지 또는 CSS 궤도</small></span></div>
+        <div class="region opener-title" data-region-id="title"><span class="region-label">3 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 우리가 향할<br>다음 방향</p></div>
+        <div class="region subtitle" data-region-id="subtitle"><span class="region-label">4 · 부제 <code>subtitle</code></span><p>예시: 발표의 핵심을 짧게 요약합니다.</p></div>
+        <div class="region sources" data-region-id="byline"><span class="region-label">5 · 발표 정보 <code>byline</code></span><p>DEPROMEET 19</p></div>
       </div></div>
+      <p class="specimen-label">같은 L01의 챕터 변형</p>
+      <div class="preview-window"><div class="layout-stage chapter-stage" aria-label="챕터 표지 예시">
+        <div class="region context" data-region-id="context"><span class="region-label">1 · 맥락 라벨 <code>context</code></span><p>DEPROMEET 19 / CHAPTER 01</p></div>
+        <div class="hero-art" data-region-id="hero-asset" role="img" aria-label="오른쪽에 배치할 사용자 제공 3D 오브젝트 자리"><span>2 · 3D 오브젝트 자리 <code>hero-asset</code></span></div>
+        <div class="region opener-title" data-region-id="title"><span class="region-label">3 · 챕터 제목 <code>title</code></span><p class="sample-title">예시: 새로운 길을<br>발견하다.</p></div>
+        <div class="region subtitle" data-region-id="subtitle"><span class="region-label">4 · 부제 <code>subtitle</code></span><p>예시: 문제를 찾고, 함께 방향을 정합니다.</p></div>
+        <div class="region sources" data-region-id="byline"><span class="region-label">5 · 발표 정보 <code>byline</code></span><p>DEPROMEET 19</p></div>
+      </div></div>
+      <p class="variant">챕터 표지: 같은 배경을 사용하고 3D 오브젝트를 오른쪽으로 축소해 챕터 제목을 왼쪽에 둡니다. 마무리: 같은 배경을 사용하되 3D 오브젝트를 생략하고 결론을 크게 표시합니다.</p>
       <dl class="legend">
         <div data-for-region="context"><dt>1 · 맥락 라벨 <code>context</code></dt><dd>상단 전체 너비. 행사나 발표의 큰 주제를 표시합니다.</dd></div>
-        <div data-for-region="title"><dt>2 · 페이지 제목 <code>title</code></dt><dd>중앙의 가장 큰 영역. 발표의 주제나 핵심 메시지를 담습니다.</dd></div>
-        <div data-for-region="subtitle"><dt>3 · 부제 <code>subtitle</code></dt><dd>제목 아래. 목적이나 범위를 짧게 설명합니다.</dd></div>
-        <div data-for-region="byline"><dt>4 · 발표 정보 <code>byline</code></dt><dd>하단. 발표자와 날짜를 담으며 불필요하면 생략합니다.</dd></div>
+        <div data-for-region="hero-asset"><dt>2 · 오브젝트 <code>hero-asset</code></dt><dd>표지는 중앙, 챕터는 오른쪽. 사용자가 제공한 이미지와 사용 범위를 확인한 경우에만 적용합니다. 이미지가 없으면 CSS 장식을 사용합니다.</dd></div>
+        <div data-for-region="title"><dt>3 · 페이지 제목 <code>title</code></dt><dd>표지에서는 왼쪽 아래, 챕터에서는 왼쪽 중앙. 짧고 크게 표시합니다.</dd></div>
+        <div data-for-region="subtitle"><dt>4 · 부제 <code>subtitle</code></dt><dd>제목을 보조하는 한 문장. 본문과 충돌하면 생략할 수 있습니다.</dd></div>
+        <div data-for-region="byline"><dt>5 · 발표 정보 <code>byline</code></dt><dd>하단. 발표자와 날짜를 담으며 불필요하면 생략합니다.</dd></div>
       </dl>
     </section>
     <section class="layout-card" id="L02" data-layout-id="L02" aria-labelledby="L02-heading">
@@ -107,7 +118,7 @@
     const cards=[...document.querySelectorAll('.layout-card')];
     const links=[...document.querySelectorAll('[data-pick]')];
     let selected=Math.max(0,cards.findIndex(c=>c.id===location.hash.slice(1))), all=false;
-    function fitPreviews(){document.querySelectorAll('.preview-window').forEach(p=>{if(p.clientWidth)p.querySelector('.layout-stage').style.transform=`scale(${p.clientWidth/1920})`;});}
+    function fitPreviews(){document.querySelectorAll('.preview-window').forEach(p=>{if(p.clientWidth)p.querySelectorAll('.layout-stage').forEach(s=>s.style.transform=`scale(${p.clientWidth/1920})`);});}
     function render(){
       cards.forEach((c,i)=>c.hidden=!all&&i!==selected);
       links.forEach((a,i)=>a.setAttribute('aria-current',String(i===selected)));

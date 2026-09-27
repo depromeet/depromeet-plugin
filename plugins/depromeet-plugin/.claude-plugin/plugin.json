@@ -1,7 +1,7 @@
 {
   "name": "depromeet-plugin",
-  "version": "0.4.0",
-  "description": "프로필 기반 HTML 발표 슬라이드를 만드는 Claude Code와 Codex용 플러그인입니다.",
+  "version": "0.6.0",
+  "description": "HTML 발표 슬라이드 제작과 로컬 HTML의 Figma 변환을 돕는 Claude Code와 Codex용 플러그인입니다.",
   "author": {
     "name": "depromeet"
   }

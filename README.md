@@ -12,16 +12,15 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 │   └── depromeet-plugin/
 │       ├── .claude-plugin/plugin.json
 │       ├── .codex-plugin/plugin.json
-│       └── skills/create-slides/
-│           ├── SKILL.md
-│           ├── agents/openai.yaml
-│           ├── profiles/
-│           │   ├── INDEX.md
-│           │   └── depromeet_19/
-│           │       ├── PROFILE.md
-│           │       ├── style.css
-│           │       └── layout-skeleton.html
-│           └── references/
+│       └── skills/
+│           ├── create-slides/
+│           │   ├── SKILL.md
+│           │   ├── agents/openai.yaml
+│           │   ├── profiles/depromeet_19/
+│           │   └── references/
+│           └── convert-html-to-figma/
+│               ├── SKILL.md
+│               └── tool/
 ├── CLAUDE.md
 └── CONTRIBUTING.md
 ```
@@ -35,11 +34,15 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 대체 폰트 사용 사실을 알립니다. 플러그인 자체에는 폰트 파일을 넣지
 않습니다.
 
-발표 목적과 자료를 바탕으로 선택한 프로필의 HTML 슬라이드를 만듭니다. 기본 프로필은 `depromeet_19`이며, 19기 디자인 가이드의 색상·서체와 12가지 공통 레이아웃 구조를 슬라이드에 맞게 적용합니다. 프로필이 스타일과 레이아웃을 소유하고, 공통 스킬은 검토·제작 절차를 담당합니다. 필요한 레이아웃 스켈레톤과 모든 페이지의 실제 문구·배치를 차례로 확인한 뒤 최종 `index.html`을 생성합니다.
+발표 목적과 자료를 바탕으로 선택한 프로필의 HTML 슬라이드를 만듭니다. 기본 프로필 `depromeet_19`는 중앙 오브젝트의 짙은 남색 표지와 챕터, 흰색 본문, 어두운 핵심 문장 페이지를 사용합니다. 19기 디자인 가이드의 색상·서체와 12가지 공통 레이아웃 구조를 적용합니다. 3D 이미지는 플러그인에 포함되지 않으며, 사용자가 해당 덱에 제공하고 사용 범위를 확인한 경우에만 적용합니다. 이미지가 없으면 CSS 궤도 장식을 사용한다고 알립니다. 필요한 레이아웃 스켈레톤과 모든 페이지의 실제 문구·배치를 차례로 확인한 뒤 최종 `index.html`을 생성합니다.
 
 ```text
 Use create-slides to turn these notes into a Depromeet-style HTML presentation.
 ```
+
+### `convert-html-to-figma`
+
+이미 만든 HTML 파일이나 ZIP을 Figma Design의 편집 가능한 프레임으로 옮깁니다. [`convert-html-to-figma`](plugins/depromeet-plugin/skills/convert-html-to-figma/SKILL.md)는 `create-slides`와 독립적이며, 빌드된 [HTML → Figma 도구](plugins/depromeet-plugin/skills/convert-html-to-figma/tool/README.md)를 안내합니다. 사용자는 로컬 플러그인을 등록한 뒤 페이지 썸네일을 확인하고, 새 가로 행과 독립 Flow로 가져올 수 있습니다.
 
 ## 새 플러그인 추가
 

@@ -1,0 +1,22 @@
+{
+  "name": "@depromeet/html-to-figma",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --import tsx --test src/*.test.js src/plugin/*.test.ts src/plugin/*.test.js",
+    "typecheck": "tsc --noEmit",
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "fflate": "0.8.3",
+    "html-to-image": "1.11.13"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "1.139.0",
+    "esbuild": "0.28.2",
+    "playwright": "1.63.0",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

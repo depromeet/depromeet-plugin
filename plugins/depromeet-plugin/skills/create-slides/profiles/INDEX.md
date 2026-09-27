@@ -1,6 +1,7 @@
 # Slide profiles
 
-The default bundled profile is [depromeet_19](depromeet_19/PROFILE.md).
+The default bundled profile is [depromeet_19](depromeet_19/PROFILE.md): a dark
+central-object cover and chapter treatment with white content pages.
 Choose a profile before making a layout skeleton or page plan. A profile owns
 its visual rules, layout specimens, CSS, and asset policy. Common workflow
 documents describe the review and delivery process only.
