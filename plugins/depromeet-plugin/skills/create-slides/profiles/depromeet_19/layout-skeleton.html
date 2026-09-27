@@ -3,95 +3,133 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Depromeet 슬라이드 레이아웃 확인</title>
+  <title>Depromeet 19 · 슬라이드 레이아웃 확인</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <strong>DEPROMEET · LAYOUT REVIEW</strong>
-    <h1>슬라이드 구조를 먼저 확인합니다</h1>
-    <p class="notice">아래 문구와 숫자는 배치 확인을 위한 예시입니다. 현재 발표에 필요한 레이아웃만 남기고, 영역 이름과 비율을 확정한 뒤 실제 페이지 내용을 계획합니다.</p>
-    <nav aria-label="레이아웃 목록">
-      <a href="#L01">L01 표지</a><a href="#L02">L02 섹션</a><a href="#L03">L03 정보 카드</a><a href="#L04">L04 설명과 시각 자료</a><a href="#L05">L05 사례와 근거</a>
-    </nav>
+    <div class="eyebrow">DEPROMEET 19 · 12 LAYOUT FAMILIES · 구조 검토용</div>
+    <h1>Depromeet 19 · 12개 레이아웃 구조</h1>
+    <p class="intro">발표 내용의 관계에 따라 고르는 12개 기본형입니다. 점선은 영역의 경계, 번호는 읽는 순서입니다. 문구·수치·일정은 모두 구조를 보여주기 위한 예시이며, 비율과 명칭은 함께 조정할 수 있습니다.</p>
+<nav aria-label="레이아웃 목록"><a href="#L01" data-pick="0">L01 · 시작·구획 전환</a><a href="#L02" data-pick="1">L02 · 설명 + 시각 자료</a><a href="#L03" data-pick="2">L03 · 비교</a><a href="#L04" data-pick="3">L04 · 큰 시각 자료 + 해석</a><a href="#L05" data-pick="4">L05 · 목차·전체 개요</a><a href="#L06" data-pick="5">L06 · 핵심 문장·질문·인용</a><a href="#L07" data-pick="6">L07 · 병렬 항목</a><a href="#L08" data-pick="7">L08 · 핵심 수치</a><a href="#L09" data-pick="8">L09 · 과정·단계</a><a href="#L10" data-pick="9">L10 · 타임라인·로드맵</a><a href="#L11" data-pick="10">L11 · 관계·계층</a><a href="#L12" data-pick="11">L12 · 요약·다음 행동</a></nav><div class="controls"><button id="single" aria-pressed="true">한 장씩 보기</button><button id="all" aria-pressed="false">전체 보기</button><button id="prev" aria-label="이전 레이아웃">← 이전</button><span id="position" aria-live="polite"></span><button id="next" aria-label="다음 레이아웃">다음 →</button></div>
+    <p class="review-note">이름과 배치를 확인한 뒤 대화에서 의견을 남겨주세요. 예: “L02의 설명 영역을 넓혀줘.” 모바일에서는 아래의 영역 설명을 함께 확인하고, 전체 비율은 가로 화면에서 확인하세요.</p>
+    <noscript><p>레이아웃 축소 표시는 JavaScript가 필요합니다. JavaScript를 켜거나 데스크톱 브라우저에서 열어주세요. 영역 설명은 아래에서 읽을 수 있습니다.</p></noscript>
   </header>
   <main>
-    <section class="layout" id="L01">
-      <h2>L01 · 파란 표지</h2><p>발표의 주제와 맥락을 소개합니다.</p>
-      <div class="viewport"><div class="stage blue">
-        <div class="meta">DEPROMEET · PRESENTATION</div>
-        <div class="region cover-title"><span class="tag">1 · title</span><br>함께 만드는<br>다음 가능성</div>
-        <div class="region cover-subtitle"><span class="tag">2 · subtitle</span><br>예시 문구 · 발표 목적을 한 문장으로 설명합니다.</div>
-        <div class="region contact"><span class="tag">3 · contact</span><br>발표자 · 날짜</div>
+    <!-- Select only the needed layout families. Adapt regions to the actual brief. -->
+    <section class="layout-card" id="L01" data-layout-id="L01" aria-labelledby="L01-heading">
+      <div class="layout-heading"><h2 id="L01-heading">L01 · 시작·구획 전환</h2><span>1920 × 1080 · 16:9</span></div>
+      <p class="layout-description">발표의 주제와 맥락을 소개하는 구성입니다. 시선은 위에서 아래로 이동합니다.</p>
+      <div class="preview-window"><div class="layout-stage" aria-label="시작형 레이아웃 예시">
+        <div class="region context" data-region-id="context"><span class="region-label">1 · 맥락 라벨 <code>context</code></span></div>
+        <div class="region opener-title" data-region-id="title"><span class="region-label">2 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 함께 정할<br>다음 방향</p></div>
+        <div class="region subtitle" data-region-id="subtitle"><span class="region-label">3 · 부제 <code>subtitle</code></span><p>예시: 이 발표가 다룰 범위를 한 문장으로 소개합니다.</p></div>
+        <div class="region sources" data-region-id="byline"><span class="region-label">4 · 발표 정보 <code>byline</code></span><p>예시: 발표자 · 날짜</p></div>
       </div></div>
-      <div class="legend"><div><code>title</code> 가장 큰 핵심 제목</div><div><code>subtitle</code> 목적과 범위</div><div><code>contact</code> 발표 정보</div></div>
+      <dl class="legend">
+        <div data-for-region="context"><dt>1 · 맥락 라벨 <code>context</code></dt><dd>상단 전체 너비. 행사나 발표의 큰 주제를 표시합니다.</dd></div>
+        <div data-for-region="title"><dt>2 · 페이지 제목 <code>title</code></dt><dd>중앙의 가장 큰 영역. 발표의 주제나 핵심 메시지를 담습니다.</dd></div>
+        <div data-for-region="subtitle"><dt>3 · 부제 <code>subtitle</code></dt><dd>제목 아래. 목적이나 범위를 짧게 설명합니다.</dd></div>
+        <div data-for-region="byline"><dt>4 · 발표 정보 <code>byline</code></dt><dd>하단. 발표자와 날짜를 담으며 불필요하면 생략합니다.</dd></div>
+      </dl>
     </section>
-
-    <section class="layout" id="L02">
-      <h2>L02 · 파란 섹션 구분</h2><p>큰 이야기의 전환점을 표시합니다.</p>
-      <div class="viewport"><div class="stage blue">
-        <div class="meta">SECTION</div>
-        <div class="region divider-number"><span class="tag">1 · number</span><br>01</div>
-        <div class="region divider-title"><span class="tag">2 · title</span><br>우리가 해결할 문제</div>
-        <div class="page">02</div>
-      </div></div>
-      <div class="legend"><div><code>number</code> 섹션 순서</div><div><code>title</code> 섹션 메시지</div></div>
-    </section>
-
-    <section class="layout" id="L03">
-      <h2>L03 · 설명과 정보 카드</h2><p>맥락을 설명하고 핵심 수치를 카드로 연결합니다.</p>
-      <div class="viewport"><div class="stage light">
-        <div class="meta">OVERVIEW</div><div class="page">03</div>
-        <div class="region heading"><span class="tag">1 · title</span><br>한눈에 보는 핵심 정보</div>
-        <div class="body">
-          <div class="region narrative"><span class="tag">2 · narrative</span><p>예시 설명입니다. 데이터의 기준과 의미를 먼저 제시합니다.</p></div>
-          <div class="region cards"><div class="card">항목 A<strong>00</strong></div><div class="card">항목 B<strong>00%</strong></div><div class="card">항목 C<strong>00</strong></div><div class="card">항목 D<strong>00</strong></div></div>
+    <section class="layout-card" id="L02" data-layout-id="L02" aria-labelledby="L02-heading">
+      <div class="layout-heading"><h2 id="L02-heading">L02 · 설명 + 시각 자료</h2><span>본문 비율 40 : 60 · 간격 제외</span></div>
+      <p class="layout-description">왼쪽에서 설명을 읽고 오른쪽의 그림, 표 또는 다이어그램과 연결합니다.</p>
+      <div class="preview-window"><div class="layout-stage" aria-label="설명과 시각 자료형 레이아웃 예시">
+        <div class="region context" data-region-id="context"><span class="region-label">1 · 맥락 라벨 <code>context</code></span></div>
+        <div class="region heading" data-region-id="title"><span class="region-label">2 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 작동 방식을 한눈에 설명합니다</p></div>
+        <div class="body-row">
+          <div class="region explanation" data-region-id="explanation"><span class="region-label">3 · 설명 영역 <code>explanation</code></span><p>예시: 먼저 핵심 개념을 설명합니다.<br><br>그림에서 주의해서 볼 지점을 이어서 짚습니다.</p></div>
+          <div class="region visual" data-region-id="visual"><span class="region-label">4 · 시각 자료 영역 <code>visual</code></span><div class="visual-placeholder">그림 · 표 · 다이어그램의<br>예시 자리</div></div>
         </div>
+        <div class="region sources" data-region-id="sources"><span class="region-label">5 · 근거·주석 <code>sources</code></span><p>예시: 출처의 페이지 번호 또는 내용의 적용 조건</p></div>
       </div></div>
-      <div class="legend"><div><code>title</code> 페이지 결론</div><div><code>narrative</code> 조건과 해석</div><div><code>cards</code> 근거가 있는 값과 라벨</div></div>
+      <dl class="legend">
+        <div data-for-region="context"><dt>1 · 맥락 라벨 <code>context</code></dt><dd>상단 전체 너비. 현재 섹션의 이름을 담습니다.</dd></div>
+        <div data-for-region="title"><dt>2 · 페이지 제목 <code>title</code></dt><dd>본문 위 전체 너비. 이 페이지의 주제나 결론을 담습니다.</dd></div>
+        <div data-for-region="explanation"><dt>3 · 설명 영역 <code>explanation</code></dt><dd>본문 왼쪽 40%. 개념과 시각 자료를 읽는 방법을 설명합니다.</dd></div>
+        <div data-for-region="visual"><dt>4 · 시각 자료 영역 <code>visual</code></dt><dd>본문 오른쪽 60%. 실제 자료의 비율과 내용에 맞춰 조정합니다.</dd></div>
+        <div data-for-region="sources"><dt>5 · 근거·주석 <code>sources</code></dt><dd>하단 전체 너비. 출처와 조건을 표시합니다. 역할이 다르면 영역을 나눌 수 있습니다.</dd></div>
+      </dl>
     </section>
-
-    <section class="layout" id="L04">
-      <h2>L04 · 설명과 시각 자료</h2><p>텍스트와 그림, 표 또는 다이어그램을 나란히 보여줍니다.</p>
-      <div class="viewport"><div class="stage light">
-        <div class="meta">APPROACH</div><div class="page">04</div>
-        <div class="region heading"><span class="tag">1 · title</span><br>어떻게 작동하는지 설명합니다</div>
-        <div class="body">
-          <div class="region explanation"><span class="tag">2 · explanation</span><p>예시 설명입니다. 시각 자료에서 봐야 할 지점을 짚습니다.</p></div>
-          <div class="region visual"><span><span class="tag">3 · visual</span><br><br>그림 · 표 · 다이어그램 영역</span></div>
+    <section class="layout-card" id="L03" data-layout-id="L03" aria-labelledby="L03-heading">
+      <div class="layout-heading"><h2 id="L03-heading">L03 · 비교</h2><span>동일한 너비의 두 열</span></div>
+      <p class="layout-description">같은 기준으로 두 대상을 비교하고, 아래에서 비교의 의미를 정리합니다.</p>
+      <div class="preview-window"><div class="layout-stage" aria-label="비교형 레이아웃 예시">
+        <div class="region context" data-region-id="context"><span class="region-label">1 · 맥락 라벨 <code>context</code></span></div>
+        <div class="region heading" data-region-id="title"><span class="region-label">2 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 두 선택지를 같은 기준으로 봅니다</p></div>
+        <div class="body-row">
+          <div class="region" data-region-id="left"><span class="region-label">3 · 비교 대상 A <code>left</code></span><p>예시: 첫 번째 선택지<br><br>특징과 적용 조건을 설명합니다.</p></div>
+          <div class="region" data-region-id="right"><span class="region-label">4 · 비교 대상 B <code>right</code></span><p>예시: 두 번째 선택지<br><br>같은 기준의 특징과 조건을 설명합니다.</p></div>
         </div>
+        <div class="region takeaway" data-region-id="takeaway"><span class="region-label">5 · 비교 결론 <code>takeaway</code></span><p>예시: 어떤 조건에서 무엇을 선택할지 정리합니다.</p></div>
+        <div class="region sources" data-region-id="sources"><span class="region-label">6 · 근거·주석 <code>sources</code></span><p>예시: 비교의 출처 또는 가정</p></div>
       </div></div>
-      <div class="legend"><div><code>explanation</code> 개념과 읽는 순서</div><div><code>visual</code> 승인된 시각 자료</div></div>
+      <dl class="legend">
+        <div data-for-region="context"><dt>1 · 맥락 라벨 <code>context</code></dt><dd>상단. 비교가 속하는 큰 주제를 표시합니다.</dd></div>
+        <div data-for-region="title"><dt>2 · 페이지 제목 <code>title</code></dt><dd>본문 위 전체 너비. 비교 질문이나 핵심 차이를 제시합니다.</dd></div>
+        <div data-for-region="left"><dt>3 · 비교 대상 A <code>left</code></dt><dd>본문 왼쪽 절반. 비교 기준과 순서를 오른쪽과 맞춥니다.</dd></div>
+        <div data-for-region="right"><dt>4 · 비교 대상 B <code>right</code></dt><dd>본문 오른쪽 절반. 동일한 위계로 다른 선택지를 설명합니다.</dd></div>
+        <div data-for-region="takeaway"><dt>5 · 비교 결론 <code>takeaway</code></dt><dd>두 열 아래 전체 너비. 종합 해석이나 선택 조건을 정리합니다.</dd></div>
+        <div data-for-region="sources"><dt>6 · 근거·주석 <code>sources</code></dt><dd>하단. 근거와 가정을 명시하며 필요 없으면 생략합니다.</dd></div>
+      </dl>
     </section>
-
-    <section class="layout" id="L05">
-      <h2>L05 · 어두운 사례와 근거</h2><p>제품 화면이나 실행 사례와 설명을 연결합니다.</p>
-      <div class="viewport"><div class="stage dark">
-        <div class="meta">PROOF</div><div class="page">05</div>
-        <div class="region heading"><span class="tag">1 · title</span><br>실제 접점에서 확인한 변화</div>
-        <div class="body">
-          <div class="region screens"><span><span class="tag">2 · media</span><br><br>승인된 화면 또는 이미지</span></div>
-          <div class="region proof"><div class="proof-item"><b>1</b>근거와 관찰을 설명합니다.</div><div class="proof-item"><b>2</b>배치와 실행 조건을 설명합니다.</div><div class="proof-item"><b>3</b>예상 효과는 측정 결과와 구분합니다.</div></div>
-        </div>
+    <section class="layout-card" id="L04" data-layout-id="L04" aria-labelledby="L04-heading">
+      <div class="layout-heading"><h2 id="L04-heading">L04 · 큰 시각 자료 + 해석</h2><span>본문 전체 너비를 활용</span></div>
+      <p class="layout-description">복잡한 표나 큰 그림을 충분한 크기로 보여주고 해석을 분리합니다.</p>
+      <div class="preview-window"><div class="layout-stage" aria-label="시각 자료 중심형 레이아웃 예시">
+        <div class="region context" data-region-id="context"><span class="region-label">1 · 맥락 라벨 <code>context</code></span></div>
+        <div class="region heading" data-region-id="title"><span class="region-label">2 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 전체 관계를 큰 그림으로 살펴봅니다</p></div>
+        <div class="region wide-visual" data-region-id="visual"><span class="region-label">3 · 시각 자료 영역 <code>visual</code></span><div class="visual-placeholder">큰 표 · 흐름도 · 이미지의 예시 자리</div></div>
+        <div class="region takeaway" data-region-id="takeaway"><span class="region-label">4 · 해석 영역 <code>takeaway</code></span><p>예시: 자료에서 읽어야 할 핵심 관계를 설명합니다.</p></div>
+        <div class="region sources" data-region-id="sources"><span class="region-label">5 · 근거·주석 <code>sources</code></span><p>예시: 자료 출처 · 단위 · 적용 범위</p></div>
       </div></div>
-      <div class="legend"><div><code>media</code> 승인된 화면과 캡션</div><div><code>proof</code> 근거·배치·예상 효과</div></div>
+      <dl class="legend">
+        <div data-for-region="context"><dt>1 · 맥락 라벨 <code>context</code></dt><dd>상단. 자료가 속하는 섹션을 표시합니다.</dd></div>
+        <div data-for-region="title"><dt>2 · 페이지 제목 <code>title</code></dt><dd>자료 위 전체 너비. 살펴볼 질문이나 주제를 제시합니다.</dd></div>
+        <div data-for-region="visual"><dt>3 · 시각 자료 영역 <code>visual</code></dt><dd>본문 전체 너비. 필요한 크기에 따라 전용 레이아웃을 추가할 수 있습니다.</dd></div>
+        <div data-for-region="takeaway"><dt>4 · 해석 영역 <code>takeaway</code></dt><dd>자료 아래. 관찰과 해석을 구별해 짧게 설명합니다.</dd></div>
+        <div data-for-region="sources"><dt>5 · 근거·주석 <code>sources</code></dt><dd>하단. 출처, 단위와 조건을 담습니다.</dd></div>
+      </dl>
     </section>
+<section class="layout-card" id="L05" data-layout-id="L05" aria-labelledby="L05-heading"><div class="layout-heading"><h2 id="L05-heading">L05 · 목차·전체 개요</h2><span>본문 65 : 35 · 간격 제외</span></div><p class="layout-description">주제 목록을 먼저 읽고, 오른쪽에서 발표의 도착점을 확인합니다.</p><div class="preview-window"><div class="layout-stage" aria-label="목차·전체 개요 레이아웃 예시"><div class="region heading" data-region-id="title"><span class="region-label">1 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 오늘 함께 살펴볼 세 가지</p></div><div class="body-row"><div class="region visual" data-region-id="agenda"><span class="region-label">2 · 주제 목록 <code>agenda</code></span><div class="agenda-row"><b>01</b><span>현재 상황 이해하기</span></div><div class="agenda-row"><b>02</b><span>가능한 방향 비교하기</span></div><div class="agenda-row"><b>03</b><span>다음 행동 정하기</span></div></div><div class="region explanation" data-region-id="orientation"><span class="region-label">3 · 전체 흐름 안내 <code>orientation</code></span><p class="item-title">어디로 향하나요?</p><p>예시: 마지막에는<br>실행할 방향을<br>함께 선택합니다.</p></div></div><div class="region sources" data-region-id="sources"><span class="region-label">4 · 근거·주석 <code>sources</code></span><p>예시 문구 · 실제 자료에 맞춰 교체</p></div></div></div><p class="variant">변형과 조정 · 가로 구획형으로 전환 가능. 진행 순서를 표시하되 단계 간 인과관계를 뜻하지는 않습니다.</p><dl class="legend"><div data-for-region="title"><dt>1 · 페이지 제목 <code>title</code></dt><dd>상단 전체 너비. 이 페이지가 전달할 주제나 결론입니다.</dd></div><div data-for-region="agenda"><dt>2 · 주제 목록 <code>agenda</code></dt><dd>왼쪽 65%. 발표의 주제를 진행 순서대로 나열합니다.</dd></div><div data-for-region="orientation"><dt>3 · 전체 흐름 안내 <code>orientation</code></dt><dd>오른쪽 35%. 목적이나 현재 위치를 표시합니다. 현재 위치 표시가 필요 없으면 목적만 담습니다.</dd></div><div data-for-region="sources"><dt>4 · 근거·주석 <code>sources</code></dt><dd>하단 전체 너비. 출처나 적용 조건을 표시합니다. 불필요하면 생략합니다.</dd></div></dl></section>
+<section class="layout-card" id="L06" data-layout-id="L06" aria-labelledby="L06-heading"><div class="layout-heading"><h2 id="L06-heading">L06 · 핵심 문장·질문·인용</h2><span>핵심 문장에 가장 큰 면적 배정</span></div><p class="layout-description">핵심 문장에 시선을 모은 뒤, 아래의 설명과 출처를 읽습니다.</p><div class="preview-window"><div class="layout-stage" aria-label="핵심 문장·질문·인용 레이아웃 예시"><div class="region context" data-region-id="context"><span class="region-label">1 · 맥락 라벨 <code>context</code></span></div><div class="region statement" data-region-id="statement"><span class="region-label">2 · 핵심 문장 <code>statement</code></span><p class="sample-title">예시: 우리가 먼저<br>풀어야 할 문제는<br>무엇일까요?</p></div><div class="region subtitle" data-region-id="support"><span class="region-label">3 · 보조 설명 <code>support</code></span><p>예시: 해답을 고르기 전에 문제의 범위를 함께 정합니다.</p></div><div class="region sources" data-region-id="attribution"><span class="region-label">4 · 출처·발화자 <code>attribution</code></span><p>인용형에서 발화자와 출처 표시 · 현재 문구는 창작 예시</p></div></div></div><p class="variant">변형과 조정 · 좌측 정렬 또는 중앙 정렬. 인용·질문·선언은 같은 공간 구조를 공유할 수 있습니다.</p><dl class="legend"><div data-for-region="context"><dt>1 · 맥락 라벨 <code>context</code></dt><dd>상단. 질문·인용·구획의 맥락을 짧게 표시합니다.</dd></div><div data-for-region="statement"><dt>2 · 핵심 문장 <code>statement</code></dt><dd>중앙의 가장 큰 영역. 하나의 질문·주장·인용문을 담습니다.</dd></div><div data-for-region="support"><dt>3 · 보조 설명 <code>support</code></dt><dd>문장 아래. 이해에 필요한 맥락만 보충하며 생략할 수 있습니다.</dd></div><div data-for-region="attribution"><dt>4 · 출처·발화자 <code>attribution</code></dt><dd>하단. 인용문일 때 출처와 발화자를 표시합니다.</dd></div></dl></section>
+<section class="layout-card" id="L07" data-layout-id="L07" aria-labelledby="L07-heading"><div class="layout-heading"><h2 id="L07-heading">L07 · 병렬 항목</h2><span>동일 너비의 세 열</span></div><p class="layout-description">동등한 항목을 왼쪽부터 읽습니다. 항목 사이에는 순서나 의존성을 부여하지 않습니다.</p><div class="preview-window"><div class="layout-stage" aria-label="병렬 항목 레이아웃 예시"><div class="region heading" data-region-id="title"><span class="region-label">1 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 세 가지 원칙을 함께 지킵니다</p></div><div class="body-row"><div class="region " data-region-id="item-1"><span class="region-label">2 · 항목 1 <code>item-1</code></span><div class="item-number">01</div><p class="item-title">명확하게</p><p>예시: 핵심을 한 문장으로 전달합니다.</p></div><div class="region " data-region-id="item-2"><span class="region-label">3 · 항목 2 <code>item-2</code></span><div class="item-number">02</div><p class="item-title">일관되게</p><p>예시: 같은 역할에는 같은 이름을 씁니다.</p></div><div class="region " data-region-id="item-3"><span class="region-label">4 · 항목 3 <code>item-3</code></span><div class="item-number">03</div><p class="item-title">유연하게</p><p>예시: 내용에 맞춰 배치를 조정합니다.</p></div></div><div class="region takeaway" data-region-id="takeaway"><span class="region-label">5 · 공통 요약 <code>takeaway</code></span><p>예시: 세 원칙은 동등한 기준입니다.</p></div></div></div><p class="variant">변형과 조정 · 2~4열 또는 2×2 그리드. 내용이 많으면 항목을 나누고 글자를 무리하게 축소하지 않습니다.</p><dl class="legend"><div data-for-region="title"><dt>1 · 페이지 제목 <code>title</code></dt><dd>상단 전체 너비. 이 페이지가 전달할 주제나 결론입니다.</dd></div><div data-for-region="item-1"><dt>2 · 항목 1 <code>item-1</code></dt><dd>본문의 동일한 너비. 이름과 설명을 같은 위계로 표시합니다.</dd></div><div data-for-region="item-2"><dt>3 · 항목 2 <code>item-2</code></dt><dd>본문의 동일한 너비. 이름과 설명을 같은 위계로 표시합니다.</dd></div><div data-for-region="item-3"><dt>4 · 항목 3 <code>item-3</code></dt><dd>본문의 동일한 너비. 이름과 설명을 같은 위계로 표시합니다.</dd></div><div data-for-region="takeaway"><dt>5 · 공통 요약 <code>takeaway</code></dt><dd>본문 아래 전체 너비. 읽은 내용의 의미를 한 문장으로 정리합니다.</dd></div></dl></section>
+<section class="layout-card" id="L08" data-layout-id="L08" aria-labelledby="L08-heading"><div class="layout-heading"><h2 id="L08-heading">L08 · 핵심 수치</h2><span>주요 수치 60 : 맥락 40</span></div><p class="layout-description">수치와 단위를 먼저 보고 기간·비교 기준을 통해 의미를 해석합니다.</p><div class="preview-window"><div class="layout-stage" aria-label="핵심 수치 레이아웃 예시"><div class="region heading" data-region-id="title"><span class="region-label">1 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 핵심 변화를 숫자로 확인합니다</p></div><div class="body-row"><div class="region visual" data-region-id="metric"><span class="region-label">2 · 주요 지표 <code>metric</code></span><p class="item-title">예시 지표 · 처리 시간 감소</p><div class="metric-number">32<small>%</small></div><p class="soft">설명을 위한 가상 수치</p></div><div class="region explanation" data-region-id="baseline"><span class="region-label">3 · 기간·비교 기준 <code>baseline</code></span><p class="item-title">무엇과 비교했나요?</p><p>예시: 개선 전 대비<br>같은 작업량 기준<br><br>측정 기간: 예시 기간</p></div></div><div class="region takeaway" data-region-id="takeaway"><span class="region-label">4 · 해석 영역 <code>takeaway</code></span><p>예시: 지표가 의미하는 변화를 설명합니다.</p></div><div class="region sources" data-region-id="sources"><span class="region-label">5 · 근거·주석 <code>sources</code></span><p>가상 수치 · 실제 성과에 대한 주장이 아닙니다.</p></div></div></div><p class="variant">변형과 조정 · 단일 수치 또는 복수 KPI. 복수 지표에도 각각 단위와 비교 기준을 표시합니다.</p><dl class="legend"><div data-for-region="title"><dt>1 · 페이지 제목 <code>title</code></dt><dd>상단 전체 너비. 이 페이지가 전달할 주제나 결론입니다.</dd></div><div data-for-region="metric"><dt>2 · 주요 지표 <code>metric</code></dt><dd>왼쪽 60%. 지표명·수치·단위를 함께 표시합니다.</dd></div><div data-for-region="baseline"><dt>3 · 기간·비교 기준 <code>baseline</code></dt><dd>오른쪽 40%. 기간·분모·기준값 등 숫자를 읽는 조건을 표시합니다.</dd></div><div data-for-region="takeaway"><dt>4 · 해석 영역 <code>takeaway</code></dt><dd>본문 아래 전체 너비. 읽은 내용의 의미를 한 문장으로 정리합니다.</dd></div><div data-for-region="sources"><dt>5 · 근거·주석 <code>sources</code></dt><dd>하단 전체 너비. 출처나 적용 조건을 표시합니다. 불필요하면 생략합니다.</dd></div></dl></section>
+<section class="layout-card" id="L09" data-layout-id="L09" aria-labelledby="L09-heading"><div class="layout-heading"><h2 id="L09-heading">L09 · 과정·단계</h2><span>3단계 + 방향 연결</span></div><p class="layout-description">왼쪽에서 오른쪽으로 실행 순서를 읽고 마지막에 결과를 확인합니다.</p><div class="preview-window"><div class="layout-stage" aria-label="과정·단계 레이아웃 예시"><div class="region heading" data-region-id="title"><span class="region-label">1 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 세 단계로 실행합니다</p></div><div class="body-row process-row"><div class="region " data-region-id="step-1"><span class="region-label">2 · 단계 1 <code>step-1</code></span><div class="item-number">01</div><p class="item-title">이해하기</p><p>예시: 자료를 모으고 목적을 정합니다.</p></div><div class="connector" aria-hidden="true">→</div><div class="region " data-region-id="step-2"><span class="region-label">3 · 단계 2 <code>step-2</code></span><div class="item-number">02</div><p class="item-title">구성하기</p><p>예시: 내용을 나누고 순서를 정합니다.</p></div><div class="connector" aria-hidden="true">→</div><div class="region " data-region-id="step-3"><span class="region-label">4 · 단계 3 <code>step-3</code></span><div class="item-number">03</div><p class="item-title">확인하기</p><p>예시: 결과를 살펴보고 수정합니다.</p></div></div><div class="region takeaway" data-region-id="takeaway"><span class="region-label">5 · 결과 <code>takeaway</code></span><p>예시: 확인된 결과를 다음 작업으로 넘깁니다.</p></div><div class="region sources" data-region-id="sources"><span class="region-label">6 · 근거·주석 <code>sources</code></span><p>화살표 = 실행 순서 · 시간 간격을 나타내지 않습니다.</p></div></div></div><p class="variant">변형과 조정 · 단계 수에 따라 가로·세로 배치. 분기와 순환은 실제 과정에 존재할 때 추가합니다.</p><dl class="legend"><div data-for-region="title"><dt>1 · 페이지 제목 <code>title</code></dt><dd>상단 전체 너비. 이 페이지가 전달할 주제나 결론입니다.</dd></div><div data-for-region="step-1"><dt>2 · 단계 1 <code>step-1</code></dt><dd>본문의 단계 영역. 단계 이름과 실행 내용을 표시합니다.</dd></div><div data-for-region="step-2"><dt>3 · 단계 2 <code>step-2</code></dt><dd>본문의 단계 영역. 단계 이름과 실행 내용을 표시합니다.</dd></div><div data-for-region="step-3"><dt>4 · 단계 3 <code>step-3</code></dt><dd>본문의 단계 영역. 단계 이름과 실행 내용을 표시합니다.</dd></div><div data-for-region="takeaway"><dt>5 · 결과 <code>takeaway</code></dt><dd>본문 아래 전체 너비. 읽은 내용의 의미를 한 문장으로 정리합니다.</dd></div><div data-for-region="sources"><dt>6 · 근거·주석 <code>sources</code></dt><dd>하단 전체 너비. 출처나 적용 조건을 표시합니다. 불필요하면 생략합니다.</dd></div></dl></section>
+<section class="layout-card" id="L10" data-layout-id="L10" aria-labelledby="L10-heading"><div class="layout-heading"><h2 id="L10-heading">L10 · 타임라인·로드맵</h2><span>3개 시점 · 간격은 도식적 표현</span></div><p class="layout-description">시간축을 따라 시점과 마일스톤을 읽습니다. 아래에서 전체 상태를 확인합니다.</p><div class="preview-window"><div class="layout-stage" aria-label="타임라인·로드맵 레이아웃 예시"><div class="region heading" data-region-id="title"><span class="region-label">1 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 앞으로의 주요 시점을 봅니다</p></div><div class="body-row timeline-row"><div class="milestone"><div class="region " data-region-id="milestone-1"><span class="region-label">2 · 마일스톤 1 <code>milestone-1</code></span><div class="time-label">1개월차</div><p class="item-title">방향 결정</p><p>예시 상태: 예정</p></div></div><div class="milestone"><div class="region " data-region-id="milestone-2"><span class="region-label">3 · 마일스톤 2 <code>milestone-2</code></span><div class="time-label">2개월차</div><p class="item-title">초안 검토</p><p>예시 상태: 예정</p></div></div><div class="milestone"><div class="region " data-region-id="milestone-3"><span class="region-label">4 · 마일스톤 3 <code>milestone-3</code></span><div class="time-label">3개월차</div><p class="item-title">결과 공유</p><p>예시 상태: 예정</p></div></div></div><div class="region takeaway" data-region-id="takeaway"><span class="region-label">5 · 전체 상태 <code>takeaway</code></span><p>예시: 각 시점의 산출물을 기준으로 진행을 확인합니다.</p></div><div class="region sources" data-region-id="sources"><span class="region-label">6 · 근거·주석 <code>sources</code></span><p>가상 일정 · 선의 간격은 실제 기간에 비례하지 않습니다.</p></div></div></div><p class="variant">변형과 조정 · 과거 연혁 또는 미래 계획. 병렬 일정은 행을 나눠 표현하고, 정확한 기간 비교에는 비례 시간축을 사용합니다.</p><dl class="legend"><div data-for-region="title"><dt>1 · 페이지 제목 <code>title</code></dt><dd>상단 전체 너비. 이 페이지가 전달할 주제나 결론입니다.</dd></div><div data-for-region="milestone-1"><dt>2 · 마일스톤 1 <code>milestone-1</code></dt><dd>시간축 아래. 시점·이벤트·상태를 하나의 묶음으로 표시합니다.</dd></div><div data-for-region="milestone-2"><dt>3 · 마일스톤 2 <code>milestone-2</code></dt><dd>시간축 아래. 시점·이벤트·상태를 하나의 묶음으로 표시합니다.</dd></div><div data-for-region="milestone-3"><dt>4 · 마일스톤 3 <code>milestone-3</code></dt><dd>시간축 아래. 시점·이벤트·상태를 하나의 묶음으로 표시합니다.</dd></div><div data-for-region="takeaway"><dt>5 · 전체 상태 <code>takeaway</code></dt><dd>본문 아래 전체 너비. 읽은 내용의 의미를 한 문장으로 정리합니다.</dd></div><div data-for-region="sources"><dt>6 · 근거·주석 <code>sources</code></dt><dd>하단 전체 너비. 출처나 적용 조건을 표시합니다. 불필요하면 생략합니다.</dd></div></dl></section>
+<section class="layout-card" id="L11" data-layout-id="L11" aria-labelledby="L11-heading"><div class="layout-heading"><h2 id="L11-heading">L11 · 관계·계층</h2><span>상위 요소 1개 + 하위 요소 3개</span></div><p class="layout-description">상위 요소를 먼저 보고 하위 요소로 내려갑니다. 선의 의미는 하단 범례에 표시합니다.</p><div class="preview-window"><div class="layout-stage" aria-label="관계·계층 레이아웃 예시"><div class="region heading" data-region-id="title"><span class="region-label">1 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 전체와 구성 요소의 관계를 봅니다</p></div><div class="tree"><div class="region tree-root" data-region-id="parent"><span class="region-label">2 · 상위 요소 <code>parent</code></span><p>예시: 전체 시스템</p></div><div class="tree-lines" aria-hidden="true"></div><div class="body-row"><div class="region " data-region-id="child-1"><span class="region-label">3 · 하위 요소 1 <code>child-1</code></span><p class="item-title">입력 영역</p><p>예시: 구성 요소의 역할</p></div><div class="region " data-region-id="child-2"><span class="region-label">4 · 하위 요소 2 <code>child-2</code></span><p class="item-title">처리 영역</p><p>예시: 구성 요소의 역할</p></div><div class="region " data-region-id="child-3"><span class="region-label">5 · 하위 요소 3 <code>child-3</code></span><p class="item-title">출력 영역</p><p>예시: 구성 요소의 역할</p></div></div></div><div class="region takeaway" data-region-id="legend"><span class="region-label">6 · 연결 의미·범례 <code>legend</code></span><p>실선 = 구성 관계 · 화살표나 실행 순서를 의미하지 않습니다.</p></div></div></div><p class="variant">변형과 조정 · 계층도·허브·네트워크로 변형 가능. 포함·의존·데이터 이동 등 서로 다른 관계를 명시적으로 구분합니다.</p><dl class="legend"><div data-for-region="title"><dt>1 · 페이지 제목 <code>title</code></dt><dd>상단 전체 너비. 이 페이지가 전달할 주제나 결론입니다.</dd></div><div data-for-region="parent"><dt>2 · 상위 요소 <code>parent</code></dt><dd>본문 중앙 위. 전체 또는 상위 개념을 표시합니다.</dd></div><div data-for-region="child-1"><dt>3 · 하위 요소 1 <code>child-1</code></dt><dd>본문 아래 동일 너비. 상위 요소에 포함되는 구성 요소를 표시합니다.</dd></div><div data-for-region="child-2"><dt>4 · 하위 요소 2 <code>child-2</code></dt><dd>본문 아래 동일 너비. 상위 요소에 포함되는 구성 요소를 표시합니다.</dd></div><div data-for-region="child-3"><dt>5 · 하위 요소 3 <code>child-3</code></dt><dd>본문 아래 동일 너비. 상위 요소에 포함되는 구성 요소를 표시합니다.</dd></div><div data-for-region="legend"><dt>6 · 연결 의미·범례 <code>legend</code></dt><dd>하단. 선의 관계 유형과 도식의 해석을 설명합니다.</dd></div></dl></section>
+<section class="layout-card" id="L12" data-layout-id="L12" aria-labelledby="L12-heading"><div class="layout-heading"><h2 id="L12-heading">L12 · 요약·다음 행동</h2><span>핵심 요약 40 : 다음 행동 60</span></div><p class="layout-description">결론을 먼저 읽고, 핵심 요약에서 다음 행동으로 이어갑니다.</p><div class="preview-window"><div class="layout-stage" aria-label="요약·다음 행동 레이아웃 예시"><div class="region heading" data-region-id="title"><span class="region-label">1 · 페이지 제목 <code>title</code></span><p class="sample-title">예시: 이제 다음 행동을 정합니다</p></div><div class="body-row"><div class="region explanation" data-region-id="summary"><span class="region-label">2 · 핵심 요약 <code>summary</code></span><p class="item-title">무엇을 기억할까요?</p><p>예시: 목적을 먼저 정합니다.<br><br>내용에 맞는 구조를 고릅니다.</p></div><div class="stack action-stack"><div class="region " data-region-id="action"><span class="region-label">3 · 다음 행동 <code>action</code></span><p class="item-title">예시: 첫 번째 초안을 검토합니다.</p><p>검토할 대상과 기대하는 결과를 명확히 적습니다.</p></div><div class="region " data-region-id="ownership"><span class="region-label">4 · 담당·기한 <code>ownership</code></span><p>예시: 담당자와 합의한 일정<br>완료 조건: 필요한 의견이 모두 반영됨</p></div></div></div><div class="region sources" data-region-id="sources"><span class="region-label">5 · 근거·주석 <code>sources</code></span><p>예시 문구 · 실제 자료에 맞춰 교체</p></div></div></div><p class="variant">변형과 조정 · 학습 정리·의사결정·실행 계획에 맞춰 변형합니다. 담당이나 기한을 임의로 확정하지 않습니다.</p><dl class="legend"><div data-for-region="title"><dt>1 · 페이지 제목 <code>title</code></dt><dd>상단 전체 너비. 이 페이지가 전달할 주제나 결론입니다.</dd></div><div data-for-region="summary"><dt>2 · 핵심 요약 <code>summary</code></dt><dd>왼쪽 40%. 핵심 내용을 짧게 되짚습니다.</dd></div><div data-for-region="action"><dt>3 · 다음 행동 <code>action</code></dt><dd>오른쪽 위. 구체적인 행동과 산출물을 표시합니다.</dd></div><div data-for-region="ownership"><dt>4 · 담당·기한 <code>ownership</code></dt><dd>오른쪽 아래. 담당·일정·완료 조건을 표시합니다. 학습 요약에서는 생략할 수 있습니다.</dd></div><div data-for-region="sources"><dt>5 · 근거·주석 <code>sources</code></dt><dd>하단 전체 너비. 출처나 적용 조건을 표시합니다. 불필요하면 생략합니다.</dd></div></dl></section>
   </main>
-  <footer><p>다음 단계: 필요한 레이아웃과 영역을 확인한 뒤 모든 페이지의 실제 문구와 배치를 계획합니다.</p></footer>
+  <footer><p>검토 의견은 대화에서 남겨주세요. 예: “L08의 비교 기준을 아래로 옮겨줘”, “L07의 항목을 네 개로 보여줘”. 실제 발표에서는 필요한 기본형만 골라 확인한 뒤, 모든 페이지의 실제 문구와 배치를 검토합니다.</p><a href="#">맨 위로</a></footer>
   <script>
-    const viewports = document.querySelectorAll('.viewport');
-    function fitStages() {
-      viewports.forEach((viewport) => {
-        const stage = viewport.querySelector('.stage');
-        stage.style.transform = `scale(${viewport.clientWidth / stage.offsetWidth})`;
-      });
+    const cards=[...document.querySelectorAll('.layout-card')];
+    const links=[...document.querySelectorAll('[data-pick]')];
+    let selected=Math.max(0,cards.findIndex(c=>c.id===location.hash.slice(1))), all=false;
+    function fitPreviews(){document.querySelectorAll('.preview-window').forEach(p=>{if(p.clientWidth)p.querySelector('.layout-stage').style.transform=`scale(${p.clientWidth/1920})`;});}
+    function render(){
+      cards.forEach((c,i)=>c.hidden=!all&&i!==selected);
+      links.forEach((a,i)=>a.setAttribute('aria-current',String(i===selected)));
+      document.getElementById('single').setAttribute('aria-pressed',String(!all));
+      document.getElementById('all').setAttribute('aria-pressed',String(all));
+      document.getElementById('position').textContent=`${selected+1} / 12`;
+      document.getElementById('prev').disabled=selected===0;
+      document.getElementById('next').disabled=selected===11;
+      fitPreviews();
     }
-    fitStages();
-    window.addEventListener('resize', fitStages);
-    if ('ResizeObserver' in window) {
-      const observer = new ResizeObserver(fitStages);
-      viewports.forEach((viewport) => observer.observe(viewport));
-    }
+    function select(i){selected=Math.max(0,Math.min(11,i));history.replaceState(null,'',`#${cards[selected].id}`);render();cards[selected].scrollIntoView({block:'start'});}
+    links.forEach((a,i)=>a.addEventListener('click',e=>{e.preventDefault();select(i);}));
+    document.getElementById('single').onclick=()=>{all=false;render();};
+    document.getElementById('all').onclick=()=>{all=true;render();};
+    document.getElementById('prev').onclick=()=>select(selected-1);
+    document.getElementById('next').onclick=()=>select(selected+1);
+    document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;if(e.key==='ArrowRight'){e.preventDefault();select(selected+1);}if(e.key==='ArrowLeft'){e.preventDefault();select(selected-1);}});
+    window.addEventListener('hashchange',()=>{const i=cards.findIndex(c=>c.id===location.hash.slice(1));if(i>=0){selected=i;render();}});
+    window.addEventListener('resize',fitPreviews);
+    new ResizeObserver(fitPreviews).observe(document.querySelector('main'));
+    render();
+    if(location.hash)requestAnimationFrame(()=>cards[selected].scrollIntoView({block:'start'}));
   </script>
 </body>
 </html>

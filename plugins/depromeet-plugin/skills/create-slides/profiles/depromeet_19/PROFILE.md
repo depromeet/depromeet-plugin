@@ -4,7 +4,9 @@ This is the bundled visual profile for Depromeet 19th-generation presentations.
 It adapts the supplied 19th-generation design-guide PDFs for browser-based
 slides. The source PDFs and font binaries are not distributed with this skill.
 The guide defines colors and type styles; slide geometry below is an adaptation
-for this skill, not a rule quoted from the guide.
+for this skill, not a rule quoted from the guide. The 12 layout families adapt
+the earlier ziweek slide-layouts-12 structural gallery. That repository is not
+a runtime dependency; the profile bundles its own Depromeet-styled specimens.
 
 ## Files and ownership
 
@@ -57,27 +59,39 @@ Check contrast in the rendered deck, especially for small labels and muted text.
 
 The PDF type sizes describe a design-system specimen, not a 1920×1080 slide.
 The specimen CSS scales important roles for viewing at presentation distance:
-cover title 96 px, page title 64 px, body about 30 px, and metadata about 22 px.
+opening title 106 px, standard title 64 px, body about 30 px, and region labels
+about 22 px.
 Keep Korean line breaks at meaningful phrases. Test the actual deck at full
 presentation size and a smaller desktop viewport.
 
 ## Geometry and candidate layouts
 
-The profile uses a 1920×1080, 16:9 stage. Start with a 90 px horizontal margin,
-24–40 px region gaps, and broad text/image regions. These measurements are
+The profile uses a 1920×1080, 16:9 stage. Start with a 90 px stage margin,
+24–30 px region gaps, and broad text/image regions. These measurements are
 slide-specific choices. Change them in this profile when updating its look.
 
 | Layout ID | Use | Main regions |
 | --- | --- | --- |
-| `L01` | Cover | metadata, title, subtitle, contact |
-| `L02` | Section divider | section number, title |
-| `L03` | Information cards | title, narrative, cards |
-| `L04` | Explanation with visual | title, explanation, visual |
-| `L05` | Evidence or example | title, media, proof items |
+| `L01` | Opening or section divider | context, title, subtitle, byline |
+| `L02` | Explanation with visual | context, title, explanation, visual, sources |
+| `L03` | Comparison | context, title, left, right, takeaway, sources |
+| `L04` | Large visual with interpretation | context, title, visual, takeaway, sources |
+| `L05` | Agenda or overview | title, agenda, orientation, sources |
+| `L06` | Statement, question, or quotation | context, statement, support, attribution |
+| `L07` | Parallel items or information cards | title, item-1 through item-3, takeaway |
+| `L08` | Key metric | title, metric, baseline, takeaway, sources |
+| `L09` | Process or steps | title, step-1 through step-3, takeaway, sources |
+| `L10` | Timeline or roadmap | title, milestone-1 through milestone-3, takeaway, sources |
+| `L11` | Relationship or hierarchy | title, parent, child-1 through child-3, legend |
+| `L12` | Summary and next action | title, summary, action, ownership, sources |
 
-Use only layouts needed for the current narrative. Preserve the region names
-and IDs in the confirmed skeleton and page plan. Adapt proportions when real
-content needs room; review a material geometry change before final HTML.
+The former five specimens map to these families: cover and divider use `L01`,
+information cards use `L07` or `L08`, explanation with visual uses `L02`, and
+evidence or example uses `L04` or `L07`. These are starting points; do not force
+content into a mismatched family. Use only layouts needed for the current
+narrative. Preserve the region names and IDs in the confirmed skeleton and page
+plan. Adapt proportions when real content needs room; review a material
+geometry change before final HTML.
 
 ## Content and assets
 

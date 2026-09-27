@@ -47,6 +47,30 @@ class CreateSlidesSkillTest(unittest.TestCase):
         self.assertFalse((SKILL_ROOT / "assets/layout-skeleton.html").exists())
         self.assertFalse((SKILL_ROOT / "references/depromeet-style.md").exists())
 
+    def test_depromeet_profile_covers_common_layout_families(self):
+        profile = (PROFILE_ROOT / "PROFILE.md").read_text()
+        skeleton = (PROFILE_ROOT / "layout-skeleton.html").read_text()
+        stylesheet = (PROFILE_ROOT / "style.css").read_text()
+
+        layout_ids = re.findall(r'<section class="layout-card" id="(L\d\d)"', skeleton)
+        self.assertEqual(layout_ids, [f"L{number:02d}" for number in range(1, 13)])
+        self.assertEqual(len(re.findall(r'data-region-id="[^"]+"', skeleton)), 61)
+        self.assertEqual(len(re.findall(r'data-for-region="[^"]+"', skeleton)), 61)
+        for section in re.findall(
+            r'<section class="layout-card".*?(?=<section class="layout-card"|</main>)',
+            skeleton,
+            re.DOTALL,
+        ):
+            self.assertEqual(
+                re.findall(r'data-region-id="([^"]+)"', section),
+                re.findall(r'data-for-region="([^"]+)"', section),
+            )
+        self.assertIn('href="style.css"', skeleton)
+        self.assertNotIn("<style>", skeleton)
+        self.assertNotRegex(skeleton, r'(?:src|href)="https?://')
+        self.assertIn("--blue-500: #1659D5", stylesheet)
+        self.assertIn("12 layout families", profile)
+
 
 if __name__ == "__main__":
     unittest.main()
