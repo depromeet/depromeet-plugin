@@ -8,7 +8,7 @@
       "name": "depromeet-plugin",
       "source": "./plugins/depromeet-plugin",
       "description": "HTML 발표 슬라이드 제작과 로컬 HTML의 Figma 변환을 돕는 Claude Code와 Codex용 플러그인입니다.",
-      "version": "0.5.0"
+      "version": "0.6.0"
     }
   ]
 }

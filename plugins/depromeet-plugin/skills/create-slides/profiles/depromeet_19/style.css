@@ -141,10 +141,84 @@
 .display-latin { font-family: "Space Grotesk", "Instrument Sans", sans-serif; }
 .slogan-latin { font-family: "Space Mono", monospace; font-style: italic; }
 
-/* The opening specimen shows the profile identity; other families use light pages. */
-#L01 .layout-stage { background: var(--blue-500); }
-#L01 .region { color: var(--white); background: transparent; border-color: var(--white-030); }
-#L01 .region-label, #L01 .region-label code { color: var(--white); }
-#L01 .sources { background: var(--white-010); }
+/* Banner-inspired presentation modes. The gradients and stars are CSS recreations. */
+:root {
+  --space-cover: radial-gradient(ellipse 76% 82% at 50% 81%, #1659d5aa, transparent 75%), linear-gradient(180deg, #0c0e15 0%, #0f1b36 64%, #092455 100%);
+  --space-chapter: radial-gradient(ellipse 70% 42% at 59% 101%, #1459d5b8 0%, #0d377580 40%, transparent 100%), radial-gradient(ellipse 65% 72% at 86% 24%, #134ab070 0%, transparent 70%), linear-gradient(180deg, #0f1422 0%, #0f1b36 56%, #06111f 100%);
+  --content-panel: #F2F4F8;
+  --content-line: #DCE3ED;
+}
+.layout-stage { color: var(--blue-800); background: var(--white); }
+.region { background: var(--content-panel); border-color: var(--blue-200); }
+.region .sample-title { color: var(--blue-800); font-weight: 780; letter-spacing: -.045em; }
+.context, .heading, .takeaway, .sources { background: transparent; border-color: transparent; }
+.context { border-bottom: 1px solid var(--content-line); border-radius: 0; }
+.context .region-label { color: var(--blue-500); }
+.sources { border-top: 1px solid var(--content-line); border-radius: 0; }
+.sources p { color: var(--gray-700); }
+.takeaway p { color: var(--blue-800); font-weight: 750; }
+.visual-placeholder { color: var(--blue-800); background: linear-gradient(135deg, #DCE9FF, #ABC8FA); border-color: var(--blue-200); font-weight: 700; }
+.item-number { color: var(--blue-500); }
+#L05 .explanation { background: #E8F0FF; }
+#L07 .body-row > .region { border-top: 8px solid var(--blue-500); }
+#L08 .layout-stage { background: radial-gradient(circle at 80% 15%, #D9E7FF 0%, transparent 42%), linear-gradient(145deg, #F9FBFF, #E8F0FF); }
+#L08 .body-row > .region:first-child { background: #E8F0FF; }
+#L12 .action-stack .region:first-child { color: var(--white); background: var(--blue-500); border-color: var(--blue-500); }
+#L12 .action-stack .region:first-child .region-label,
+#L12 .action-stack .region:first-child .region-label code { color: var(--white); }
+
+/* L01 cover, chapter, and L06 statement share the dark presentation atmosphere. */
+#L01 .layout-stage, #L06 .layout-stage { color: var(--white); background: var(--space-chapter); }
+#L01 .cover-stage { display: block; background: var(--space-cover); }
+#L01 .chapter-stage { display: block; }
+#L01 .layout-stage::before, #L06 .layout-stage::before { content: ""; position: absolute; z-index: 0; inset: 0; opacity: .37; background-image: radial-gradient(circle, #D8EEFF 0 1px, transparent 1.6px), radial-gradient(circle, #64B6FF 0 1px, transparent 1.5px), radial-gradient(circle, #EFF9FF 0 .65px, transparent 1.3px); background-size: 139px 139px, 197px 173px, 83px 127px; background-position: 19px 11px, 81px 76px, 37px 46px; mask-image: linear-gradient(180deg, #000 0%, #000b 75%, transparent 100%); }
+#L01 .layout-stage::after, #L06 .layout-stage::after { content: ""; position: absolute; z-index: 0; width: 85%; height: 31%; left: 7%; bottom: -19%; border-radius: 50%; background: #0C5FEB; filter: blur(85px); opacity: .5; }
+#L01 .layout-stage > * { position: absolute; z-index: 2; }
+#L01 .mode-kicker { color: #9ACAEF; font: 700 25px "Instrument Sans", "Pretendard", sans-serif; letter-spacing: .14em; }
+#L01 .cover-stage .mode-kicker { top: 259px; left: 90px; }
+#L01 .chapter-stage .mode-kicker { top: 268px; left: 90px; }
+#L01 .closing-stage .mode-kicker { top: 268px; left: 90px; }
+#L01 .region, #L06 .region { color: var(--white); background: transparent; border-color: var(--white-030); }
+#L01 .region-label, #L06 .region-label,
+#L01 .region-label code, #L06 .region-label code { color: #C7E1FF; }
+#L01 .sample-title, #L06 .sample-title { color: var(--white); }
+#L01 .context { top: 72px; left: 90px; right: 90px; height: 102px; border-left: 0; border-right: 0; border-top: 0; border-radius: 0; }
+#L01 .context p { font: 700 24px "Instrument Sans", "Pretendard", sans-serif; letter-spacing: .08em; }
+#L01 .sources { left: 90px; right: 90px; bottom: 54px; height: 75px; border-bottom: 0; border-left: 0; border-right: 0; }
+#L01 .sources p { color: #D0E4FF; }
+#L01 .page-marker { position: absolute; top: 21px; right: 30px; color: #B5D1F3; font: 700 24px "Instrument Sans", "Pretendard", sans-serif; letter-spacing: .08em; }
+#L01 .cover-stage .sources { z-index: 4; }
+#L01 .cover-stage .cover-halo { top: 112px; left: 422px; width: 1076px; height: 1076px; border: 2px solid #79BEFF55; border-radius: 50%; box-shadow: 0 0 0 115px #2480FF08, 0 0 80px #478DFD20; }
+#L01 .cover-stage .title-shade { z-index: 3; inset: 52% 0 0; background: linear-gradient(180deg, transparent 0%, #081831C9 38%, #07152AE8 100%); }
+#L01 .cover-stage .opener-title { z-index: 4; top: 610px; left: 90px; width: 1050px; height: 340px; padding: 20px 24px; }
+#L01 .cover-stage .opener-title .sample-title { font-size: 106px; line-height: 1.06; }
+#L01 .cover-stage .subtitle { z-index: 4; right: 90px; bottom: 200px; width: 610px; height: 110px; text-align: right; }
+#L01 .cover-stage .subtitle p { font-size: 28px; }
+#L01 .chapter-stage .opener-title { z-index: 4; top: 320px; left: 90px; width: 900px; height: 370px; padding: 40px; }
+#L01 .chapter-stage .opener-title .sample-title { font-size: 106px; line-height: 1.08; }
+#L01 .chapter-stage .subtitle { left: 90px; bottom: 180px; width: 810px; height: 120px; }
+#L01 .chapter-stage .chapter-beam { left: 90px; right: 998px; bottom: 302px; height: 2px; background: linear-gradient(90deg, #72C8FF, transparent); box-shadow: 0 0 20px #2DA8FF; }
+#L01 .hero-art { display: flex; align-items: center; justify-content: center; border: 2px solid #74B8FF88; border-radius: 50%; background: radial-gradient(circle at 50% 58%, #2979E688, #1247AA36 42%, transparent 71%); box-shadow: 0 0 0 75px #2480FF08, 0 0 90px #478DFD33; }
+#L01 .hero-art::before { content: "✦"; position: absolute; top: 11%; right: 20%; color: #D6F2FF; font-size: 145px; text-shadow: 0 0 45px #62BDFF; }
+#L01 .hero-art span { display: block; max-width: 500px; padding: 28px 36px; border: 2px dashed #A8D3FFAA; border-radius: 20px; background: #071B3CBB; color: var(--white); text-align: center; font-size: 30px; font-weight: 750; line-height: 1.5; }
+#L01 .hero-art code { color: #B8DBFF; font-size: 26px; }
+#L01 .hero-art small { color: #A9CDFB; font-size: 23px; font-weight: 500; }
+#L01 .cover-stage .hero-art { top: 70px; left: 560px; width: 790px; height: 790px; }
+#L01 .chapter-stage .hero-art { top: 120px; right: 10px; width: 760px; height: 760px; }
+#L01 .has-asset .hero-art { border: 0; background: none; box-shadow: none; }
+#L01 .has-asset .hero-art::before, #L01 .has-asset .hero-art span { display: none; }
+#L01 .has-asset .hero-art img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 13px 45px #1D8DFF8A); }
+#L01 .cover-stage.has-asset .hero-art { top: -43px; left: 460px; width: 1000px; height: 1000px; }
+#L01 .chapter-stage.has-asset .hero-art { top: -54px; right: -58px; width: 1130px; height: 1130px; }
+#L01 .closing-stage .opener-title { z-index: 4; top: 335px; left: 90px; width: 1170px; height: 340px; padding: 40px; }
+#L01 .closing-stage .opener-title .sample-title { font-size: 106px; line-height: 1.08; }
+#L01 .closing-stage .subtitle { left: 90px; bottom: 180px; width: 1050px; height: 120px; }
+#L01 .closing-stage .closing-orbit { top: 162px; right: 70px; width: 800px; height: 800px; border: 2px solid #72B6FF55; border-radius: 50%; box-shadow: 0 0 0 96px #2480FF08, 0 0 80px #478DFD20; }
+#L01 .closing-stage .closing-orbit::after { content: "✦"; position: absolute; top: 12%; right: 18%; color: #C8E9FF; font-size: 150px; text-shadow: 0 0 50px #45AAFF; }
+#L06 .statement { background: transparent; border-color: transparent; }
+#L06 .statement .sample-title { font-size: 100px; }
+#L06 .statement::after { content: ""; position: absolute; left: 40px; bottom: 54px; width: 600px; height: 2px; background: #6CC4FF; box-shadow: 0 0 18px #63C4FF; }
+#L06 .sources p { color: #C8DCFA; }
+.specimen-label { margin: 18px 0 8px; color: var(--blue-800); font-size: 15px; font-weight: 750; }
 .action-stack { flex: 3; }
 .metric-number, .item-number, .agenda-row b { font-family: "Instrument Sans", "Pretendard", sans-serif; }
