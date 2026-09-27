@@ -6,9 +6,9 @@ future revisions.
 | Artifact | Purpose |
 | --- | --- |
 | `layout-skeleton.html` and required profile assets | Browser-visible layout specimens and region glossary |
-| `style-profile.md` | Selected profile, concrete tokens, and approved adaptations |
+| `style-profile.md` | Selected profile, concrete tokens, approved adaptations, actual font and license provenance, and any fallback |
 | `page-plan.md` | Complete page copy, placement, sources, and review state |
-| `index.html` and optional `assets/` | Final presentation and dependencies |
+| `index.html` and optional `assets/` | Final presentation, local fonts used, and their license notices |
 
 ## Layout skeleton
 

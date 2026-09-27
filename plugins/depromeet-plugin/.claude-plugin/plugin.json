@@ -1,6 +1,6 @@
 {
   "name": "depromeet-plugin",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "프로필 기반 HTML 발표 슬라이드를 만드는 Claude Code와 Codex용 플러그인입니다.",
   "author": {
     "name": "depromeet"

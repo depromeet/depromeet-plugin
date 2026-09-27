@@ -19,6 +19,8 @@ a runtime dependency; the profile bundles its own Depromeet-styled specimens.
   with this profile's visual design and illustrative copy.
 - This file defines when to use those values and how to adapt the source guide
   to a slide. Do not add profile-specific defaults to the common workflow.
+- [FONTS.md](FONTS.md) identifies the original font distributions and the
+  required license, acquisition, and fallback handling for each deck.
 
 The overview images are quick references, not page plans or final slide assets.
 Their wording and numbers are illustrative. Use the HTML skeleton to inspect
@@ -67,9 +69,10 @@ Check contrast in the rendered deck, especially for small labels and muted text.
 - The Space Grotesk / Space Mono guide shows display and slogan specimens.
   This slide adaptation offers `.display-latin` for a short English display
   and `.slogan-latin` for a short slogan. Do not apply them to Korean copy.
-- The supplied PDFs do not include usable font files. The CSS therefore lists
-  local font names and system fallbacks. If the exact fonts are required,
-  obtain permitted font files and package them as local assets for that deck.
+- The supplied PDFs do not include usable font files. Follow [FONTS.md](FONTS.md)
+  to obtain the fonts used by this deck, include their license notices, and
+  load them locally. The CSS fallback stack remains available when acquisition
+  or loading fails; disclose that fallback to the user and in the final handoff.
   Verify the rendered font, because a fallback changes line wrapping.
 
 The PDF type sizes describe a design-system specimen, not a 1920×1080 slide.
