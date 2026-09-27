@@ -58,6 +58,11 @@
 
   // src/plugin/import.ts
   var DATA_NAMESPACE = "depromeetHtmlToFigmaRows";
+  var FONT_FAMILY_ALIASES = {
+    instrument: ["Instrument Sans"],
+    spacegrotesk: ["Space Grotesk"],
+    spacemono: ["Space Mono"]
+  };
   function solid(css) {
     if (!css || css === "transparent") return null;
     const hex = /^#([\da-f]{6})$/i.exec(css);
@@ -94,7 +99,8 @@
     for (const page of pages) for (const element of page.elements) {
       if (element.kind !== "text") continue;
       const original = element.fontFamily || "Inter";
-      const candidates = [original, "Noto Sans KR", "Inter"];
+      const aliases = FONT_FAMILY_ALIASES[original.toLowerCase()] || [];
+      const candidates = [original, ...aliases, "Noto Sans KR", "Inter"];
       let chosen;
       for (const family of [...new Set(candidates)]) {
         const font = findFont(fonts, family, element.fontWeight || 400);
@@ -112,7 +118,7 @@
       }
       if (!chosen) throw new Error(`${page.name}: no usable font for ${original}`);
       selected.set(element, chosen);
-      if (chosen.family.toLowerCase() !== original.toLowerCase()) warnings.push(`${page.name} \xB7 ${element.name || "text"}: ${original} \u2192 ${chosen.family} (${chosen.style})`);
+      if (![original, ...aliases].some((family) => family.toLowerCase() === chosen.family.toLowerCase())) warnings.push(`${page.name} \xB7 ${element.name || "text"}: ${original} \u2192 ${chosen.family} (${chosen.style})`);
     }
     return selected;
   }
@@ -125,7 +131,7 @@
       text.characters = element.text || "";
       text.fontSize = element.fontSize || 16;
       text.resize(Math.max(1, element.width + 4), Math.max(1, element.height + 4));
-      text.textAutoResize = element.noWrap ? "WIDTH_AND_HEIGHT" : "HEIGHT";
+      text.textAutoResize = element.noWrap && element.textAlign !== "center" && element.textAlign !== "right" ? "WIDTH_AND_HEIGHT" : "HEIGHT";
       const fill = solid(element.color);
       text.fills = fill ? [fill] : [{ type: "SOLID", color: { r: 0, g: 0, b: 0 } }];
       if (element.lineHeight && Number.isFinite(element.lineHeight)) text.lineHeight = { value: element.lineHeight, unit: "PIXELS" };

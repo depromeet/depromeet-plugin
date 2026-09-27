@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { importCapture } from './import.ts';
 
-function fakeFigma() {
+function fakeFigma(availableFonts = [{ fontName: { family: 'Inter', style: 'Regular' } }]) {
   let id = 0;
   const children: any[] = [{ x: 0, y: 0, width: 400, height: 300, name: 'User content', getSharedPluginData: () => '' }];
   const page = { children, flowStartingPoints: [{ nodeId: 'old', name: 'Existing flow' }], selection: [] as any[] };
@@ -24,7 +24,7 @@ function fakeFigma() {
     createRectangle() { return node('RECTANGLE'); },
     createText() { return node('TEXT'); },
     createImage() { return { hash: 'image-hash' }; },
-    async listAvailableFontsAsync() { return [{ fontName: { family: 'Inter', style: 'Regular' } }]; },
+    async listAvailableFontsAsync() { return availableFonts; },
     async loadFontAsync() {}
   };
   return { api, page, children };
@@ -74,6 +74,34 @@ test('uses no-wrap text sizing for inline fragments and flexible height for bloc
   const [number, body] = children[1].children;
   assert.equal(number.textAutoResize, 'WIDTH_AND_HEIGHT');
   assert.equal(body.textAutoResize, 'HEIGHT');
+});
+
+test('retains the alignment box for centered single-line text', async () => {
+  const { api, children } = fakeFigma();
+  const input = { version:1, title:'Center', warnings:[], pages:[{
+    id:'one', name:'One', width:800, height:450, elements:[
+      { kind:'text', name:'heading', x:50, y:100, width:700, height:58, text:'Welcome', fontFamily:'Inter', fontSize:48, textAlign:'center', noWrap:true }
+    ]
+  }] };
+  await importCapture(api, input, ['one']);
+  const heading = children[1].children[0];
+  assert.equal(heading.x, 50);
+  assert.equal(heading.textAlignHorizontal, 'CENTER');
+  assert.equal(heading.textAutoResize, 'HEIGHT');
+});
+
+test('resolves the deck font alias to its installed Figma family', async () => {
+  const { api, children } = fakeFigma([
+    { fontName: { family:'Instrument Sans', style:'Regular' } },
+    { fontName: { family:'Inter', style:'Regular' } }
+  ]);
+  const input = { version:1, title:'Fonts', warnings:[], pages:[{
+    id:'one', name:'One', width:800, height:450, elements:[
+      { kind:'text', name:'heading', x:20, y:20, width:400, height:60, text:'DEPROMEET 19', fontFamily:'Instrument', fontSize:48 }
+    ]
+  }] };
+  await importCapture(api, input, ['one']);
+  assert.equal(children[1].children[0].fontName.family, 'Instrument Sans');
 });
 
 test('promotes the newest row flow and confirms every page connection', async () => {
