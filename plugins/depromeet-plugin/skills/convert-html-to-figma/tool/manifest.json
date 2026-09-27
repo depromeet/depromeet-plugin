@@ -5,8 +5,5 @@
   "documentAccess": "dynamic-page",
   "main": "dist/code.js",
   "ui": "dist/ui.html",
-  "networkAccess": {
-    "allowedDomains": ["http://localhost:4179"],
-    "reasoning": "Connect to the local HTML capture service started by the user."
-  }
+  "networkAccess": { "allowedDomains": ["none"] }
 }
