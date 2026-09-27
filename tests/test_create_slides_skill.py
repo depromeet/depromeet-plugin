@@ -1,4 +1,5 @@
 import re
+import struct
 import unittest
 from pathlib import Path
 
@@ -70,6 +71,19 @@ class CreateSlidesSkillTest(unittest.TestCase):
         self.assertNotRegex(skeleton, r'(?:src|href)="https?://')
         self.assertIn("--blue-500: #1659D5", stylesheet)
         self.assertIn("12 layout families", profile)
+
+    def test_profile_overview_images_are_full_size_pngs(self):
+        profile = (PROFILE_ROOT / "PROFILE.md").read_text()
+        images = [PROFILE_ROOT / name for name in ("layout-overview.png", "design-overview.png")]
+
+        for path in images:
+            self.assertIn(f"]({path.name})", profile)
+            data = path.read_bytes()
+            self.assertTrue(data.startswith(b"\x89PNG\r\n\x1a\n"))
+            width, height = struct.unpack(">II", data[16:24])
+            self.assertGreaterEqual(width, 2000)
+            self.assertGreaterEqual(height, 2000)
+        self.assertNotEqual(images[0].read_bytes(), images[1].read_bytes())
 
 
 if __name__ == "__main__":

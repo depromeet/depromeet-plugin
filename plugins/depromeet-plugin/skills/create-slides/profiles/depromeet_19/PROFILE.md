@@ -14,8 +14,23 @@ a runtime dependency; the profile bundles its own Depromeet-styled specimens.
   stage geometry, spacing, component appearance, and review-only styling.
 - [layout-skeleton.html](layout-skeleton.html) is the browser-visible set of
   layout specimens and region names. It loads `style.css` beside itself.
+- [layout-overview.png](layout-overview.png) shows all 12 structural families
+  together; [design-overview.png](design-overview.png) shows the same families
+  with this profile's visual design and illustrative copy.
 - This file defines when to use those values and how to adapt the source guide
   to a slide. Do not add profile-specific defaults to the common workflow.
+
+The overview images are quick references, not page plans or final slide assets.
+Their wording and numbers are illustrative. Use the HTML skeleton to inspect
+individual regions and confirm the selected layouts for each presentation.
+
+### Layout structure
+
+![All 12 layout families with region boundaries](layout-overview.png)
+
+### Depromeet 19 design example
+
+![The same 12 layouts with Depromeet 19 colors and type](design-overview.png)
 
 When preparing a deck, copy both the skeleton and stylesheet into its output
 directory. Keep their relative link working. Select only the layouts needed,
