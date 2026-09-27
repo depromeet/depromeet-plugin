@@ -4,18 +4,13 @@
 
 ## 처음 준비하기
 
-Node.js 22 이상과 Figma Desktop이 필요합니다. 이 디렉터리에서 한 번 빌드합니다.
-
-```bash
-npm ci
-npm run build
-```
-
-빌드한 `dist/`는 Git에 포함하지 않습니다. HTML 분석과 캡처는 Figma 플러그인 내부에서 처리하므로, 가져올 때 터미널이나 로컬 서비스가 필요하지 않습니다. 다른 기계에서는 그 기계에서 다시 빌드하세요.
+Figma Desktop이 필요합니다. 저장소에는 빌드된 `dist/code.js`와 `dist/ui.html`이 포함되어 있습니다. 사용자는 Node.js 설치나 빌드 없이 바로 등록할 수 있습니다. HTML 분석과 캡처는 Figma 플러그인 내부에서 처리합니다.
 
 Figma Desktop의 디자인 파일에서 **Plugins → Development → Import new plugin from manifest…**를 열고 이 디렉터리의 `manifest.json`을 선택합니다. 이후에는 Development 목록에서 **HTML → Figma**를 실행합니다. 개발용 등록에는 Figma 플러그인 ID 발급이나 Community 게시가 필요하지 않습니다. 등록은 처음 한 번만 하면 됩니다.
 
-컴퓨터 사용 자동화가 없다면 사용자가 Figma 안에서 등록과 가져오기를 진행합니다. 스킬은 파일 준비, 빌드, 검증 방법을 안내할 수 있습니다. Community 공개 게시나 조직 내부 게시도 가능한 배포 방식입니다.
+컴퓨터 사용 자동화가 없다면 사용자가 Figma 안에서 등록과 가져오기를 진행합니다. 스킬은 파일 준비, 플러그인 등록, 검증 방법을 안내할 수 있습니다. Community 공개 게시나 조직 내부 게시도 가능한 배포 방식입니다.
+
+소스를 수정하는 유지 관리자는 Node.js 22 이상에서 `npm ci && npm test && npm run typecheck && npm run build`를 실행하고 변경된 `dist/code.js`, `dist/ui.html`도 함께 커밋합니다. CI가 빌드 결과의 최신 상태를 검사합니다.
 
 ## 가져오기
 
@@ -44,6 +39,6 @@ zip -r /tmp/chuseok-html.zip index.html style.css assets
 
 ## 검증 범위
 
-자동 테스트는 입력 계약, ZIP 안전성, 브라우저 내부 HTML 캡처와 실제 썸네일, 숨겨진 페이지의 레이아웃 복원, 폰트 대체, 가로 행과 Flow, 오류 복구, 3단계 UI를 검사합니다. 테스트 실행에는 `npx playwright install chromium && npm test`가 필요합니다. 추석 덱 10장의 썸네일을 브라우저와 Figma Desktop에서 확인했고, Figma에서 10개 프레임과 Prototype의 Flow 시작점·클릭 연결이 생성되는 것을 확인했습니다. 이 기계의 Figma에서는 `Pretendard Variable`을 사용할 수 없어 `Noto Sans KR`로 대체됐으며 결과 화면에 해당 사실이 표시됐습니다.
+자동 테스트는 입력 계약, ZIP 안전성, 브라우저 내부 HTML 캡처와 실제 썸네일, 숨겨진 페이지의 레이아웃 복원, 폰트 대체, 가로 행과 Flow, 오류 복구, 3단계 UI를 검사합니다. 테스트 실행에는 `npx playwright install chromium && npm test`가 필요합니다. 추석 덱 10장의 썸네일을 브라우저와 Figma Desktop에서 확인했고, Figma에서 10개 프레임과 Prototype의 Flow 시작점·클릭 연결이 생성되는 것을 확인했습니다. 이 기계의 Figma에서는 `Pretendard Variable`을 사용할 수 없어 `Noto Sans KR`로 대체됐으며 결과 화면에 해당 사실이 표시됐습니다. 이후 추가한 글줄·Flow·모달 수정은 자동 검사와 새 Figma 가져오기로 확인합니다.
 
 [Figma 개발 플러그인 등록](https://help.figma.com/hc/en-us/articles/360042786733-Create-a-plugin-for-development), [매니페스트](https://developers.figma.com/docs/plugins/manifest/), [네트워크 요청](https://developers.figma.com/docs/plugins/making-network-requests/), [조직 내부 배포](https://help.figma.com/hc/en-us/articles/4404228629655-Create-internal-plugins-for-an-organization)를 참고했습니다.

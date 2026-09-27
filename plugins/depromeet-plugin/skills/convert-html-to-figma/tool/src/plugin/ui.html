@@ -5,16 +5,14 @@
   <title>HTML → Figma</title>
   <style>
     :root { font-family:Inter,Pretendard,-apple-system,sans-serif; color:#182545; background:#f3f5fa; --blue:#315fe9; --line:#dfe5ef; --muted:#697790; }
-    * { box-sizing:border-box; } body { margin:0; } button,input { font:inherit; } button { cursor:pointer; } button:disabled { cursor:not-allowed; opacity:.45; }
+    * { box-sizing:border-box; } html,body { height:100%; } body { margin:0; overflow:hidden; } button,input { font:inherit; } button { cursor:pointer; } button:disabled { cursor:not-allowed; opacity:.45; }
     button:focus-visible,input:focus-visible { outline:2px solid #7da0ff; outline-offset:2px; }
-    .shell { padding:20px; } header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
-    h1 { margin:0; font-size:22px; letter-spacing:-.04em; } header small { color:var(--muted); } .badge { border-radius:30px; padding:7px 11px; background:#e7edff; color:#2e51b1; font-size:11px; font-weight:700; }
-    .intro { background:#e9efff; border-radius:11px; padding:11px 14px; color:#294b9e; font-size:12px; line-height:1.5; margin-bottom:14px; }
+    .shell { height:100vh; min-height:0; padding:12px; display:flex; flex-direction:column; }
     .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:14px; } .step { border:1px solid var(--line); background:white; border-radius:10px; padding:10px; font-size:12px; font-weight:700; color:#5e6c86; } .step.active { border-color:#8faaff; background:#f8faff; color:var(--blue); }
-    .panel { background:white; border:1px solid var(--line); border-radius:13px; overflow:hidden; min-height:490px; display:flex; flex-direction:column; }
+    .panel { background:white; border:1px solid var(--line); border-radius:13px; overflow:hidden; min-height:0; flex:1; display:flex; flex-direction:column; }
     .panel-head { padding:20px 21px 14px; border-bottom:1px solid #eef1f6; } .panel-head small { color:var(--blue); font-weight:800; font-size:10px; }
     h2 { font-size:19px; margin:5px 0 4px; letter-spacing:-.04em; } .description { color:var(--muted); margin:0; font-size:12px; line-height:1.5; }
-    .screen { padding:18px 21px; flex:1; display:none; } .screen.active { display:block; } label { display:block; font-size:12px; font-weight:750; margin:0 0 7px; }
+    .screen { padding:18px 21px; flex:1; min-height:0; overflow:auto; display:none; } .screen.active { display:block; } label { display:block; font-size:12px; font-weight:750; margin:0 0 7px; }
     .file-box { border:1px dashed #9bb1df; border-radius:10px; background:#f9fbff; padding:25px; text-align:center; font-size:12px; } .file-box input { width:100%; margin-top:15px; font-size:11px; } .file-box strong { display:block; margin-bottom:6px; } .file-box small { color:var(--muted); }
     .notice { margin-top:13px; padding:11px 12px; background:#f3f6fa; border-radius:9px; font-size:11px; line-height:1.5; color:#57657c; }
     .page-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-height:378px; overflow:auto; }
@@ -24,14 +22,12 @@
     .page-title { min-width:0; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .move { border:1px solid var(--line); background:white; border-radius:6px; width:25px; height:25px; flex:none; }
     .success { background:#ecf8f1; border:1px solid #b8dfc8; color:#246f48; border-radius:10px; padding:15px; font-size:14px; font-weight:750; }
     .warnings { margin-top:13px; max-height:150px; overflow:auto; font-size:11px; line-height:1.55; } .warnings li { margin-bottom:5px; }
-    .actions { border-top:1px solid #eef1f6; padding:13px 21px; display:flex; justify-content:space-between; gap:9px; } .primary,.secondary { padding:9px 14px; border-radius:8px; font-size:12px; font-weight:750; } .primary { color:white; background:var(--blue); border:1px solid var(--blue); } .secondary { color:#35476a; background:white; border:1px solid #ccd5e5; }
+    .actions { border-top:1px solid #eef1f6; padding:13px 21px; display:flex; justify-content:space-between; gap:9px; flex:none; } .primary,.secondary { padding:9px 14px; border-radius:8px; font-size:12px; font-weight:750; } .primary { color:white; background:var(--blue); border:1px solid var(--blue); } .secondary { color:#35476a; background:white; border:1px solid #ccd5e5; }
     .error { color:#a12238; background:#fff0f2; border-radius:8px; padding:9px 11px; font-size:11px; display:none; margin:0 21px 10px; }
   </style>
 </head>
 <body>
   <div class="shell">
-    <header><div><h1>HTML → Figma</h1><small>HTML 파일을 편집 가능한 Figma 프레임으로</small></div><span class="badge">로컬 개발 플러그인</span></header>
-    <div class="intro">가져올 때마다 기존 작업 아래 새 행을 만듭니다. 페이지는 왼쪽부터 차례로 놓이고, 행마다 별도의 발표 Flow로 연결됩니다.</div>
     <div class="steps"><div class="step active">1 · 파일 선택</div><div class="step">2 · 페이지 확인</div><div class="step">3 · 결과</div></div>
     <div id="renderHost" style="position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;pointer-events:none;z-index:-1" aria-hidden="true"></div>
     <section class="panel">
@@ -68,7 +64,7 @@
       }
       if (state.result) {
         $('#success').textContent = state.result.frameIds.length + '개 편집 가능한 프레임이 새 행에 추가됐습니다.';
-        $('#resultSummary').textContent = '페이지를 왼쪽부터 배치하고 첫 페이지를 이 행의 Flow 시작점으로 등록했습니다.';
+        $('#resultSummary').textContent = `가로 배치 완료 · Flow 연결 ${state.result.connections}/${Math.max(0, state.result.frameIds.length - 1)}개`;
         $('#resultWarnings').innerHTML = state.result.warnings.length ? '<strong>폰트 대체·변환 알림</strong><ul>' + state.result.warnings.map((warning) => '<li>' + escapeHtml(warning) + '</li>').join('') + '</ul>' : '폰트 대체·변환 알림 없음';
       }
     }

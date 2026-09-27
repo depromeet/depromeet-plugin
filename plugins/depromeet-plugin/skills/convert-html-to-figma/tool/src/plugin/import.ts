@@ -7,7 +7,7 @@ interface ElementData {
   kind: 'rect' | 'text' | 'image'; name?: string; x: number; y: number; width: number; height: number;
   fill?: string; borderColor?: string; borderWidth?: number; radius?: number; opacity?: number;
   text?: string; fontFamily?: string; fontSize?: number; fontWeight?: number; color?: string;
-  lineHeight?: number | null; textAlign?: string; data?: string;
+  lineHeight?: number | null; textAlign?: string; noWrap?: boolean; data?: string;
 }
 interface PageData { id: string; name: string; width: number; height: number; elements: ElementData[] }
 interface Capture { title: string; pages: PageData[]; warnings: string[] }
@@ -78,8 +78,8 @@ function renderElement(api: PluginAPI, frame: FrameNode, element: ElementData, f
     text.fontName = font!;
     text.characters = element.text || '';
     text.fontSize = element.fontSize || 16;
-    text.textAutoResize = 'NONE';
     text.resize(Math.max(1, element.width + 4), Math.max(1, element.height + 4));
+    text.textAutoResize = element.noWrap ? 'WIDTH_AND_HEIGHT' : 'HEIGHT';
     const fill = solid(element.color);
     text.fills = fill ? [fill] : [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 } }];
     if (element.lineHeight && Number.isFinite(element.lineHeight)) text.lineHeight = { value: element.lineHeight, unit: 'PIXELS' };
@@ -143,11 +143,13 @@ export async function importCapture(api: PluginAPI, raw: unknown, order: string[
     }
     for (let index = 0; index < created.length - 1; index++) {
       await created[index].setReactionsAsync([{ trigger: { type: 'ON_CLICK' }, actions: [{ type: 'NODE', destinationId: created[index + 1].id, navigation: 'NAVIGATE', transition: null }] }]);
+      const action = created[index].reactions[0]?.actions?.[0];
+      if (action?.type !== 'NODE' || action.destinationId !== created[index + 1].id) throw new Error(`${pages[index].name}: prototype connection was not saved`);
     }
-    api.currentPage.flowStartingPoints = [...previousStarts, { nodeId: created[0].id, name: capture.title }];
+    api.currentPage.flowStartingPoints = [{ nodeId: created[0].id, name: capture.title }, ...previousStarts];
     api.currentPage.selection = created;
     api.viewport.scrollAndZoomIntoView(created);
-    return { frameIds: created.map((frame) => frame.id), warnings, rowId };
+    return { frameIds: created.map((frame) => frame.id), connections: Math.max(0, created.length - 1), warnings, rowId };
   } catch (error) {
     api.currentPage.flowStartingPoints = previousStarts;
     for (const frame of created) frame.remove();

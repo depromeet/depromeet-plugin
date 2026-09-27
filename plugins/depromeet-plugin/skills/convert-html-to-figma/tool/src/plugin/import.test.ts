@@ -43,13 +43,14 @@ test('creates an independent horizontal row and keeps old content and flow', asy
   assert.equal(children.length, 3);
   assert.deepEqual(children.slice(1).map((frame) => [frame.x, frame.y]), [[0, 460], [920, 460]]);
   assert.equal(page.flowStartingPoints.length, 2);
-  assert.equal(page.flowStartingPoints[0].nodeId, 'old');
-  assert.equal(page.flowStartingPoints[1].nodeId, children[1].id);
+  assert.equal(page.flowStartingPoints[0].nodeId, children[1].id);
+  assert.equal(page.flowStartingPoints[1].nodeId, 'old');
   assert.equal(children[1].reactions[0].actions[0].destinationId, children[2].id);
   assert.equal(children[1].children[0].characters, 'Hello');
   assert.ok(result.warnings.some((warning: string) => warning.includes('Missing Font') && warning.includes('Inter')));
   await importCapture(api, capture, ['two', 'one']);
   assert.equal(page.flowStartingPoints.length, 3);
+  assert.equal(page.flowStartingPoints[0].nodeId, children[3].id);
   assert.ok(children[3].y > children[1].y);
 });
 
@@ -59,4 +60,26 @@ test('removes only new frames if importing fails', async () => {
   await assert.rejects(importCapture(api, capture, ['one', 'two']), /Figma text failed/);
   assert.equal(children.length, 1);
   assert.equal(page.flowStartingPoints.length, 1);
+});
+
+test('uses no-wrap text sizing for inline fragments and flexible height for blocks', async () => {
+  const { api, children } = fakeFigma();
+  const input = { version:1, title:'Cards', warnings:[], pages:[{
+    id:'one', name:'One', width:800, height:450, elements:[
+      { kind:'text', name:'number', x:20, y:20, width:44, height:54, text:'01', fontFamily:'Inter', fontSize:44, noWrap:true },
+      { kind:'text', name:'body', x:20, y:100, width:300, height:40, text:'A longer line of text', fontFamily:'Inter', fontSize:32 }
+    ]
+  }] };
+  await importCapture(api, input, ['one']);
+  const [number, body] = children[1].children;
+  assert.equal(number.textAutoResize, 'WIDTH_AND_HEIGHT');
+  assert.equal(body.textAutoResize, 'HEIGHT');
+});
+
+test('promotes the newest row flow and confirms every page connection', async () => {
+  const { api, page, children } = fakeFigma();
+  const result = await importCapture(api, capture, ['one', 'two']);
+  assert.equal(page.flowStartingPoints[0].nodeId, children[1].id);
+  assert.equal(page.flowStartingPoints[1].nodeId, 'old');
+  assert.equal(result.connections, 1);
 });

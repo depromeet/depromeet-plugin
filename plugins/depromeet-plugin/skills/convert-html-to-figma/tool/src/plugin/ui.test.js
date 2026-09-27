@@ -36,3 +36,21 @@ test('imports actual HTML thumbnails in order without calling a local service', 
     assert.equal(await page.evaluate(() => window.importMessage.capture.pages[0].thumbnail), undefined);
   } finally { await browser.close(); }
 });
+
+test('keeps import controls inside the 760 by 650 plugin dialog', async () => {
+  const browser = await chromium.launch();
+  try {
+    const page = await browser.newPage({viewport:{width:760,height:650}});
+    await page.setContent(await bundledUi());
+    const layout = await page.evaluate(() => ({
+      height:document.documentElement.scrollHeight,
+      buttonBottom:document.querySelector('#next').getBoundingClientRect().bottom,
+      extraIntro:!!document.querySelector('.intro'),
+      subline:document.querySelector('header small')?.textContent
+    }));
+    assert.ok(layout.height <= 650, JSON.stringify(layout));
+    assert.ok(layout.buttonBottom <= 650, JSON.stringify(layout));
+    assert.equal(layout.extraIntro, false);
+    assert.equal(layout.subline, undefined);
+  } finally { await browser.close(); }
+});

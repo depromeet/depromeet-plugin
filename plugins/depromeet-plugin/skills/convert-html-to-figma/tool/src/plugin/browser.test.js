@@ -36,7 +36,7 @@ test('captures hidden HTML pages and distinct rendered thumbnails without a serv
 test('resolves ZIP CSS and image paths inside the plugin without network requests', async () => browserHarness(async (page) => {
   const dot = Uint8Array.from(Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/lH8AAAAASUVORK5CYII=', 'base64'));
   const zip = zipSync({
-    'deck/index.html': strToU8('<link rel="stylesheet" href="style.css"><section data-page-id="first"><h1>ZIP works</h1><img src="dot.png"></section><section data-page-id="second" hidden>Next</section>'),
+    'deck/index.html': strToU8('<title>Deck Title</title><link rel="stylesheet" href="style.css"><section data-page-id="first"><h1>ZIP works</h1><img src="dot.png"></section><section data-page-id="second" hidden>Next</section>'),
     'deck/style.css': strToU8('section{width:800px;height:450px;background:#123456 url(dot.png) no-repeat} h1{font-size:32px}'),
     'deck/dot.png': dot
   });
@@ -46,6 +46,7 @@ test('resolves ZIP CSS and image paths inside the plugin without network request
     [new File([new Uint8Array(bytes)], 'deck.zip', {type:'application/zip'})], document.querySelector('#host')
   ), [...zip]);
   assert.equal(result.pages.length, 2);
+  assert.equal(result.title, 'Deck Title');
   assert.equal(result.pages[0].width, 800);
   assert.ok(result.pages[0].elements.some((item) => item.kind === 'image' && item.data));
   assert.ok(result.pages[0].elements.some((item) => item.kind === 'text' && item.text === 'ZIP works'));
@@ -70,6 +71,22 @@ test('bounds portrait thumbnails to the preview size', async () => browserHarnes
   const png = Buffer.from(result.pages[0].thumbnail.split(',')[1], 'base64');
   assert.ok(png.readUInt32BE(16) <= 320);
   assert.ok(png.readUInt32BE(20) <= 180);
+}));
+
+test('keeps inline text fragments on one line for editable Figma text', async () => browserHarness(async (page) => {
+  const result = await page.evaluate(async () => window.h2f.captureFiles([new File([
+    '<style>section{width:800px;height:450px}h3{font-size:44px}</style><section><h3><span>01</span> · 기억</h3></section>'
+  ], 'cards.html', {type:'text/html'})], document.querySelector('#host')));
+  const number = result.pages[0].elements.find((item) => item.kind === 'text' && item.text === '01');
+  assert.equal(number.noWrap, true);
+}));
+
+test('keeps visible descendants inside display contents wrappers', async () => browserHarness(async (page) => {
+  const result = await page.evaluate(async () => window.h2f.captureFiles([new File([
+    '<style>.slide{width:800px;height:450px}.group{display:contents}</style><section class="slide"><div class="group">Direct text <strong>Visible nested text</strong></div></section>'
+  ], 'contents.html', {type:'text/html'})], document.querySelector('#host')));
+  assert.ok(result.pages[0].elements.some((item) => item.kind === 'text' && item.text === 'Direct text'));
+  assert.ok(result.pages[0].elements.some((item) => item.kind === 'text' && item.text === 'Visible nested text'));
 }));
 
 test('rejects a ZIP path that escapes the archive root', async () => browserHarness(async (page) => {

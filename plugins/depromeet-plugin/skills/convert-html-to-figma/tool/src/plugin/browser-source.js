@@ -95,8 +95,10 @@ export async function prepareBrowserFiles(files) {
     return output;
   }
   const htmlFiles = [];
+  let title = '';
   for (const name of htmlNames) {
     const doc = new DOMParser().parseFromString(textDecoder.decode(contents.get(name)), 'text/html');
+    if (!title) title = doc.title.trim();
     for (const node of doc.querySelectorAll('script,base,iframe,object,embed')) node.remove();
     for (const node of doc.querySelectorAll('link:not([rel~="stylesheet"]),meta[http-equiv]')) node.remove();
     for (const link of doc.querySelectorAll('link[rel~="stylesheet"]')) {
@@ -123,5 +125,5 @@ export async function prepareBrowserFiles(files) {
     doc.head.prepend(policy);
     htmlFiles.push({ name, html:`<!doctype html>${doc.documentElement.outerHTML}` });
   }
-  return { htmlFiles, warnings, title:htmlNames[0].split('/').pop() };
+  return { htmlFiles, warnings, title:title || htmlNames[0].split('/').pop() };
 }
