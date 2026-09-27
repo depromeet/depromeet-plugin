@@ -7,7 +7,7 @@ and statement pages, and white content pages. The star field and gradients are
 CSS adaptations, not official design-guide requirements. The source PDFs,
 source banner, reusable 3D image file, and font binaries are not distributed
 with this skill. The design overview includes the user-supplied 3D object in
-its cover preview only.
+its cover and chapter previews only.
 The 12 layout families are structural choices; their example copy is not deck
 content or a factual claim.
 
@@ -17,11 +17,12 @@ content or a factual claim.
   stage geometry, spacing, component appearance, and review-only styling.
 - [layout-skeleton.html](layout-skeleton.html) is the browser-visible set of
   layout specimens and region names. It loads `style.css` beside itself.
-- [design-overview.png](design-overview.png) shows the 12 families with the
-  current colors, typography, and a rasterized 3D cover example;
-  [layout-overview.png](layout-overview.png)
-  shows their content regions and reading order. Both are quick references
-  rendered from the HTML specimens, not separate layout specifications.
+- [design-overview.png](design-overview.png) shows 14 page specimens: cover,
+  chapter, 11 content families, and closing. It includes the current colors,
+  typography, star field, and rasterized 3D examples.
+- [layout-overview.png](layout-overview.png) shows the 12 layout families'
+  content regions and reading order. Both images are quick references rendered
+  from the HTML specimens, not separate layout specifications.
 - This file defines when to use each visual mode, how to place an optional
   3D object, and how to adapt the source guide to slides. Do not add
   profile-specific defaults to the common workflow.
@@ -29,11 +30,11 @@ content or a factual claim.
   required license, acquisition, and fallback handling for each deck.
 
 Use the HTML skeleton as the browser-visible source of truth for all 12
-families. L01 shows both cover and chapter specimens. Its CSS orbit is an
-asset-free placeholder; the 3D cover example in the overview PNG does not
-provide a reusable image file or permission to reuse the original asset.
-The overview images show the L01 cover specimen; open the HTML skeleton to
-inspect its chapter variant.
+families. L01 shows cover, chapter, and closing specimens. Its CSS orbit is an
+asset-free placeholder; the 3D examples in the overview PNG do not provide a
+reusable image file or permission to reuse the original asset. For a deck with
+an authorized image, replace the `hero-asset` placeholder with an image and
+add `.has-asset` to that stage. The closing specimen omits the image.
 
 When preparing a deck, copy both the skeleton and stylesheet into its output
 directory. Keep their relative link working. Select only the layouts needed,
@@ -52,8 +53,8 @@ its visible tables enumerate 27. Do not invent the other nine.
 - **Cover (`L01`)**: use `--space-cover`, a centered supplied 3D object when
   authorized, and a large lower-left title. This is the profile's B composition.
 - **Chapter (`L01`)**: use `--space-chapter`, move an available 3D object right,
-  and keep the chapter title left. A closing page can reuse the dark background
-  without the object so the final statement remains primary.
+  and keep the chapter title left. The closing specimen reuses the dark
+  background without the object so the final statement remains primary.
 - **Content (`L02`–`L05`, `L07`, `L09`–`L12`)**: white is the default stage.
   Use `--blue-800` for titles, `--blue-500` for selected emphasis, and
   `--content-panel` for quiet cards. Keep the space texture and 3D image off
@@ -92,6 +93,10 @@ presentation size and a smaller desktop viewport.
 The profile uses a 1920×1080, 16:9 stage. Start with a 90 px stage margin,
 24–30 px region gaps, and broad text/image regions. These measurements are
 slide-specific choices. Change them in this profile when updating its look.
+The dark specimens use three layers of small stars, a low blue glow, and thin
+header and footer rules. Keep the cover halo and lower title shade, the chapter
+light beam, and the closing orbit when adapting those modes. Kicker text and
+page counters in the specimens are examples; replace them for each deck.
 
 | Layout ID | Use | Main regions |
 | --- | --- | --- |
