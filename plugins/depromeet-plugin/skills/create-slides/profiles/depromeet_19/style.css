@@ -199,7 +199,6 @@
 #L01 .chapter-stage .subtitle { left: 90px; bottom: 180px; width: 810px; height: 120px; }
 #L01 .chapter-stage .chapter-beam { left: 90px; right: 998px; bottom: 302px; height: 2px; background: linear-gradient(90deg, #72C8FF, transparent); box-shadow: 0 0 20px #2DA8FF; }
 #L01 .hero-art { display: flex; align-items: center; justify-content: center; border: 2px solid #74B8FF88; border-radius: 50%; background: radial-gradient(circle at 50% 58%, #2979E688, #1247AA36 42%, transparent 71%); box-shadow: 0 0 0 75px #2480FF08, 0 0 90px #478DFD33; }
-#L01 .hero-art::before { content: "✦"; position: absolute; top: 11%; right: 20%; color: #D6F2FF; font-size: 145px; text-shadow: 0 0 45px #62BDFF; }
 #L01 .hero-art span { display: block; max-width: 500px; padding: 28px 36px; border: 2px dashed #A8D3FFAA; border-radius: 20px; background: #071B3CBB; color: var(--white); text-align: center; font-size: 30px; font-weight: 750; line-height: 1.5; }
 #L01 .hero-art code { color: #B8DBFF; font-size: 26px; }
 #L01 .hero-art small { color: #A9CDFB; font-size: 23px; font-weight: 500; }
@@ -214,7 +213,6 @@
 #L01 .closing-stage .opener-title .sample-title { font-size: 106px; line-height: 1.08; }
 #L01 .closing-stage .subtitle { left: 90px; bottom: 180px; width: 1050px; height: 120px; }
 #L01 .closing-stage .closing-orbit { top: 162px; right: 70px; width: 800px; height: 800px; border: 2px solid #72B6FF55; border-radius: 50%; box-shadow: 0 0 0 96px #2480FF08, 0 0 80px #478DFD20; }
-#L01 .closing-stage .closing-orbit::after { content: "✦"; position: absolute; top: 12%; right: 18%; color: #C8E9FF; font-size: 150px; text-shadow: 0 0 50px #45AAFF; }
 #L06 .statement { background: transparent; border-color: transparent; }
 #L06 .statement .sample-title { font-size: 100px; }
 #L06 .statement::after { content: ""; position: absolute; left: 40px; bottom: 54px; width: 600px; height: 2px; background: #6CC4FF; box-shadow: 0 0 18px #63C4FF; }

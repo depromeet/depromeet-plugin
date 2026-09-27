@@ -31,6 +31,8 @@ Choose a profile from the [profile index](../profiles/INDEX.md). Read its
 keeping relative links working. Retain only the layouts needed for this
 presentation. Replace example labels with representative sample content while
 keeping it clearly marked as illustrative.
+For `depromeet_19`, this includes `assets/hero-object.png` on cover and chapter
+layouts. Confirm the copied image renders in the skeleton before layout review.
 
 Use the chosen profile's palette, type, hierarchy, and geometry from the start.
 Follow the profile's font acquisition instructions before reviewing the
@@ -63,6 +65,8 @@ page plan, using stable page, layout, and region IDs. Inspect every page in a
 browser at the presentation size and a smaller desktop size. Fix visual defects
 that preserve the confirmed design. Return to the affected review stage before
 changing wording, page count, region roles, or material geometry.
+Check that every profile image referenced by the final HTML is present and loads;
+for `depromeet_19`, check the cover and chapter 3D object specifically.
 
 Deliver `index.html`, its required assets, `layout-skeleton.html`, `style-profile.md`,
 and `page-plan.md`. Report the page count, controls, portability, completed checks,
