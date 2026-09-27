@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML → Figma</title>
+  <style>
+    :root { font-family:Inter,Pretendard,-apple-system,sans-serif; color:#182545; background:#f3f5fa; --blue:#315fe9; --line:#dfe5ef; --muted:#697790; }
+    * { box-sizing:border-box; } html,body { height:100%; } body { margin:0; overflow:hidden; } button,input { font:inherit; } button { cursor:pointer; } button:disabled { cursor:not-allowed; opacity:.45; }
+    button:focus-visible,input:focus-visible { outline:2px solid #7da0ff; outline-offset:2px; }
+    .shell { height:100vh; min-height:0; padding:12px; display:flex; flex-direction:column; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:14px; } .step { border:1px solid var(--line); background:white; border-radius:10px; padding:10px; font-size:12px; font-weight:700; color:#5e6c86; } .step.active { border-color:#8faaff; background:#f8faff; color:var(--blue); }
+    .panel { background:white; border:1px solid var(--line); border-radius:13px; overflow:hidden; min-height:0; flex:1; display:flex; flex-direction:column; }
+    .panel-head { padding:20px 21px 14px; border-bottom:1px solid #eef1f6; } .panel-head small { color:var(--blue); font-weight:800; font-size:10px; }
+    h2 { font-size:19px; margin:5px 0 4px; letter-spacing:-.04em; } .description { color:var(--muted); margin:0; font-size:12px; line-height:1.5; }
+    .screen { padding:18px 21px; flex:1; min-height:0; overflow:auto; display:none; } .screen.active { display:block; } label { display:block; font-size:12px; font-weight:750; margin:0 0 7px; }
+    .file-box { border:1px dashed #9bb1df; border-radius:10px; background:#f9fbff; padding:25px; text-align:center; font-size:12px; } .file-box input { width:100%; margin-top:15px; font-size:11px; } .file-box strong { display:block; margin-bottom:6px; } .file-box small { color:var(--muted); }
+    .notice { margin-top:13px; padding:11px 12px; background:#f3f6fa; border-radius:9px; font-size:11px; line-height:1.5; color:#57657c; }
+    .page-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-height:378px; overflow:auto; }
+    .page-item { min-width:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fff; }
+    .page-item img { display:block; width:100%; aspect-ratio:16/9; object-fit:contain; background:#fff; border-bottom:1px solid var(--line); }
+    .page-meta { display:flex; align-items:center; gap:7px; padding:8px; font-size:12px; } .number { width:25px; height:25px; flex:none; background:#edf2fc; border-radius:6px; display:grid; place-items:center; font-size:10px; font-weight:800; }
+    .page-title { min-width:0; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .move { border:1px solid var(--line); background:white; border-radius:6px; width:25px; height:25px; flex:none; }
+    .success { background:#ecf8f1; border:1px solid #b8dfc8; color:#246f48; border-radius:10px; padding:15px; font-size:14px; font-weight:750; }
+    .warnings { margin-top:13px; max-height:150px; overflow:auto; font-size:11px; line-height:1.55; } .warnings li { margin-bottom:5px; }
+    .actions { border-top:1px solid #eef1f6; padding:13px 21px; display:flex; justify-content:space-between; gap:9px; flex:none; } .primary,.secondary { padding:9px 14px; border-radius:8px; font-size:12px; font-weight:750; } .primary { color:white; background:var(--blue); border:1px solid var(--blue); } .secondary { color:#35476a; background:white; border:1px solid #ccd5e5; }
+    .error { color:#a12238; background:#fff0f2; border-radius:8px; padding:9px 11px; font-size:11px; display:none; margin:0 21px 10px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="steps"><div class="step active">1 · 파일 선택</div><div class="step">2 · 페이지 확인</div><div class="step">3 · 결과</div></div>
+    <div id="renderHost" style="position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;pointer-events:none;z-index:-1" aria-hidden="true"></div>
+    <section class="panel">
+      <div class="panel-head"><small id="eyebrow">STEP 01 / 03</small><h2 id="title">어떤 HTML을 가져올까요?</h2><p class="description" id="description">HTML 파일이나 ZIP을 선택하세요.</p></div>
+      <div class="screen active" data-step="0"><div class="file-box"><strong>HTML 파일 또는 ZIP 선택</strong><small>여러 HTML 파일을 함께 선택할 수 있습니다. CSS·이미지는 ZIP에 포함하세요.</small><input id="files" type="file" accept=".html,.htm,.zip" multiple></div><div class="notice">파일은 이 플러그인 안에서 변환됩니다. 페이지 구획은 자동으로 찾습니다. 설치되지 않은 폰트는 대체 결과를 알려 드립니다.</div></div>
+      <div class="screen" data-step="1"><label id="count">감지된 페이지</label><div class="page-list" id="pageList"></div><div class="notice">↑ ↓로 순서를 바꾸세요. 이 순서가 가로 배치와 Flow 순서가 됩니다.</div><div class="warnings" id="captureWarnings"></div></div>
+      <div class="screen" data-step="2"><div class="success" id="success">가져오기가 완료됐습니다.</div><div class="notice" id="resultSummary"></div><div class="warnings" id="resultWarnings"></div><button type="button" class="secondary" id="another" style="margin-top:15px">다른 HTML 가져오기</button></div>
+      <div class="error" id="error" role="alert"></div>
+      <div class="actions"><button type="button" class="secondary" id="back">이전</button><button type="button" class="primary" id="next">다음: 페이지 확인 →</button></div>
+    </section>
+  </div>
+  <!-- H2F_BROWSER_BUNDLE -->
+  <script>
+    const state = { step:0, capture:null, order:[], busy:false, result:null };
+    const $ = (selector) => document.querySelector(selector);
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const titles = ['어떤 HTML을 가져올까요?', '가져올 페이지를 확인하세요', '새 행이 추가됐어요'];
+    const descriptions = ['HTML 파일이나 ZIP을 선택하세요.', '실제 페이지를 보고 순서를 바꿀 수 있습니다.', '다음 가져오기도 아래 새 행으로 들어갑니다.'];
+    function showError(message) { const box = $('#error'); box.textContent = message; box.style.display = message ? 'block' : 'none'; }
+    function render() {
+      document.querySelectorAll('.step').forEach((item,index) => item.classList.toggle('active', index === state.step));
+      document.querySelectorAll('.screen').forEach((item,index) => item.classList.toggle('active', index === state.step));
+      $('#eyebrow').textContent = 'STEP 0' + (state.step + 1) + ' / 03';
+      $('#title').textContent = titles[state.step]; $('#description').textContent = descriptions[state.step];
+      $('#back').hidden = state.step !== 1; $('#next').hidden = state.step === 2; $('#next').disabled = state.busy;
+      $('#next').textContent = state.busy ? '처리 중…' : ['다음: 페이지 확인 →', '새 행으로 가져오기 →', ''][state.step];
+      if (state.capture) {
+        $('#count').textContent = state.order.length + '개 페이지 감지';
+        $('#pageList').innerHTML = state.order.map((id,index) => {
+          const page = state.capture.pages.find((item) => item.id === id);
+          return '<div class="page-item"><img src="' + page.thumbnail + '" alt="' + escapeHtml(page.name) + ' 미리보기"><div class="page-meta"><span class="number">' + String(index + 1).padStart(2,'0') + '</span><span class="page-title" title="' + escapeHtml(page.name) + '">' + escapeHtml(page.name) + '</span><button class="move" data-move="up" data-index="' + index + '" ' + (index === 0 ? 'disabled' : '') + ' aria-label="위로">↑</button><button class="move" data-move="down" data-index="' + index + '" ' + (index === state.order.length - 1 ? 'disabled' : '') + ' aria-label="아래로">↓</button></div></div>';
+        }).join('');
+        $('#captureWarnings').innerHTML = state.capture.warnings.length ? '<strong>캡처 알림</strong><ul>' + state.capture.warnings.map((warning) => '<li>' + escapeHtml(warning) + '</li>').join('') + '</ul>' : '';
+      }
+      if (state.result) {
+        $('#success').textContent = state.result.frameIds.length + '개 편집 가능한 프레임이 새 행에 추가됐습니다.';
+        $('#resultSummary').textContent = `가로 배치 완료 · Flow 연결 ${state.result.connections}/${Math.max(0, state.result.frameIds.length - 1)}개`;
+        $('#resultWarnings').innerHTML = state.result.warnings.length ? '<strong>폰트 대체·변환 알림</strong><ul>' + state.result.warnings.map((warning) => '<li>' + escapeHtml(warning) + '</li>').join('') + '</ul>' : '폰트 대체·변환 알림 없음';
+      }
+    }
+    async function analyze() {
+      const files = [...$('#files').files]; if (!files.length) throw new Error('HTML 파일 또는 ZIP을 선택하세요.');
+      const payload = await window.h2f.captureFiles(files, $('#renderHost'));
+      state.capture = payload; state.order = payload.pages.map((page) => page.id); state.step = 1;
+    }
+    $('#next').addEventListener('click', async () => {
+      if (state.busy) return; showError(''); state.busy = true; render();
+      try {
+        if (state.step === 0) { await analyze(); state.busy = false; render(); }
+        else if (state.step === 1) {
+          const capture = { ...state.capture, pages:state.capture.pages.map(({thumbnail, ...page}) => page) };
+          parent.postMessage({ pluginMessage:{ type:'import', capture, order:state.order } }, '*');
+        }
+      } catch (error) { showError(error.message || String(error)); state.busy = false; render(); }
+    });
+    $('#back').addEventListener('click', () => { state.step = 0; showError(''); render(); });
+    $('#pageList').addEventListener('click', (event) => { const button = event.target.closest('[data-move]'); if (!button) return; const index = Number(button.dataset.index); const next = index + (button.dataset.move === 'up' ? -1 : 1); [state.order[index],state.order[next]] = [state.order[next],state.order[index]]; render(); });
+    $('#another').addEventListener('click', () => { state.step = 0; state.capture = null; state.order = []; state.result = null; $('#files').value = ''; showError(''); render(); });
+    onmessage = (event) => { const message = event.data.pluginMessage; if (!message) return; if (message.type === 'result') { state.result = message.result; state.step = 2; state.busy = false; showError(''); } else if (message.type === 'error') { state.busy = false; showError(message.error); } render(); };
+    render();
+  </script>
+</body>
+</html>

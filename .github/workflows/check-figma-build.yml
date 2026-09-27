@@ -1,0 +1,31 @@
+name: Check Figma plugin build
+
+on:
+  pull_request:
+    paths:
+      - 'plugins/depromeet-plugin/skills/convert-html-to-figma/tool/**'
+      - '.github/workflows/check-figma-build.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check-figma-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: plugins/depromeet-plugin/skills/convert-html-to-figma/tool
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: plugins/depromeet-plugin/skills/convert-html-to-figma/tool/package-lock.json
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run build
+      - name: Check committed build matches source
+        run: test -z "$(git status --porcelain -- dist/)"

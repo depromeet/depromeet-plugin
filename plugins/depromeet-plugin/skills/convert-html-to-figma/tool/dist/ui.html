@@ -1,0 +1,1721 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML → Figma</title>
+  <style>
+    :root { font-family:Inter,Pretendard,-apple-system,sans-serif; color:#182545; background:#f3f5fa; --blue:#315fe9; --line:#dfe5ef; --muted:#697790; }
+    * { box-sizing:border-box; } html,body { height:100%; } body { margin:0; overflow:hidden; } button,input { font:inherit; } button { cursor:pointer; } button:disabled { cursor:not-allowed; opacity:.45; }
+    button:focus-visible,input:focus-visible { outline:2px solid #7da0ff; outline-offset:2px; }
+    .shell { height:100vh; min-height:0; padding:12px; display:flex; flex-direction:column; }
+    .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-bottom:14px; } .step { border:1px solid var(--line); background:white; border-radius:10px; padding:10px; font-size:12px; font-weight:700; color:#5e6c86; } .step.active { border-color:#8faaff; background:#f8faff; color:var(--blue); }
+    .panel { background:white; border:1px solid var(--line); border-radius:13px; overflow:hidden; min-height:0; flex:1; display:flex; flex-direction:column; }
+    .panel-head { padding:20px 21px 14px; border-bottom:1px solid #eef1f6; } .panel-head small { color:var(--blue); font-weight:800; font-size:10px; }
+    h2 { font-size:19px; margin:5px 0 4px; letter-spacing:-.04em; } .description { color:var(--muted); margin:0; font-size:12px; line-height:1.5; }
+    .screen { padding:18px 21px; flex:1; min-height:0; overflow:auto; display:none; } .screen.active { display:block; } label { display:block; font-size:12px; font-weight:750; margin:0 0 7px; }
+    .file-box { border:1px dashed #9bb1df; border-radius:10px; background:#f9fbff; padding:25px; text-align:center; font-size:12px; } .file-box input { width:100%; margin-top:15px; font-size:11px; } .file-box strong { display:block; margin-bottom:6px; } .file-box small { color:var(--muted); }
+    .notice { margin-top:13px; padding:11px 12px; background:#f3f6fa; border-radius:9px; font-size:11px; line-height:1.5; color:#57657c; }
+    .page-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; max-height:378px; overflow:auto; }
+    .page-item { min-width:0; border:1px solid var(--line); border-radius:10px; overflow:hidden; background:#fff; }
+    .page-item img { display:block; width:100%; aspect-ratio:16/9; object-fit:contain; background:#fff; border-bottom:1px solid var(--line); }
+    .page-meta { display:flex; align-items:center; gap:7px; padding:8px; font-size:12px; } .number { width:25px; height:25px; flex:none; background:#edf2fc; border-radius:6px; display:grid; place-items:center; font-size:10px; font-weight:800; }
+    .page-title { min-width:0; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .move { border:1px solid var(--line); background:white; border-radius:6px; width:25px; height:25px; flex:none; }
+    .success { background:#ecf8f1; border:1px solid #b8dfc8; color:#246f48; border-radius:10px; padding:15px; font-size:14px; font-weight:750; }
+    .warnings { margin-top:13px; max-height:150px; overflow:auto; font-size:11px; line-height:1.55; } .warnings li { margin-bottom:5px; }
+    .actions { border-top:1px solid #eef1f6; padding:13px 21px; display:flex; justify-content:space-between; gap:9px; flex:none; } .primary,.secondary { padding:9px 14px; border-radius:8px; font-size:12px; font-weight:750; } .primary { color:white; background:var(--blue); border:1px solid var(--blue); } .secondary { color:#35476a; background:white; border:1px solid #ccd5e5; }
+    .error { color:#a12238; background:#fff0f2; border-radius:8px; padding:9px 11px; font-size:11px; display:none; margin:0 21px 10px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="steps"><div class="step active">1 · 파일 선택</div><div class="step">2 · 페이지 확인</div><div class="step">3 · 결과</div></div>
+    <div id="renderHost" style="position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;pointer-events:none;z-index:-1" aria-hidden="true"></div>
+    <section class="panel">
+      <div class="panel-head"><small id="eyebrow">STEP 01 / 03</small><h2 id="title">어떤 HTML을 가져올까요?</h2><p class="description" id="description">HTML 파일이나 ZIP을 선택하세요.</p></div>
+      <div class="screen active" data-step="0"><div class="file-box"><strong>HTML 파일 또는 ZIP 선택</strong><small>여러 HTML 파일을 함께 선택할 수 있습니다. CSS·이미지는 ZIP에 포함하세요.</small><input id="files" type="file" accept=".html,.htm,.zip" multiple></div><div class="notice">파일은 이 플러그인 안에서 변환됩니다. 페이지 구획은 자동으로 찾습니다. 설치되지 않은 폰트는 대체 결과를 알려 드립니다.</div></div>
+      <div class="screen" data-step="1"><label id="count">감지된 페이지</label><div class="page-list" id="pageList"></div><div class="notice">↑ ↓로 순서를 바꾸세요. 이 순서가 가로 배치와 Flow 순서가 됩니다.</div><div class="warnings" id="captureWarnings"></div></div>
+      <div class="screen" data-step="2"><div class="success" id="success">가져오기가 완료됐습니다.</div><div class="notice" id="resultSummary"></div><div class="warnings" id="resultWarnings"></div><button type="button" class="secondary" id="another" style="margin-top:15px">다른 HTML 가져오기</button></div>
+      <div class="error" id="error" role="alert"></div>
+      <div class="actions"><button type="button" class="secondary" id="back">이전</button><button type="button" class="primary" id="next">다음: 페이지 확인 →</button></div>
+    </section>
+  </div>
+  <script>"use strict";
+(() => {
+  // node_modules/html-to-image/es/util.js
+  function resolveUrl(url, baseUrl) {
+    if (url.match(/^[a-z]+:\/\//i)) {
+      return url;
+    }
+    if (url.match(/^\/\//)) {
+      return window.location.protocol + url;
+    }
+    if (url.match(/^[a-z]+:/i)) {
+      return url;
+    }
+    const doc = document.implementation.createHTMLDocument();
+    const base = doc.createElement("base");
+    const a = doc.createElement("a");
+    doc.head.appendChild(base);
+    doc.body.appendChild(a);
+    if (baseUrl) {
+      base.href = baseUrl;
+    }
+    a.href = url;
+    return a.href;
+  }
+  var uuid = /* @__PURE__ */ (() => {
+    let counter = 0;
+    const random = () => (
+      // eslint-disable-next-line no-bitwise
+      `0000${(Math.random() * 36 ** 4 << 0).toString(36)}`.slice(-4)
+    );
+    return () => {
+      counter += 1;
+      return `u${random()}${counter}`;
+    };
+  })();
+  function toArray(arrayLike) {
+    const arr = [];
+    for (let i2 = 0, l = arrayLike.length; i2 < l; i2++) {
+      arr.push(arrayLike[i2]);
+    }
+    return arr;
+  }
+  var styleProps = null;
+  function getStyleProperties(options = {}) {
+    if (styleProps) {
+      return styleProps;
+    }
+    if (options.includeStyleProperties) {
+      styleProps = options.includeStyleProperties;
+      return styleProps;
+    }
+    styleProps = toArray(window.getComputedStyle(document.documentElement));
+    return styleProps;
+  }
+  function px(node, styleProperty) {
+    const win = node.ownerDocument.defaultView || window;
+    const val = win.getComputedStyle(node).getPropertyValue(styleProperty);
+    return val ? parseFloat(val.replace("px", "")) : 0;
+  }
+  function getNodeWidth(node) {
+    const leftBorder = px(node, "border-left-width");
+    const rightBorder = px(node, "border-right-width");
+    return node.clientWidth + leftBorder + rightBorder;
+  }
+  function getNodeHeight(node) {
+    const topBorder = px(node, "border-top-width");
+    const bottomBorder = px(node, "border-bottom-width");
+    return node.clientHeight + topBorder + bottomBorder;
+  }
+  function getImageSize(targetNode, options = {}) {
+    const width = options.width || getNodeWidth(targetNode);
+    const height = options.height || getNodeHeight(targetNode);
+    return { width, height };
+  }
+  function getPixelRatio() {
+    let ratio;
+    let FINAL_PROCESS;
+    try {
+      FINAL_PROCESS = process;
+    } catch (e) {
+    }
+    const val = FINAL_PROCESS && FINAL_PROCESS.env ? FINAL_PROCESS.env.devicePixelRatio : null;
+    if (val) {
+      ratio = parseInt(val, 10);
+      if (Number.isNaN(ratio)) {
+        ratio = 1;
+      }
+    }
+    return ratio || window.devicePixelRatio || 1;
+  }
+  var canvasDimensionLimit = 16384;
+  function checkCanvasDimensions(canvas) {
+    if (canvas.width > canvasDimensionLimit || canvas.height > canvasDimensionLimit) {
+      if (canvas.width > canvasDimensionLimit && canvas.height > canvasDimensionLimit) {
+        if (canvas.width > canvas.height) {
+          canvas.height *= canvasDimensionLimit / canvas.width;
+          canvas.width = canvasDimensionLimit;
+        } else {
+          canvas.width *= canvasDimensionLimit / canvas.height;
+          canvas.height = canvasDimensionLimit;
+        }
+      } else if (canvas.width > canvasDimensionLimit) {
+        canvas.height *= canvasDimensionLimit / canvas.width;
+        canvas.width = canvasDimensionLimit;
+      } else {
+        canvas.width *= canvasDimensionLimit / canvas.height;
+        canvas.height = canvasDimensionLimit;
+      }
+    }
+  }
+  function createImage(url) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => {
+        img.decode().then(() => {
+          requestAnimationFrame(() => resolve(img));
+        });
+      };
+      img.onerror = reject;
+      img.crossOrigin = "anonymous";
+      img.decoding = "async";
+      img.src = url;
+    });
+  }
+  async function svgToDataURL(svg) {
+    return Promise.resolve().then(() => new XMLSerializer().serializeToString(svg)).then(encodeURIComponent).then((html) => `data:image/svg+xml;charset=utf-8,${html}`);
+  }
+  async function nodeToDataURL(node, width, height) {
+    const xmlns = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(xmlns, "svg");
+    const foreignObject = document.createElementNS(xmlns, "foreignObject");
+    svg.setAttribute("width", `${width}`);
+    svg.setAttribute("height", `${height}`);
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    foreignObject.setAttribute("width", "100%");
+    foreignObject.setAttribute("height", "100%");
+    foreignObject.setAttribute("x", "0");
+    foreignObject.setAttribute("y", "0");
+    foreignObject.setAttribute("externalResourcesRequired", "true");
+    svg.appendChild(foreignObject);
+    foreignObject.appendChild(node);
+    return svgToDataURL(svg);
+  }
+  var isInstanceOfElement = (node, instance) => {
+    if (node instanceof instance)
+      return true;
+    const nodePrototype = Object.getPrototypeOf(node);
+    if (nodePrototype === null)
+      return false;
+    return nodePrototype.constructor.name === instance.name || isInstanceOfElement(nodePrototype, instance);
+  };
+
+  // node_modules/html-to-image/es/clone-pseudos.js
+  function formatCSSText(style) {
+    const content = style.getPropertyValue("content");
+    return `${style.cssText} content: '${content.replace(/'|"/g, "")}';`;
+  }
+  function formatCSSProperties(style, options) {
+    return getStyleProperties(options).map((name) => {
+      const value = style.getPropertyValue(name);
+      const priority = style.getPropertyPriority(name);
+      return `${name}: ${value}${priority ? " !important" : ""};`;
+    }).join(" ");
+  }
+  function getPseudoElementStyle(className, pseudo, style, options) {
+    const selector = `.${className}:${pseudo}`;
+    const cssText = style.cssText ? formatCSSText(style) : formatCSSProperties(style, options);
+    return document.createTextNode(`${selector}{${cssText}}`);
+  }
+  function clonePseudoElement(nativeNode, clonedNode, pseudo, options) {
+    const style = window.getComputedStyle(nativeNode, pseudo);
+    const content = style.getPropertyValue("content");
+    if (content === "" || content === "none") {
+      return;
+    }
+    const className = uuid();
+    try {
+      clonedNode.className = `${clonedNode.className} ${className}`;
+    } catch (err2) {
+      return;
+    }
+    const styleElement = document.createElement("style");
+    styleElement.appendChild(getPseudoElementStyle(className, pseudo, style, options));
+    clonedNode.appendChild(styleElement);
+  }
+  function clonePseudoElements(nativeNode, clonedNode, options) {
+    clonePseudoElement(nativeNode, clonedNode, ":before", options);
+    clonePseudoElement(nativeNode, clonedNode, ":after", options);
+  }
+
+  // node_modules/html-to-image/es/mimes.js
+  var WOFF = "application/font-woff";
+  var JPEG = "image/jpeg";
+  var mimes = {
+    woff: WOFF,
+    woff2: WOFF,
+    ttf: "application/font-truetype",
+    eot: "application/vnd.ms-fontobject",
+    png: "image/png",
+    jpg: JPEG,
+    jpeg: JPEG,
+    gif: "image/gif",
+    tiff: "image/tiff",
+    svg: "image/svg+xml",
+    webp: "image/webp"
+  };
+  function getExtension(url) {
+    const match = /\.([^./]*?)$/g.exec(url);
+    return match ? match[1] : "";
+  }
+  function getMimeType(url) {
+    const extension = getExtension(url).toLowerCase();
+    return mimes[extension] || "";
+  }
+
+  // node_modules/html-to-image/es/dataurl.js
+  function getContentFromDataUrl(dataURL) {
+    return dataURL.split(/,/)[1];
+  }
+  function isDataUrl(url) {
+    return url.search(/^(data:)/) !== -1;
+  }
+  function makeDataUrl(content, mimeType) {
+    return `data:${mimeType};base64,${content}`;
+  }
+  async function fetchAsDataURL(url, init, process2) {
+    const res = await fetch(url, init);
+    if (res.status === 404) {
+      throw new Error(`Resource "${res.url}" not found`);
+    }
+    const blob = await res.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = reject;
+      reader.onloadend = () => {
+        try {
+          resolve(process2({ res, result: reader.result }));
+        } catch (error) {
+          reject(error);
+        }
+      };
+      reader.readAsDataURL(blob);
+    });
+  }
+  var cache = {};
+  function getCacheKey(url, contentType, includeQueryParams) {
+    let key = url.replace(/\?.*/, "");
+    if (includeQueryParams) {
+      key = url;
+    }
+    if (/ttf|otf|eot|woff2?/i.test(key)) {
+      key = key.replace(/.*\//, "");
+    }
+    return contentType ? `[${contentType}]${key}` : key;
+  }
+  async function resourceToDataURL(resourceUrl, contentType, options) {
+    const cacheKey = getCacheKey(resourceUrl, contentType, options.includeQueryParams);
+    if (cache[cacheKey] != null) {
+      return cache[cacheKey];
+    }
+    if (options.cacheBust) {
+      resourceUrl += (/\?/.test(resourceUrl) ? "&" : "?") + (/* @__PURE__ */ new Date()).getTime();
+    }
+    let dataURL;
+    try {
+      const content = await fetchAsDataURL(resourceUrl, options.fetchRequestInit, ({ res, result }) => {
+        if (!contentType) {
+          contentType = res.headers.get("Content-Type") || "";
+        }
+        return getContentFromDataUrl(result);
+      });
+      dataURL = makeDataUrl(content, contentType);
+    } catch (error) {
+      dataURL = options.imagePlaceholder || "";
+      let msg = `Failed to fetch resource: ${resourceUrl}`;
+      if (error) {
+        msg = typeof error === "string" ? error : error.message;
+      }
+      if (msg) {
+        console.warn(msg);
+      }
+    }
+    cache[cacheKey] = dataURL;
+    return dataURL;
+  }
+
+  // node_modules/html-to-image/es/clone-node.js
+  async function cloneCanvasElement(canvas) {
+    const dataURL = canvas.toDataURL();
+    if (dataURL === "data:,") {
+      return canvas.cloneNode(false);
+    }
+    return createImage(dataURL);
+  }
+  async function cloneVideoElement(video, options) {
+    if (video.currentSrc) {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = video.clientWidth;
+      canvas.height = video.clientHeight;
+      ctx === null || ctx === void 0 ? void 0 : ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const dataURL2 = canvas.toDataURL();
+      return createImage(dataURL2);
+    }
+    const poster = video.poster;
+    const contentType = getMimeType(poster);
+    const dataURL = await resourceToDataURL(poster, contentType, options);
+    return createImage(dataURL);
+  }
+  async function cloneIFrameElement(iframe, options) {
+    var _a2;
+    try {
+      if ((_a2 = iframe === null || iframe === void 0 ? void 0 : iframe.contentDocument) === null || _a2 === void 0 ? void 0 : _a2.body) {
+        return await cloneNode(iframe.contentDocument.body, options, true);
+      }
+    } catch (_b2) {
+    }
+    return iframe.cloneNode(false);
+  }
+  async function cloneSingleNode(node, options) {
+    if (isInstanceOfElement(node, HTMLCanvasElement)) {
+      return cloneCanvasElement(node);
+    }
+    if (isInstanceOfElement(node, HTMLVideoElement)) {
+      return cloneVideoElement(node, options);
+    }
+    if (isInstanceOfElement(node, HTMLIFrameElement)) {
+      return cloneIFrameElement(node, options);
+    }
+    return node.cloneNode(isSVGElement(node));
+  }
+  var isSlotElement = (node) => node.tagName != null && node.tagName.toUpperCase() === "SLOT";
+  var isSVGElement = (node) => node.tagName != null && node.tagName.toUpperCase() === "SVG";
+  async function cloneChildren(nativeNode, clonedNode, options) {
+    var _a2, _b2;
+    if (isSVGElement(clonedNode)) {
+      return clonedNode;
+    }
+    let children = [];
+    if (isSlotElement(nativeNode) && nativeNode.assignedNodes) {
+      children = toArray(nativeNode.assignedNodes());
+    } else if (isInstanceOfElement(nativeNode, HTMLIFrameElement) && ((_a2 = nativeNode.contentDocument) === null || _a2 === void 0 ? void 0 : _a2.body)) {
+      children = toArray(nativeNode.contentDocument.body.childNodes);
+    } else {
+      children = toArray(((_b2 = nativeNode.shadowRoot) !== null && _b2 !== void 0 ? _b2 : nativeNode).childNodes);
+    }
+    if (children.length === 0 || isInstanceOfElement(nativeNode, HTMLVideoElement)) {
+      return clonedNode;
+    }
+    await children.reduce((deferred, child) => deferred.then(() => cloneNode(child, options)).then((clonedChild) => {
+      if (clonedChild) {
+        clonedNode.appendChild(clonedChild);
+      }
+    }), Promise.resolve());
+    return clonedNode;
+  }
+  function cloneCSSStyle(nativeNode, clonedNode, options) {
+    const targetStyle = clonedNode.style;
+    if (!targetStyle) {
+      return;
+    }
+    const sourceStyle = window.getComputedStyle(nativeNode);
+    if (sourceStyle.cssText) {
+      targetStyle.cssText = sourceStyle.cssText;
+      targetStyle.transformOrigin = sourceStyle.transformOrigin;
+    } else {
+      getStyleProperties(options).forEach((name) => {
+        let value = sourceStyle.getPropertyValue(name);
+        if (name === "font-size" && value.endsWith("px")) {
+          const reducedFont = Math.floor(parseFloat(value.substring(0, value.length - 2))) - 0.1;
+          value = `${reducedFont}px`;
+        }
+        if (isInstanceOfElement(nativeNode, HTMLIFrameElement) && name === "display" && value === "inline") {
+          value = "block";
+        }
+        if (name === "d" && clonedNode.getAttribute("d")) {
+          value = `path(${clonedNode.getAttribute("d")})`;
+        }
+        targetStyle.setProperty(name, value, sourceStyle.getPropertyPriority(name));
+      });
+    }
+  }
+  function cloneInputValue(nativeNode, clonedNode) {
+    if (isInstanceOfElement(nativeNode, HTMLTextAreaElement)) {
+      clonedNode.innerHTML = nativeNode.value;
+    }
+    if (isInstanceOfElement(nativeNode, HTMLInputElement)) {
+      clonedNode.setAttribute("value", nativeNode.value);
+    }
+  }
+  function cloneSelectValue(nativeNode, clonedNode) {
+    if (isInstanceOfElement(nativeNode, HTMLSelectElement)) {
+      const clonedSelect = clonedNode;
+      const selectedOption = Array.from(clonedSelect.children).find((child) => nativeNode.value === child.getAttribute("value"));
+      if (selectedOption) {
+        selectedOption.setAttribute("selected", "");
+      }
+    }
+  }
+  function decorate(nativeNode, clonedNode, options) {
+    if (isInstanceOfElement(clonedNode, Element)) {
+      cloneCSSStyle(nativeNode, clonedNode, options);
+      clonePseudoElements(nativeNode, clonedNode, options);
+      cloneInputValue(nativeNode, clonedNode);
+      cloneSelectValue(nativeNode, clonedNode);
+    }
+    return clonedNode;
+  }
+  async function ensureSVGSymbols(clone, options) {
+    const uses = clone.querySelectorAll ? clone.querySelectorAll("use") : [];
+    if (uses.length === 0) {
+      return clone;
+    }
+    const processedDefs = {};
+    for (let i2 = 0; i2 < uses.length; i2++) {
+      const use = uses[i2];
+      const id = use.getAttribute("xlink:href");
+      if (id) {
+        const exist = clone.querySelector(id);
+        const definition = document.querySelector(id);
+        if (!exist && definition && !processedDefs[id]) {
+          processedDefs[id] = await cloneNode(definition, options, true);
+        }
+      }
+    }
+    const nodes = Object.values(processedDefs);
+    if (nodes.length) {
+      const ns = "http://www.w3.org/1999/xhtml";
+      const svg = document.createElementNS(ns, "svg");
+      svg.setAttribute("xmlns", ns);
+      svg.style.position = "absolute";
+      svg.style.width = "0";
+      svg.style.height = "0";
+      svg.style.overflow = "hidden";
+      svg.style.display = "none";
+      const defs = document.createElementNS(ns, "defs");
+      svg.appendChild(defs);
+      for (let i2 = 0; i2 < nodes.length; i2++) {
+        defs.appendChild(nodes[i2]);
+      }
+      clone.appendChild(svg);
+    }
+    return clone;
+  }
+  async function cloneNode(node, options, isRoot) {
+    if (!isRoot && options.filter && !options.filter(node)) {
+      return null;
+    }
+    return Promise.resolve(node).then((clonedNode) => cloneSingleNode(clonedNode, options)).then((clonedNode) => cloneChildren(node, clonedNode, options)).then((clonedNode) => decorate(node, clonedNode, options)).then((clonedNode) => ensureSVGSymbols(clonedNode, options));
+  }
+
+  // node_modules/html-to-image/es/embed-resources.js
+  var URL_REGEX = /url\((['"]?)([^'"]+?)\1\)/g;
+  var URL_WITH_FORMAT_REGEX = /url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g;
+  var FONT_SRC_REGEX = /src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;
+  function toRegex(url) {
+    const escaped = url.replace(/([.*+?^${}()|\[\]\/\\])/g, "\\$1");
+    return new RegExp(`(url\\(['"]?)(${escaped})(['"]?\\))`, "g");
+  }
+  function parseURLs(cssText) {
+    const urls = [];
+    cssText.replace(URL_REGEX, (raw, quotation, url) => {
+      urls.push(url);
+      return raw;
+    });
+    return urls.filter((url) => !isDataUrl(url));
+  }
+  async function embed(cssText, resourceURL, baseURL, options, getContentFromUrl) {
+    try {
+      const resolvedURL = baseURL ? resolveUrl(resourceURL, baseURL) : resourceURL;
+      const contentType = getMimeType(resourceURL);
+      let dataURL;
+      if (getContentFromUrl) {
+        const content = await getContentFromUrl(resolvedURL);
+        dataURL = makeDataUrl(content, contentType);
+      } else {
+        dataURL = await resourceToDataURL(resolvedURL, contentType, options);
+      }
+      return cssText.replace(toRegex(resourceURL), `$1${dataURL}$3`);
+    } catch (error) {
+    }
+    return cssText;
+  }
+  function filterPreferredFontFormat(str, { preferredFontFormat }) {
+    return !preferredFontFormat ? str : str.replace(FONT_SRC_REGEX, (match) => {
+      while (true) {
+        const [src, , format] = URL_WITH_FORMAT_REGEX.exec(match) || [];
+        if (!format) {
+          return "";
+        }
+        if (format === preferredFontFormat) {
+          return `src: ${src};`;
+        }
+      }
+    });
+  }
+  function shouldEmbed(url) {
+    return url.search(URL_REGEX) !== -1;
+  }
+  async function embedResources(cssText, baseUrl, options) {
+    if (!shouldEmbed(cssText)) {
+      return cssText;
+    }
+    const filteredCSSText = filterPreferredFontFormat(cssText, options);
+    const urls = parseURLs(filteredCSSText);
+    return urls.reduce((deferred, url) => deferred.then((css) => embed(css, url, baseUrl, options)), Promise.resolve(filteredCSSText));
+  }
+
+  // node_modules/html-to-image/es/embed-images.js
+  async function embedProp(propName, node, options) {
+    var _a2;
+    const propValue = (_a2 = node.style) === null || _a2 === void 0 ? void 0 : _a2.getPropertyValue(propName);
+    if (propValue) {
+      const cssString = await embedResources(propValue, null, options);
+      node.style.setProperty(propName, cssString, node.style.getPropertyPriority(propName));
+      return true;
+    }
+    return false;
+  }
+  async function embedBackground(clonedNode, options) {
+    ;
+    await embedProp("background", clonedNode, options) || await embedProp("background-image", clonedNode, options);
+    await embedProp("mask", clonedNode, options) || await embedProp("-webkit-mask", clonedNode, options) || await embedProp("mask-image", clonedNode, options) || await embedProp("-webkit-mask-image", clonedNode, options);
+  }
+  async function embedImageNode(clonedNode, options) {
+    const isImageElement = isInstanceOfElement(clonedNode, HTMLImageElement);
+    if (!(isImageElement && !isDataUrl(clonedNode.src)) && !(isInstanceOfElement(clonedNode, SVGImageElement) && !isDataUrl(clonedNode.href.baseVal))) {
+      return;
+    }
+    const url = isImageElement ? clonedNode.src : clonedNode.href.baseVal;
+    const dataURL = await resourceToDataURL(url, getMimeType(url), options);
+    await new Promise((resolve, reject) => {
+      clonedNode.onload = resolve;
+      clonedNode.onerror = options.onImageErrorHandler ? (...attributes) => {
+        try {
+          resolve(options.onImageErrorHandler(...attributes));
+        } catch (error) {
+          reject(error);
+        }
+      } : reject;
+      const image = clonedNode;
+      if (image.decode) {
+        image.decode = resolve;
+      }
+      if (image.loading === "lazy") {
+        image.loading = "eager";
+      }
+      if (isImageElement) {
+        clonedNode.srcset = "";
+        clonedNode.src = dataURL;
+      } else {
+        clonedNode.href.baseVal = dataURL;
+      }
+    });
+  }
+  async function embedChildren(clonedNode, options) {
+    const children = toArray(clonedNode.childNodes);
+    const deferreds = children.map((child) => embedImages(child, options));
+    await Promise.all(deferreds).then(() => clonedNode);
+  }
+  async function embedImages(clonedNode, options) {
+    if (isInstanceOfElement(clonedNode, Element)) {
+      await embedBackground(clonedNode, options);
+      await embedImageNode(clonedNode, options);
+      await embedChildren(clonedNode, options);
+    }
+  }
+
+  // node_modules/html-to-image/es/apply-style.js
+  function applyStyle(node, options) {
+    const { style } = node;
+    if (options.backgroundColor) {
+      style.backgroundColor = options.backgroundColor;
+    }
+    if (options.width) {
+      style.width = `${options.width}px`;
+    }
+    if (options.height) {
+      style.height = `${options.height}px`;
+    }
+    const manual = options.style;
+    if (manual != null) {
+      Object.keys(manual).forEach((key) => {
+        style[key] = manual[key];
+      });
+    }
+    return node;
+  }
+
+  // node_modules/html-to-image/es/embed-webfonts.js
+  var cssFetchCache = {};
+  async function fetchCSS(url) {
+    let cache2 = cssFetchCache[url];
+    if (cache2 != null) {
+      return cache2;
+    }
+    const res = await fetch(url);
+    const cssText = await res.text();
+    cache2 = { url, cssText };
+    cssFetchCache[url] = cache2;
+    return cache2;
+  }
+  async function embedFonts(data, options) {
+    let cssText = data.cssText;
+    const regexUrl = /url\(["']?([^"')]+)["']?\)/g;
+    const fontLocs = cssText.match(/url\([^)]+\)/g) || [];
+    const loadFonts = fontLocs.map(async (loc) => {
+      let url = loc.replace(regexUrl, "$1");
+      if (!url.startsWith("https://")) {
+        url = new URL(url, data.url).href;
+      }
+      return fetchAsDataURL(url, options.fetchRequestInit, ({ result }) => {
+        cssText = cssText.replace(loc, `url(${result})`);
+        return [loc, result];
+      });
+    });
+    return Promise.all(loadFonts).then(() => cssText);
+  }
+  function parseCSS(source) {
+    if (source == null) {
+      return [];
+    }
+    const result = [];
+    const commentsRegex = /(\/\*[\s\S]*?\*\/)/gi;
+    let cssText = source.replace(commentsRegex, "");
+    const keyframesRegex = new RegExp("((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})", "gi");
+    while (true) {
+      const matches = keyframesRegex.exec(cssText);
+      if (matches === null) {
+        break;
+      }
+      result.push(matches[0]);
+    }
+    cssText = cssText.replace(keyframesRegex, "");
+    const importRegex = /@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi;
+    const combinedCSSRegex = "((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})";
+    const unifiedRegex = new RegExp(combinedCSSRegex, "gi");
+    while (true) {
+      let matches = importRegex.exec(cssText);
+      if (matches === null) {
+        matches = unifiedRegex.exec(cssText);
+        if (matches === null) {
+          break;
+        } else {
+          importRegex.lastIndex = unifiedRegex.lastIndex;
+        }
+      } else {
+        unifiedRegex.lastIndex = importRegex.lastIndex;
+      }
+      result.push(matches[0]);
+    }
+    return result;
+  }
+  async function getCSSRules(styleSheets, options) {
+    const ret = [];
+    const deferreds = [];
+    styleSheets.forEach((sheet) => {
+      if ("cssRules" in sheet) {
+        try {
+          toArray(sheet.cssRules || []).forEach((item, index) => {
+            if (item.type === CSSRule.IMPORT_RULE) {
+              let importIndex = index + 1;
+              const url = item.href;
+              const deferred = fetchCSS(url).then((metadata) => embedFonts(metadata, options)).then((cssText) => parseCSS(cssText).forEach((rule) => {
+                try {
+                  sheet.insertRule(rule, rule.startsWith("@import") ? importIndex += 1 : sheet.cssRules.length);
+                } catch (error) {
+                  console.error("Error inserting rule from remote css", {
+                    rule,
+                    error
+                  });
+                }
+              })).catch((e) => {
+                console.error("Error loading remote css", e.toString());
+              });
+              deferreds.push(deferred);
+            }
+          });
+        } catch (e) {
+          const inline = styleSheets.find((a) => a.href == null) || document.styleSheets[0];
+          if (sheet.href != null) {
+            deferreds.push(fetchCSS(sheet.href).then((metadata) => embedFonts(metadata, options)).then((cssText) => parseCSS(cssText).forEach((rule) => {
+              inline.insertRule(rule, inline.cssRules.length);
+            })).catch((err2) => {
+              console.error("Error loading remote stylesheet", err2);
+            }));
+          }
+          console.error("Error inlining remote css file", e);
+        }
+      }
+    });
+    return Promise.all(deferreds).then(() => {
+      styleSheets.forEach((sheet) => {
+        if ("cssRules" in sheet) {
+          try {
+            toArray(sheet.cssRules || []).forEach((item) => {
+              ret.push(item);
+            });
+          } catch (e) {
+            console.error(`Error while reading CSS rules from ${sheet.href}`, e);
+          }
+        }
+      });
+      return ret;
+    });
+  }
+  function getWebFontRules(cssRules) {
+    return cssRules.filter((rule) => rule.type === CSSRule.FONT_FACE_RULE).filter((rule) => shouldEmbed(rule.style.getPropertyValue("src")));
+  }
+  async function parseWebFontRules(node, options) {
+    if (node.ownerDocument == null) {
+      throw new Error("Provided element is not within a Document");
+    }
+    const styleSheets = toArray(node.ownerDocument.styleSheets);
+    const cssRules = await getCSSRules(styleSheets, options);
+    return getWebFontRules(cssRules);
+  }
+  function normalizeFontFamily(font) {
+    return font.trim().replace(/["']/g, "");
+  }
+  function getUsedFonts(node) {
+    const fonts = /* @__PURE__ */ new Set();
+    function traverse(node2) {
+      const fontFamily = node2.style.fontFamily || getComputedStyle(node2).fontFamily;
+      fontFamily.split(",").forEach((font) => {
+        fonts.add(normalizeFontFamily(font));
+      });
+      Array.from(node2.children).forEach((child) => {
+        if (child instanceof HTMLElement) {
+          traverse(child);
+        }
+      });
+    }
+    traverse(node);
+    return fonts;
+  }
+  async function getWebFontCSS(node, options) {
+    const rules = await parseWebFontRules(node, options);
+    const usedFonts = getUsedFonts(node);
+    const cssTexts = await Promise.all(rules.filter((rule) => usedFonts.has(normalizeFontFamily(rule.style.fontFamily))).map((rule) => {
+      const baseUrl = rule.parentStyleSheet ? rule.parentStyleSheet.href : null;
+      return embedResources(rule.cssText, baseUrl, options);
+    }));
+    return cssTexts.join("\n");
+  }
+  async function embedWebFonts(clonedNode, options) {
+    const cssText = options.fontEmbedCSS != null ? options.fontEmbedCSS : options.skipFonts ? null : await getWebFontCSS(clonedNode, options);
+    if (cssText) {
+      const styleNode = document.createElement("style");
+      const sytleContent = document.createTextNode(cssText);
+      styleNode.appendChild(sytleContent);
+      if (clonedNode.firstChild) {
+        clonedNode.insertBefore(styleNode, clonedNode.firstChild);
+      } else {
+        clonedNode.appendChild(styleNode);
+      }
+    }
+  }
+
+  // node_modules/html-to-image/es/index.js
+  async function toSvg(node, options = {}) {
+    const { width, height } = getImageSize(node, options);
+    const clonedNode = await cloneNode(node, options, true);
+    await embedWebFonts(clonedNode, options);
+    await embedImages(clonedNode, options);
+    applyStyle(clonedNode, options);
+    const datauri = await nodeToDataURL(clonedNode, width, height);
+    return datauri;
+  }
+  async function toCanvas(node, options = {}) {
+    const { width, height } = getImageSize(node, options);
+    const svg = await toSvg(node, options);
+    const img = await createImage(svg);
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    const ratio = options.pixelRatio || getPixelRatio();
+    const canvasWidth = options.canvasWidth || width;
+    const canvasHeight = options.canvasHeight || height;
+    canvas.width = canvasWidth * ratio;
+    canvas.height = canvasHeight * ratio;
+    if (!options.skipAutoScale) {
+      checkCanvasDimensions(canvas);
+    }
+    canvas.style.width = `${canvasWidth}`;
+    canvas.style.height = `${canvasHeight}`;
+    if (options.backgroundColor) {
+      context.fillStyle = options.backgroundColor;
+      context.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    return canvas;
+  }
+  async function toPng(node, options = {}) {
+    const canvas = await toCanvas(node, options);
+    return canvas.toDataURL();
+  }
+
+  // node_modules/fflate/esm/browser.js
+  var u8 = Uint8Array;
+  var u16 = Uint16Array;
+  var i32 = Int32Array;
+  var fleb = new u8([
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    1,
+    1,
+    2,
+    2,
+    2,
+    2,
+    3,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    4,
+    5,
+    5,
+    5,
+    5,
+    0,
+    /* unused */
+    0,
+    0,
+    /* impossible */
+    0
+  ]);
+  var fdeb = new u8([
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    2,
+    2,
+    3,
+    3,
+    4,
+    4,
+    5,
+    5,
+    6,
+    6,
+    7,
+    7,
+    8,
+    8,
+    9,
+    9,
+    10,
+    10,
+    11,
+    11,
+    12,
+    12,
+    13,
+    13,
+    /* unused */
+    0,
+    0
+  ]);
+  var clim = new u8([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
+  var freb = function(eb, start) {
+    var b = new u16(31);
+    for (var i2 = 0; i2 < 31; ++i2) {
+      b[i2] = start += 1 << eb[i2 - 1];
+    }
+    var r = new i32(b[30]);
+    for (var i2 = 1; i2 < 30; ++i2) {
+      for (var j = b[i2]; j < b[i2 + 1]; ++j) {
+        r[j] = j - b[i2] << 5 | i2;
+      }
+    }
+    return { b, r };
+  };
+  var _a = freb(fleb, 2);
+  var fl = _a.b;
+  var revfl = _a.r;
+  fl[28] = 258, revfl[258] = 28;
+  var _b = freb(fdeb, 0);
+  var fd = _b.b;
+  var revfd = _b.r;
+  var rev = new u16(32768);
+  for (i = 0; i < 32768; ++i) {
+    x = (i & 43690) >> 1 | (i & 21845) << 1;
+    x = (x & 52428) >> 2 | (x & 13107) << 2;
+    x = (x & 61680) >> 4 | (x & 3855) << 4;
+    rev[i] = ((x & 65280) >> 8 | (x & 255) << 8) >> 1;
+  }
+  var x;
+  var i;
+  var hMap = (function(cd, mb, r) {
+    var s = cd.length;
+    var i2 = 0;
+    var l = new u16(mb);
+    for (; i2 < s; ++i2) {
+      if (cd[i2])
+        ++l[cd[i2] - 1];
+    }
+    var le = new u16(mb);
+    for (i2 = 1; i2 < mb; ++i2) {
+      le[i2] = le[i2 - 1] + l[i2 - 1] << 1;
+    }
+    var co;
+    if (r) {
+      co = new u16(1 << mb);
+      var rvb = 15 - mb;
+      for (i2 = 0; i2 < s; ++i2) {
+        if (cd[i2]) {
+          var sv = i2 << 4 | cd[i2];
+          var r_1 = mb - cd[i2];
+          var v = le[cd[i2] - 1]++ << r_1;
+          for (var m = v | (1 << r_1) - 1; v <= m; ++v) {
+            co[rev[v] >> rvb] = sv;
+          }
+        }
+      }
+    } else {
+      co = new u16(s);
+      for (i2 = 0; i2 < s; ++i2) {
+        if (cd[i2]) {
+          co[i2] = rev[le[cd[i2] - 1]++] >> 15 - cd[i2];
+        }
+      }
+    }
+    return co;
+  });
+  var flt = new u8(288);
+  for (i = 0; i < 144; ++i)
+    flt[i] = 8;
+  var i;
+  for (i = 144; i < 256; ++i)
+    flt[i] = 9;
+  var i;
+  for (i = 256; i < 280; ++i)
+    flt[i] = 7;
+  var i;
+  for (i = 280; i < 288; ++i)
+    flt[i] = 8;
+  var i;
+  var fdt = new u8(32);
+  for (i = 0; i < 32; ++i)
+    fdt[i] = 5;
+  var i;
+  var flrm = /* @__PURE__ */ hMap(flt, 9, 1);
+  var fdrm = /* @__PURE__ */ hMap(fdt, 5, 1);
+  var max = function(a) {
+    var m = a[0];
+    for (var i2 = 1; i2 < a.length; ++i2) {
+      if (a[i2] > m)
+        m = a[i2];
+    }
+    return m;
+  };
+  var bits = function(d, p, m) {
+    var o = p / 8 | 0;
+    return (d[o] | d[o + 1] << 8) >> (p & 7) & m;
+  };
+  var bits16 = function(d, p) {
+    var o = p / 8 | 0;
+    return (d[o] | d[o + 1] << 8 | d[o + 2] << 16) >> (p & 7);
+  };
+  var shft = function(p) {
+    return (p + 7) / 8 | 0;
+  };
+  var slc = function(v, s, e) {
+    if (s == null || s < 0)
+      s = 0;
+    if (e == null || e > v.length)
+      e = v.length;
+    return new u8(v.subarray(s, e));
+  };
+  var ec = [
+    "unexpected EOF",
+    "invalid block type",
+    "invalid length/literal",
+    "invalid distance",
+    "stream finished",
+    "no stream handler",
+    ,
+    // determined by compression function
+    "no callback",
+    "invalid UTF-8 data",
+    "extra field too long",
+    "date not in range 1980-2099",
+    "filename too long",
+    "stream finishing",
+    "invalid zip data"
+    // determined by unknown compression method
+  ];
+  var err = function(ind, msg, nt) {
+    var e = new Error(msg || ec[ind]);
+    e.code = ind;
+    if (Error.captureStackTrace)
+      Error.captureStackTrace(e, err);
+    if (!nt)
+      throw e;
+    return e;
+  };
+  var inflt = function(dat, st, buf, dict) {
+    var sl = dat.length, dl = dict ? dict.length : 0;
+    if (!sl || st.f && !st.l)
+      return buf || new u8(0);
+    var noBuf = !buf;
+    var resize = noBuf || st.i != 2;
+    var noSt = st.i;
+    if (noBuf)
+      buf = new u8(sl * 3);
+    var cbuf = function(l2) {
+      var bl = buf.length;
+      if (l2 > bl) {
+        var nbuf = new u8(Math.max(bl * 2, l2));
+        nbuf.set(buf);
+        buf = nbuf;
+      }
+    };
+    var final = st.f || 0, pos = st.p || 0, bt = st.b || 0, lm = st.l, dm = st.d, lbt = st.m, dbt = st.n;
+    var tbts = sl * 8;
+    do {
+      if (!lm) {
+        final = bits(dat, pos, 1);
+        var type = bits(dat, pos + 1, 3);
+        pos += 3;
+        if (!type) {
+          var s = shft(pos) + 4, l = dat[s - 4] | dat[s - 3] << 8, t = s + l;
+          if (t > sl) {
+            if (noSt)
+              err(0);
+            break;
+          }
+          if (resize)
+            cbuf(bt + l);
+          buf.set(dat.subarray(s, t), bt);
+          st.b = bt += l, st.p = pos = t * 8, st.f = final;
+          continue;
+        } else if (type == 1)
+          lm = flrm, dm = fdrm, lbt = 9, dbt = 5;
+        else if (type == 2) {
+          var hLit = bits(dat, pos, 31) + 257, hcLen = bits(dat, pos + 10, 15) + 4;
+          var tl = hLit + bits(dat, pos + 5, 31) + 1;
+          pos += 14;
+          var ldt = new u8(tl);
+          var clt = new u8(19);
+          for (var i2 = 0; i2 < hcLen; ++i2) {
+            clt[clim[i2]] = bits(dat, pos + i2 * 3, 7);
+          }
+          pos += hcLen * 3;
+          var clb = max(clt), clbmsk = (1 << clb) - 1;
+          var clm = hMap(clt, clb, 1);
+          for (var i2 = 0; i2 < tl; ) {
+            var r = clm[bits(dat, pos, clbmsk)];
+            pos += r & 15;
+            var s = r >> 4;
+            if (s < 16) {
+              ldt[i2++] = s;
+            } else {
+              var c = 0, n = 0;
+              if (s == 16)
+                n = 3 + bits(dat, pos, 3), pos += 2, c = ldt[i2 - 1];
+              else if (s == 17)
+                n = 3 + bits(dat, pos, 7), pos += 3;
+              else if (s == 18)
+                n = 11 + bits(dat, pos, 127), pos += 7;
+              while (n--)
+                ldt[i2++] = c;
+            }
+          }
+          var lt = ldt.subarray(0, hLit), dt = ldt.subarray(hLit);
+          lbt = max(lt);
+          dbt = max(dt);
+          lm = hMap(lt, lbt, 1);
+          dm = hMap(dt, dbt, 1);
+        } else
+          err(1);
+        if (pos > tbts) {
+          if (noSt)
+            err(0);
+          break;
+        }
+      }
+      if (resize)
+        cbuf(bt + 131072);
+      var lms = (1 << lbt) - 1, dms = (1 << dbt) - 1;
+      var lpos = pos;
+      for (; ; lpos = pos) {
+        var c = lm[bits16(dat, pos) & lms], sym = c >> 4;
+        pos += c & 15;
+        if (pos > tbts) {
+          if (noSt)
+            err(0);
+          break;
+        }
+        if (!c)
+          err(2);
+        if (sym < 256)
+          buf[bt++] = sym;
+        else if (sym == 256) {
+          lpos = pos, lm = null;
+          break;
+        } else {
+          var add = sym - 254;
+          if (sym > 264) {
+            var i2 = sym - 257, b = fleb[i2];
+            add = bits(dat, pos, (1 << b) - 1) + fl[i2];
+            pos += b;
+          }
+          var d = dm[bits16(dat, pos) & dms], dsym = d >> 4;
+          if (!d)
+            err(3);
+          pos += d & 15;
+          var dt = fd[dsym];
+          if (dsym > 3) {
+            var b = fdeb[dsym];
+            dt += bits16(dat, pos) & (1 << b) - 1, pos += b;
+          }
+          if (pos > tbts) {
+            if (noSt)
+              err(0);
+            break;
+          }
+          if (resize)
+            cbuf(bt + 131072);
+          var end = bt + add;
+          if (bt < dt) {
+            var shift = dl - dt, dend = Math.min(dt, end);
+            if (shift + bt < 0)
+              err(3);
+            for (; bt < dend; ++bt)
+              buf[bt] = dict[shift + bt];
+          }
+          for (; bt < end; ++bt)
+            buf[bt] = buf[bt - dt];
+        }
+      }
+      st.l = lm, st.p = lpos, st.b = bt, st.f = final;
+      if (lm)
+        final = 1, st.m = lbt, st.d = dm, st.n = dbt;
+    } while (!final);
+    return bt != buf.length && noBuf ? slc(buf, 0, bt) : buf.subarray(0, bt);
+  };
+  var et = /* @__PURE__ */ new u8(0);
+  var b2 = function(d, b) {
+    return d[b] | d[b + 1] << 8;
+  };
+  var b4 = function(d, b) {
+    return (d[b] | d[b + 1] << 8 | d[b + 2] << 16 | d[b + 3] << 24) >>> 0;
+  };
+  var b8 = function(d, b) {
+    return b4(d, b) + b4(d, b + 4) * 4294967296;
+  };
+  function inflateSync(data, opts) {
+    return inflt(data, { i: 2 }, opts && opts.out, opts && opts.dictionary);
+  }
+  var td = typeof TextDecoder != "undefined" && /* @__PURE__ */ new TextDecoder();
+  var tds = 0;
+  try {
+    td.decode(et, { stream: true });
+    tds = 1;
+  } catch (e) {
+  }
+  var dutf8 = function(d) {
+    for (var r = "", i2 = 0; ; ) {
+      var c = d[i2++];
+      var eb = (c > 127) + (c > 223) + (c > 239);
+      if (i2 + eb > d.length)
+        return { s: r, r: slc(d, i2 - 1) };
+      if (!eb)
+        r += String.fromCharCode(c);
+      else if (eb == 3) {
+        c = ((c & 15) << 18 | (d[i2++] & 63) << 12 | (d[i2++] & 63) << 6 | d[i2++] & 63) - 65536, r += String.fromCharCode(55296 | c >> 10, 56320 | c & 1023);
+      } else if (eb & 1)
+        r += String.fromCharCode((c & 31) << 6 | d[i2++] & 63);
+      else
+        r += String.fromCharCode((c & 15) << 12 | (d[i2++] & 63) << 6 | d[i2++] & 63);
+    }
+  };
+  function strFromU8(dat, latin1) {
+    if (latin1) {
+      var r = "";
+      for (var i2 = 0; i2 < dat.length; i2 += 16384)
+        r += String.fromCharCode.apply(null, dat.subarray(i2, i2 + 16384));
+      return r;
+    } else if (td) {
+      return td.decode(dat);
+    } else {
+      var _a2 = dutf8(dat), s = _a2.s, r = _a2.r;
+      if (r.length)
+        err(8);
+      return s;
+    }
+  }
+  var slzh = function(d, b) {
+    return b + 30 + b2(d, b + 26) + b2(d, b + 28);
+  };
+  var zh = function(d, b, z) {
+    var fnl = b2(d, b + 28), efl = b2(d, b + 30), fn = strFromU8(d.subarray(b + 46, b + 46 + fnl), !(b2(d, b + 8) & 2048)), es = b + 46 + fnl;
+    var _a2 = z64hs(d, es, efl, z, b4(d, b + 20), b4(d, b + 24), b4(d, b + 42)), sc = _a2[0], su = _a2[1], off = _a2[2];
+    return [b2(d, b + 10), sc, su, fn, es + efl + b2(d, b + 32), off];
+  };
+  var z64hs = function(d, b, l, z, sc, su, off) {
+    var nsc = sc == 4294967295, nsu = su == 4294967295, noff = off == 4294967295, e = b + l;
+    var nf = nsc + nsu + noff;
+    if (z && nf) {
+      for (; b + 4 < e; b += 4 + b2(d, b + 2)) {
+        if (b2(d, b) == 1) {
+          return [
+            nsc ? b8(d, b + 4 + 8 * nsu) : sc,
+            nsu ? b8(d, b + 4) : su,
+            noff ? b8(d, b + 4 + 8 * (nsu + nsc)) : off,
+            1
+          ];
+        }
+      }
+      if (z < 2)
+        err(13);
+    }
+    return [sc, su, off, 0];
+  };
+  function unzipSync(data, opts) {
+    var files = {};
+    var e = data.length - 22;
+    for (; b4(data, e) != 101010256; --e) {
+      if (!e || data.length - e > 65558)
+        err(13);
+    }
+    ;
+    var c = b2(data, e + 8);
+    if (!c)
+      return {};
+    var o = b4(data, e + 16);
+    var z = b4(data, e - 20) == 117853008;
+    if (z) {
+      var ze = b4(data, e - 12);
+      z = b4(data, ze) == 101075792;
+      if (z) {
+        c = b4(data, ze + 32);
+        o = b4(data, ze + 48);
+      }
+    }
+    var fltr = opts && opts.filter;
+    for (var i2 = 0; i2 < c; ++i2) {
+      var _a2 = zh(data, o, z), c_2 = _a2[0], sc = _a2[1], su = _a2[2], fn = _a2[3], no = _a2[4], off = _a2[5], b = slzh(data, off);
+      o = no;
+      if (!fltr || fltr({
+        name: fn,
+        size: sc,
+        originalSize: su,
+        compression: c_2
+      })) {
+        if (!c_2)
+          files[fn] = slc(data, b, b + sc);
+        else if (c_2 == 8)
+          files[fn] = inflateSync(data.subarray(b, b + sc), { out: new u8(su) });
+        else
+          err(14, "unknown compression type " + c_2);
+      }
+    }
+    return files;
+  }
+
+  // src/plugin/browser-source.js
+  var MAX_BYTES = 40 * 1024 * 1024;
+  var MIME = { css: "text/css", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", gif: "image/gif", svg: "image/svg+xml", webp: "image/webp", ttf: "font/ttf", otf: "font/otf", woff: "font/woff", woff2: "font/woff2" };
+  function safeName(name) {
+    if (typeof name !== "string" || !name || name.startsWith("/") || name.includes("\\") || /^[a-z][a-z\d+.-]*:/i.test(name)) throw new Error("Unsafe file path");
+    const parts = [];
+    for (const part of name.split("/")) {
+      if (!part || part === ".") continue;
+      if (part === "..") {
+        if (!parts.length) throw new Error("Unsafe file path");
+        parts.pop();
+      } else parts.push(part);
+    }
+    if (!parts.length) throw new Error("Unsafe file path");
+    return parts.join("/");
+  }
+  function resolveRef(base, reference) {
+    const raw = reference.trim().replace(/^['"]|['"]$/g, "");
+    if (/^(data:|blob:|#)/i.test(raw)) return { direct: raw };
+    if (/^(?:[a-z][a-z\d+.-]*:|\/\/)/i.test(raw)) return { external: raw };
+    const path = raw.split(/[?#]/)[0];
+    if (!path) return { direct: raw };
+    return { path: safeName(`${base.slice(0, base.lastIndexOf("/") + 1)}${decodeURIComponent(path)}`) };
+  }
+  function dataUrl(path, bytes) {
+    const extension = path.split(".").pop().toLowerCase();
+    const mime = MIME[extension] || "application/octet-stream";
+    let binary = "";
+    for (let index = 0; index < bytes.length; index += 32768) binary += String.fromCharCode(...bytes.subarray(index, index + 32768));
+    return `data:${mime};base64,${btoa(binary)}`;
+  }
+  async function replaceAsync(input, expression, replacer) {
+    const matches = [...input.matchAll(expression)];
+    const replacements = await Promise.all(matches.map((match) => replacer(...match)));
+    let output = input;
+    for (let index = matches.length - 1; index >= 0; index--) {
+      const match = matches[index];
+      output = output.slice(0, match.index) + replacements[index] + output.slice(match.index + match[0].length);
+    }
+    return output;
+  }
+  async function prepareBrowserFiles(files) {
+    if (!Array.isArray(files) || files.length < 1 || files.length > 100) throw new Error("Only HTML files and ZIPs are supported");
+    const contents = /* @__PURE__ */ new Map();
+    let total = 0;
+    for (const file of files) {
+      const name = safeName(file.name);
+      if (!/\.(html?|zip)$/i.test(name)) throw new Error("Only HTML files and ZIPs are supported");
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      total += bytes.length;
+      if (total > MAX_BYTES) throw new Error("Files exceed 40 MB");
+      if (/\.zip$/i.test(name)) {
+        const extracted = unzipSync(bytes, { filter(entry) {
+          if (entry.name.endsWith("/")) return false;
+          safeName(entry.name);
+          total += entry.originalSize;
+          if (total > MAX_BYTES) throw new Error("Extracted files exceed 40 MB");
+          return true;
+        } });
+        for (const [path, data] of Object.entries(extracted)) contents.set(safeName(path), data);
+      } else contents.set(name, bytes);
+    }
+    const htmlNames = [...contents.keys()].filter((name) => /\.html?$/i.test(name)).sort((a, b) => a.localeCompare(b, void 0, { numeric: true }));
+    if (!htmlNames.length) throw new Error("No HTML file found");
+    const warnings = [];
+    const warning = (message) => {
+      if (!warnings.includes(message)) warnings.push(message);
+    };
+    const textDecoder = new TextDecoder();
+    const cachedUrls = /* @__PURE__ */ new Map();
+    function assetUrl(base, reference) {
+      let ref;
+      try {
+        ref = resolveRef(base, reference);
+      } catch {
+        warning(`${base}: unsafe asset path ${reference}`);
+        return "";
+      }
+      if (ref.direct) return ref.direct;
+      if (ref.external) {
+        warning(`${base}: external asset omitted: ${ref.external}`);
+        return "";
+      }
+      const bytes = contents.get(ref.path);
+      if (!bytes) {
+        warning(`${base}: missing asset ${reference}`);
+        return "";
+      }
+      if (!cachedUrls.has(ref.path)) cachedUrls.set(ref.path, dataUrl(ref.path, bytes));
+      return cachedUrls.get(ref.path);
+    }
+    async function cssUrls(css, base, seen = /* @__PURE__ */ new Set()) {
+      let output = await replaceAsync(css, /@import\s+(?:url\()?\s*['"]?([^'"\s);]+)['"]?\s*\)?\s*;/gi, async (match, reference) => {
+        const ref = resolveRef(base, reference);
+        if (!ref.path || !contents.has(ref.path) || seen.has(ref.path)) {
+          warning(`${base}: CSS import omitted: ${reference}`);
+          return "";
+        }
+        seen.add(ref.path);
+        return cssUrls(textDecoder.decode(contents.get(ref.path)), ref.path, seen);
+      });
+      output = await replaceAsync(output, /url\(\s*(['"]?)(.*?)\1\s*\)/gi, async (_match, _quote, reference) => {
+        const url = assetUrl(base, reference);
+        return url ? `url("${url}")` : "none";
+      });
+      return output;
+    }
+    const htmlFiles = [];
+    let title = "";
+    for (const name of htmlNames) {
+      const doc = new DOMParser().parseFromString(textDecoder.decode(contents.get(name)), "text/html");
+      if (!title) title = doc.title.trim();
+      for (const node of doc.querySelectorAll("script,base,iframe,object,embed")) node.remove();
+      for (const node of doc.querySelectorAll('link:not([rel~="stylesheet"]),meta[http-equiv]')) node.remove();
+      for (const link of doc.querySelectorAll('link[rel~="stylesheet"]')) {
+        const href = link.getAttribute("href") || "";
+        const ref = resolveRef(name, href);
+        const style = doc.createElement("style");
+        if (ref.path && contents.has(ref.path)) style.textContent = await cssUrls(textDecoder.decode(contents.get(ref.path)), ref.path);
+        else warning(`${name}: stylesheet omitted: ${href}`);
+        link.replaceWith(style);
+      }
+      for (const style of doc.querySelectorAll("style")) style.textContent = await cssUrls(style.textContent || "", name);
+      for (const node of doc.querySelectorAll("[style]")) node.setAttribute("style", await cssUrls(node.getAttribute("style") || "", name));
+      for (const node of doc.querySelectorAll("[src],[poster],image[href],image[xlink\\:href]")) {
+        for (const attribute of ["src", "poster", "href", "xlink:href"]) {
+          if (!node.hasAttribute(attribute)) continue;
+          const url = assetUrl(name, node.getAttribute(attribute));
+          if (url) node.setAttribute(attribute, url);
+          else node.removeAttribute(attribute);
+        }
+      }
+      for (const node of doc.querySelectorAll("[srcset]")) {
+        node.removeAttribute("srcset");
+        warning(`${name}: srcset omitted`);
+      }
+      const policy = doc.createElement("meta");
+      policy.setAttribute("http-equiv", "Content-Security-Policy");
+      policy.setAttribute("content", "default-src 'none'; img-src data: blob:; font-src data: blob:; style-src 'unsafe-inline' data:; media-src data: blob:; script-src 'none'; connect-src 'none'; frame-src 'none'");
+      doc.head.prepend(policy);
+      htmlFiles.push({ name, html: `<!doctype html>${doc.documentElement.outerHTML}` });
+    }
+    return { htmlFiles, warnings, title: title || htmlNames[0].split("/").pop() };
+  }
+
+  // src/contract.js
+  var MAX_PAGES = 100;
+  var MAX_ELEMENTS = 5e3;
+  var MAX_SIZE = 1e4;
+  function positive(value, label) {
+    if (!Number.isFinite(value) || value <= 0 || value > MAX_SIZE) throw new Error(`Invalid ${label}`);
+  }
+  function coordinate(value, label) {
+    if (!Number.isFinite(value) || Math.abs(value) > MAX_SIZE * 2) throw new Error(`Invalid ${label}`);
+  }
+  function validateCapture(value) {
+    if (!value || typeof value !== "object" || value.version !== 1) throw new Error("Unsupported capture version");
+    if (typeof value.title !== "string" || !value.title.trim()) throw new Error("Invalid title");
+    if (!Array.isArray(value.pages) || value.pages.length < 1 || value.pages.length > MAX_PAGES) throw new Error("Invalid pages");
+    if (!Array.isArray(value.warnings)) throw new Error("Invalid warnings");
+    const ids = /* @__PURE__ */ new Set();
+    for (const page of value.pages) {
+      if (!page || typeof page.id !== "string" || !page.id || ids.has(page.id)) throw new Error("Invalid or duplicate page id");
+      ids.add(page.id);
+      if (typeof page.name !== "string" || !page.name) throw new Error("Invalid page name");
+      positive(page.width, "width");
+      positive(page.height, "height");
+      if (page.thumbnail !== void 0 && (typeof page.thumbnail !== "string" || !/^data:image\/png;base64,[A-Za-z0-9+/]+={0,2}$/.test(page.thumbnail) || page.thumbnail.length > 5e5)) throw new Error("Invalid page thumbnail");
+      if (!Array.isArray(page.elements) || page.elements.length > MAX_ELEMENTS) throw new Error("Invalid elements");
+      for (const element of page.elements) {
+        if (!element || !["rect", "text", "image"].includes(element.kind)) throw new Error("Invalid element kind");
+        coordinate(element.x, "x");
+        coordinate(element.y, "y");
+        positive(element.width, "element width");
+        positive(element.height, "element height");
+        if (element.kind === "text") {
+          if (typeof element.text !== "string" || element.text.length > 1e5) throw new Error("Invalid text");
+          if (typeof element.fontFamily !== "string" || !element.fontFamily) throw new Error("Invalid font family");
+          positive(element.fontSize, "font size");
+        }
+        if (element.kind === "image" && (typeof element.data !== "string" || element.data.length > 15e6)) throw new Error("Invalid image data");
+      }
+    }
+    return value;
+  }
+
+  // src/plugin/browser.js
+  var VIEWPORT = { width: 1440, height: 900 };
+  function pageRoots(doc) {
+    for (const selector of ["[data-page-id]", "[data-slide]", ".slide"]) {
+      const roots = [...doc.querySelectorAll(selector)];
+      if (roots.length > 1) return { selector, roots };
+    }
+    return { selector: "body", roots: [doc.body] };
+  }
+  function exposeRoot(win, roots, index) {
+    for (const [position, node] of roots.entries()) {
+      if (roots.length === 1) break;
+      if (position !== index) {
+        node.style.setProperty("display", "none", "important");
+        continue;
+      }
+      node.removeAttribute("hidden");
+      node.removeAttribute("inert");
+      node.style.removeProperty("display");
+      if (win.getComputedStyle(node).display === "none") node.style.setProperty("display", "block", "important");
+      node.style.setProperty("visibility", "visible", "important");
+      for (let parent = node.parentElement; parent; parent = parent.parentElement) {
+        if (win.getComputedStyle(parent).transform !== "none") parent.style.setProperty("transform", "none", "important");
+      }
+    }
+  }
+  async function measurePage(win, root, id, name, whole) {
+    const doc = root.ownerDocument;
+    const origin = root.getBoundingClientRect();
+    const width = Math.max(1, Math.ceil(whole ? Math.max(doc.documentElement.scrollWidth, win.innerWidth) : origin.width));
+    const height = Math.max(1, Math.ceil(whole ? Math.max(doc.documentElement.scrollHeight, win.innerHeight) : origin.height));
+    const elements = [];
+    const warnings = [];
+    let visited = 0;
+    let imageCount = 0;
+    const note = (message) => {
+      if (!warnings.includes(message)) warnings.push(message);
+    };
+    const relative = (rect) => ({
+      x: Math.round((rect.left - origin.left) * 100) / 100,
+      y: Math.round((rect.top - origin.top) * 100) / 100,
+      width: Math.round(rect.width * 100) / 100,
+      height: Math.round(rect.height * 100) / 100
+    });
+    async function walk(element) {
+      if (visited++ > 5e3) {
+        note("Element limit reached; remaining DOM omitted");
+        return;
+      }
+      const style = win.getComputedStyle(element);
+      if (style.display === "none" || style.visibility === "hidden" || Number(style.opacity) === 0) return;
+      if (["SCRIPT", "STYLE", "NOSCRIPT", "TEMPLATE"].includes(element.tagName)) return;
+      const rect = relative(element.getBoundingClientRect());
+      const hasBox = rect.width > 0 && rect.height > 0;
+      const label = element.getAttribute("data-region-id") || element.id || element.tagName.toLowerCase();
+      if (style.transform !== "none") note(`${label}: CSS transform is approximated by its bounding box`);
+      if (style.filter !== "none" || style.backdropFilter !== "none") note(`${label}: CSS filter is not editable`);
+      if (style.boxShadow !== "none") note(`${label}: box shadow is omitted`);
+      const isImage = ["IMG", "SVG", "CANVAS", "VIDEO"].includes(element.tagName);
+      const hasBackgroundImage = style.backgroundImage !== "none";
+      const background = style.backgroundColor;
+      const sides = ["Top", "Right", "Bottom", "Left"].map((side) => ({ name: side.toLowerCase(), width: parseFloat(style[`border${side}Width`]) || 0, color: style[`border${side}Color`] }));
+      const uniformBorder = sides[0].width > 0 && sides.every((side) => side.width === sides[0].width && side.color === sides[0].color);
+      const hasBackground = background !== "rgba(0, 0, 0, 0)" && background !== "transparent";
+      if (hasBox && (hasBackground && !hasBackgroundImage || uniformBorder)) elements.push({
+        kind: "rect",
+        ...rect,
+        name: label,
+        fill: background,
+        ...uniformBorder ? { borderColor: sides[0].color, borderWidth: sides[0].width } : {},
+        radius: parseFloat(style.borderTopLeftRadius) || 0,
+        opacity: Number(style.opacity)
+      });
+      if (hasBox && (isImage || hasBackgroundImage)) {
+        if (imageCount++ < 100) {
+          try {
+            const png = await toPng(element, { pixelRatio: 1, filter: hasBackgroundImage && !isImage ? (child) => child === element : void 0 });
+            elements.push({ kind: "image", ...rect, name: label, data: png.split(",")[1] });
+            note(`${label}: rasterized image or CSS background; this layer is not editable`);
+          } catch {
+            note(`${label}: image capture failed`);
+          }
+        } else note("Image limit reached; remaining images omitted");
+        if (isImage) return;
+      }
+      if (hasBox && !uniformBorder) for (const side of sides) {
+        if (side.width <= 0) continue;
+        const edge = side.name === "top" ? { x: rect.x, y: rect.y, width: rect.width, height: side.width } : side.name === "bottom" ? { x: rect.x, y: rect.y + rect.height - side.width, width: rect.width, height: side.width } : side.name === "left" ? { x: rect.x, y: rect.y, width: side.width, height: rect.height } : { x: rect.x + rect.width - side.width, y: rect.y, width: side.width, height: rect.height };
+        elements.push({ kind: "rect", ...edge, name: `${label}-border-${side.name}`, fill: side.color, opacity: Number(style.opacity) });
+      }
+      for (const child of element.childNodes) {
+        if (child.nodeType === win.Node.TEXT_NODE) {
+          const text = child.textContent || "";
+          if (!text.trim()) continue;
+          const range = doc.createRange();
+          range.selectNodeContents(child);
+          const box = relative(range.getBoundingClientRect());
+          if (box.width <= 0 || box.height <= 0) continue;
+          const contentRight = hasBox ? rect.x + rect.width - (parseFloat(style.paddingRight) || 0) : box.x + box.width;
+          elements.push({
+            kind: "text",
+            ...box,
+            width: Math.max(box.width, Math.round((contentRight - box.x) * 100) / 100),
+            name: label,
+            text: text.trim(),
+            fontFamily: style.fontFamily.split(",")[0].trim().replace(/^[\'"]|[\'"]$/g, ""),
+            fontSize: parseFloat(style.fontSize) || 16,
+            fontWeight: parseInt(style.fontWeight, 10) || 400,
+            color: style.color,
+            lineHeight: style.lineHeight === "normal" ? null : parseFloat(style.lineHeight),
+            textAlign: style.textAlign,
+            opacity: Number(style.opacity),
+            ...style.display === "inline" ? { noWrap: true } : {}
+          });
+        } else if (child.nodeType === win.Node.ELEMENT_NODE) await walk(child);
+      }
+    }
+    await walk(root);
+    const thumbnail = await toPng(root, { pixelRatio: Math.min(1, 320 / width, 180 / height), cacheBust: false });
+    return { page: { id, name, width, height, elements, thumbnail }, warnings };
+  }
+  async function captureHtml(name, html, host) {
+    const iframe = document.createElement("iframe");
+    iframe.setAttribute("sandbox", "allow-same-origin");
+    iframe.style.cssText = `position:absolute;top:0;left:0;width:${VIEWPORT.width}px;height:${VIEWPORT.height}px;opacity:0;pointer-events:none;transform:scale(.001);transform-origin:top left;border:0`;
+    host.appendChild(iframe);
+    try {
+      const ready = new Promise((resolve, reject) => {
+        iframe.onload = resolve;
+        iframe.onerror = reject;
+      });
+      iframe.srcdoc = html.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, "");
+      await ready;
+      const win = iframe.contentWindow;
+      const doc = iframe.contentDocument;
+      if (!win || !doc?.body) throw new Error("HTML preview could not be loaded");
+      await doc.fonts.ready;
+      const { selector, roots } = pageRoots(doc);
+      const pages = [];
+      const warnings = [];
+      for (const [index, root] of roots.entries()) {
+        exposeRoot(win, roots, index);
+        const id = root.getAttribute("data-page-id") || root.getAttribute("data-slide") || `${index + 1}`.padStart(2, "0");
+        const result = await measurePage(win, root, id, selector === "body" ? name : id, selector === "body");
+        pages.push(result.page);
+        warnings.push(...result.warnings.map((message) => `${result.page.name}: ${message}`));
+        if (pages.length >= 100) break;
+      }
+      return { pages, warnings };
+    } finally {
+      iframe.remove();
+    }
+  }
+  async function captureFiles(files, host) {
+    const prepared = await prepareBrowserFiles(files);
+    const pages = [];
+    const warnings = [...prepared.warnings];
+    for (const file of prepared.htmlFiles) {
+      const result = await captureHtml(file.name, file.html, host);
+      for (const page of result.pages) {
+        page.id = pages.some((item) => item.id === page.id) ? `${pages.length + 1}-${page.id}` : page.id;
+        pages.push(page);
+        if (pages.length >= 100) break;
+      }
+      warnings.push(...result.warnings);
+      if (pages.length >= 100) break;
+    }
+    return validateCapture({ version: 1, title: prepared.title, pages, warnings });
+  }
+  window.h2f = { captureFiles };
+})();
+</script>
+  <script>
+    const state = { step:0, capture:null, order:[], busy:false, result:null };
+    const $ = (selector) => document.querySelector(selector);
+    const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const titles = ['어떤 HTML을 가져올까요?', '가져올 페이지를 확인하세요', '새 행이 추가됐어요'];
+    const descriptions = ['HTML 파일이나 ZIP을 선택하세요.', '실제 페이지를 보고 순서를 바꿀 수 있습니다.', '다음 가져오기도 아래 새 행으로 들어갑니다.'];
+    function showError(message) { const box = $('#error'); box.textContent = message; box.style.display = message ? 'block' : 'none'; }
+    function render() {
+      document.querySelectorAll('.step').forEach((item,index) => item.classList.toggle('active', index === state.step));
+      document.querySelectorAll('.screen').forEach((item,index) => item.classList.toggle('active', index === state.step));
+      $('#eyebrow').textContent = 'STEP 0' + (state.step + 1) + ' / 03';
+      $('#title').textContent = titles[state.step]; $('#description').textContent = descriptions[state.step];
+      $('#back').hidden = state.step !== 1; $('#next').hidden = state.step === 2; $('#next').disabled = state.busy;
+      $('#next').textContent = state.busy ? '처리 중…' : ['다음: 페이지 확인 →', '새 행으로 가져오기 →', ''][state.step];
+      if (state.capture) {
+        $('#count').textContent = state.order.length + '개 페이지 감지';
+        $('#pageList').innerHTML = state.order.map((id,index) => {
+          const page = state.capture.pages.find((item) => item.id === id);
+          return '<div class="page-item"><img src="' + page.thumbnail + '" alt="' + escapeHtml(page.name) + ' 미리보기"><div class="page-meta"><span class="number">' + String(index + 1).padStart(2,'0') + '</span><span class="page-title" title="' + escapeHtml(page.name) + '">' + escapeHtml(page.name) + '</span><button class="move" data-move="up" data-index="' + index + '" ' + (index === 0 ? 'disabled' : '') + ' aria-label="위로">↑</button><button class="move" data-move="down" data-index="' + index + '" ' + (index === state.order.length - 1 ? 'disabled' : '') + ' aria-label="아래로">↓</button></div></div>';
+        }).join('');
+        $('#captureWarnings').innerHTML = state.capture.warnings.length ? '<strong>캡처 알림</strong><ul>' + state.capture.warnings.map((warning) => '<li>' + escapeHtml(warning) + '</li>').join('') + '</ul>' : '';
+      }
+      if (state.result) {
+        $('#success').textContent = state.result.frameIds.length + '개 편집 가능한 프레임이 새 행에 추가됐습니다.';
+        $('#resultSummary').textContent = `가로 배치 완료 · Flow 연결 ${state.result.connections}/${Math.max(0, state.result.frameIds.length - 1)}개`;
+        $('#resultWarnings').innerHTML = state.result.warnings.length ? '<strong>폰트 대체·변환 알림</strong><ul>' + state.result.warnings.map((warning) => '<li>' + escapeHtml(warning) + '</li>').join('') + '</ul>' : '폰트 대체·변환 알림 없음';
+      }
+    }
+    async function analyze() {
+      const files = [...$('#files').files]; if (!files.length) throw new Error('HTML 파일 또는 ZIP을 선택하세요.');
+      const payload = await window.h2f.captureFiles(files, $('#renderHost'));
+      state.capture = payload; state.order = payload.pages.map((page) => page.id); state.step = 1;
+    }
+    $('#next').addEventListener('click', async () => {
+      if (state.busy) return; showError(''); state.busy = true; render();
+      try {
+        if (state.step === 0) { await analyze(); state.busy = false; render(); }
+        else if (state.step === 1) {
+          const capture = { ...state.capture, pages:state.capture.pages.map(({thumbnail, ...page}) => page) };
+          parent.postMessage({ pluginMessage:{ type:'import', capture, order:state.order } }, '*');
+        }
+      } catch (error) { showError(error.message || String(error)); state.busy = false; render(); }
+    });
+    $('#back').addEventListener('click', () => { state.step = 0; showError(''); render(); });
+    $('#pageList').addEventListener('click', (event) => { const button = event.target.closest('[data-move]'); if (!button) return; const index = Number(button.dataset.index); const next = index + (button.dataset.move === 'up' ? -1 : 1); [state.order[index],state.order[next]] = [state.order[next],state.order[index]]; render(); });
+    $('#another').addEventListener('click', () => { state.step = 0; state.capture = null; state.order = []; state.result = null; $('#files').value = ''; showError(''); render(); });
+    onmessage = (event) => { const message = event.data.pluginMessage; if (!message) return; if (message.type === 'result') { state.result = message.result; state.step = 2; state.busy = false; showError(''); } else if (message.type === 'error') { state.busy = false; showError(message.error); } render(); };
+    render();
+  </script>
+</body>
+</html>
