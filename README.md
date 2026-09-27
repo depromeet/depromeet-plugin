@@ -41,6 +41,10 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 Use create-slides to turn these notes into a Depromeet-style HTML presentation.
 ```
 
+### `convert-html-to-figma`
+
+이미 만든 HTML 파일이나 ZIP을 Figma Design의 편집 가능한 프레임으로 옮깁니다. [`convert-html-to-figma`](plugins/depromeet-plugin/skills/convert-html-to-figma/SKILL.md)는 `create-slides`와 독립적이며, 로컬 [HTML → Figma 도구](plugins/depromeet-plugin/skills/convert-html-to-figma/tool/README.md)의 설치와 가져오기를 안내합니다. 페이지의 실제 썸네일을 확인한 뒤 순서대로 가로 배치하고 가져오기마다 독립 Flow를 만듭니다.
+
 ## 새 플러그인 추가
 
 1. `plugins/<plugin-name>/` 디렉터리를 만듭니다.
