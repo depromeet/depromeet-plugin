@@ -23,6 +23,8 @@ jobs:
           cache: npm
           cache-dependency-path: plugins/depromeet-plugin/skills/convert-html-to-figma/tool/package-lock.json
       - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm test
       - run: npm run typecheck
       - run: npm run build
       - name: Check committed build matches source

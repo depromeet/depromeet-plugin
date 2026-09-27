@@ -81,6 +81,14 @@ test('keeps inline text fragments on one line for editable Figma text', async ()
   assert.equal(number.noWrap, true);
 }));
 
+test('keeps visible descendants inside display contents wrappers', async () => browserHarness(async (page) => {
+  const result = await page.evaluate(async () => window.h2f.captureFiles([new File([
+    '<style>.slide{width:800px;height:450px}.group{display:contents}</style><section class="slide"><div class="group">Direct text <strong>Visible nested text</strong></div></section>'
+  ], 'contents.html', {type:'text/html'})], document.querySelector('#host')));
+  assert.ok(result.pages[0].elements.some((item) => item.kind === 'text' && item.text === 'Direct text'));
+  assert.ok(result.pages[0].elements.some((item) => item.kind === 'text' && item.text === 'Visible nested text'));
+}));
+
 test('rejects a ZIP path that escapes the archive root', async () => browserHarness(async (page) => {
   const zip = zipSync({ '../escape.html':strToU8('<h1>Escape</h1>') });
   const message = await page.evaluate(async (bytes) => {

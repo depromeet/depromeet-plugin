@@ -46,7 +46,7 @@ async function measurePage(win, root, id, name, whole) {
     if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) return;
     if (['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE'].includes(element.tagName)) return;
     const rect = relative(element.getBoundingClientRect());
-    if (rect.width <= 0 || rect.height <= 0) return;
+    const hasBox = rect.width > 0 && rect.height > 0;
     const label = element.getAttribute('data-region-id') || element.id || element.tagName.toLowerCase();
     if (style.transform !== 'none') note(`${label}: CSS transform is approximated by its bounding box`);
     if (style.filter !== 'none' || style.backdropFilter !== 'none') note(`${label}: CSS filter is not editable`);
@@ -57,9 +57,9 @@ async function measurePage(win, root, id, name, whole) {
     const sides = ['Top', 'Right', 'Bottom', 'Left'].map((side) => ({ name:side.toLowerCase(), width:parseFloat(style[`border${side}Width`]) || 0, color:style[`border${side}Color`] }));
     const uniformBorder = sides[0].width > 0 && sides.every((side) => side.width === sides[0].width && side.color === sides[0].color);
     const hasBackground = background !== 'rgba(0, 0, 0, 0)' && background !== 'transparent';
-    if ((hasBackground && !hasBackgroundImage) || uniformBorder) elements.push({ kind:'rect', ...rect, name:label, fill:background,
+    if (hasBox && ((hasBackground && !hasBackgroundImage) || uniformBorder)) elements.push({ kind:'rect', ...rect, name:label, fill:background,
       ...(uniformBorder ? { borderColor:sides[0].color, borderWidth:sides[0].width } : {}), radius:parseFloat(style.borderTopLeftRadius) || 0, opacity:Number(style.opacity) });
-    if (isImage || hasBackgroundImage) {
+    if (hasBox && (isImage || hasBackgroundImage)) {
       if (imageCount++ < 100) {
         try {
           const png = await toPng(element, { pixelRatio: 1, filter: hasBackgroundImage && !isImage ? (child) => child === element : undefined });
@@ -69,7 +69,7 @@ async function measurePage(win, root, id, name, whole) {
       } else note('Image limit reached; remaining images omitted');
       if (isImage) return;
     }
-    if (!uniformBorder) for (const side of sides) {
+    if (hasBox && !uniformBorder) for (const side of sides) {
       if (side.width <= 0) continue;
       const edge = side.name === 'top' ? { x:rect.x, y:rect.y, width:rect.width, height:side.width }
         : side.name === 'bottom' ? { x:rect.x, y:rect.y + rect.height - side.width, width:rect.width, height:side.width }
@@ -84,7 +84,7 @@ async function measurePage(win, root, id, name, whole) {
         const range = doc.createRange(); range.selectNodeContents(child);
         const box = relative(range.getBoundingClientRect());
         if (box.width <= 0 || box.height <= 0) continue;
-        const contentRight = rect.x + rect.width - (parseFloat(style.paddingRight) || 0);
+        const contentRight = hasBox ? rect.x + rect.width - (parseFloat(style.paddingRight) || 0) : box.x + box.width;
         elements.push({ kind:'text', ...box, width:Math.max(box.width, Math.round((contentRight - box.x) * 100) / 100), name:label,
           text:text.trim(), fontFamily:style.fontFamily.split(',')[0].trim().replace(/^[\'"]|[\'"]$/g, ''),
           fontSize:parseFloat(style.fontSize) || 16, fontWeight:parseInt(style.fontWeight, 10) || 400,
