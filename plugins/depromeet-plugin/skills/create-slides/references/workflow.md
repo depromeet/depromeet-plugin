@@ -1,4 +1,4 @@
-# Depromeet HTML slide workflow
+# HTML slide workflow
 
 Resolve relative paths from this file. Create presentation artifacts in the
 user's chosen output directory. If none is given, choose a clear deck directory
@@ -25,17 +25,18 @@ inventing content.
 
 ## 2. Confirm layouts and style
 
-Read [depromeet-style.md](depromeet-style.md) and
-[review-contract.md](review-contract.md). Copy
-[layout-skeleton.html](../assets/layout-skeleton.html) into the deck directory
-and retain only the layouts needed for this presentation. Replace the example
-labels with representative sample content while keeping it clearly marked as
-illustrative.
+Choose a profile from the [profile index](../profiles/INDEX.md). Read its
+`PROFILE.md` and [review contract](review-contract.md). Copy the profile's
+`layout-skeleton.html` and its required local assets into the deck directory,
+keeping relative links working. Retain only the layouts needed for this
+presentation. Replace example labels with representative sample content while
+keeping it clearly marked as illustrative.
 
-Use the Depromeet palette and hierarchy from the start. Do not ask the user to
-choose among other companies or preset catalogs. The user may still change
-colors, proportions, region names, or layout choices in the skeleton. Open the
-actual skeleton in a browser and obtain confirmation before planning final pages.
+Use the chosen profile's palette, type, hierarchy, and geometry from the start.
+The user may change colors, proportions, region names, or layout choices in the
+skeleton. Open the actual skeleton in a browser and obtain confirmation before
+planning final pages. Record the selected profile and approved changes in the
+deck's `style-profile.md`.
 
 ## 3. Confirm every page's content
 
