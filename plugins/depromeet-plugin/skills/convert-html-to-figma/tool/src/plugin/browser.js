@@ -3,6 +3,7 @@ import { prepareBrowserFiles } from './browser-source.js';
 import { validateCapture } from '../contract.js';
 
 const VIEWPORT = { width: 1440, height: 900 };
+const FONT_SUBSTITUTION_WIDTH_FACTOR = 1.2;
 
 function pageRoots(doc) {
   for (const selector of ['[data-page-id]', '[data-slide]', '.slide']) {
@@ -84,12 +85,24 @@ async function measurePage(win, root, id, name, whole) {
         const range = doc.createRange(); range.selectNodeContents(child);
         const box = relative(range.getBoundingClientRect());
         if (box.width <= 0 || box.height <= 0) continue;
-        const contentRight = hasBox ? rect.x + rect.width - (parseFloat(style.paddingRight) || 0) : box.x + box.width;
-        elements.push({ kind:'text', ...box, width:Math.max(box.width, Math.round((contentRight - box.x) * 100) / 100), name:label,
+        const lineRects = [...range.getClientRects()];
+        const noWrap = lineRects.length > 0 && lineRects.every((line) => Math.abs(line.top - lineRects[0].top) < 1);
+        const paddingLeft = parseFloat(style.paddingLeft) || 0;
+        const paddingRight = parseFloat(style.paddingRight) || 0;
+        const contentLeft = hasBox ? rect.x + paddingLeft : box.x;
+        const contentRight = hasBox ? rect.x + rect.width - paddingRight : box.x + box.width;
+        const aligned = style.textAlign === 'center' || style.textAlign === 'right';
+        const width = aligned && hasBox
+          ? Math.max(contentRight - contentLeft, noWrap ? box.width * FONT_SUBSTITUTION_WIDTH_FACTOR : 0)
+          : Math.max(box.width, contentRight - box.x);
+        const x = aligned && hasBox
+          ? style.textAlign === 'center' ? (contentLeft + contentRight - width) / 2 : contentRight - width
+          : box.x;
+        elements.push({ kind:'text', ...box, x:Math.round(x * 100) / 100, width:Math.round(width * 100) / 100, name:label,
           text:text.trim(), fontFamily:style.fontFamily.split(',')[0].trim().replace(/^[\'"]|[\'"]$/g, ''),
           fontSize:parseFloat(style.fontSize) || 16, fontWeight:parseInt(style.fontWeight, 10) || 400,
           color:style.color, lineHeight:style.lineHeight === 'normal' ? null : parseFloat(style.lineHeight), textAlign:style.textAlign, opacity:Number(style.opacity),
-          ...(style.display === 'inline' ? { noWrap:true } : {}) });
+          ...(noWrap ? { noWrap:true } : {}) });
       } else if (child.nodeType === win.Node.ELEMENT_NODE) await walk(child);
     }
   }

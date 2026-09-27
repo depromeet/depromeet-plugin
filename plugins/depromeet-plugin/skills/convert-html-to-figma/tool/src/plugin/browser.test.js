@@ -81,6 +81,30 @@ test('keeps inline text fragments on one line for editable Figma text', async ()
   assert.equal(number.noWrap, true);
 }));
 
+test('preserves a single-line block when an imported font is wider', async () => browserHarness(async (page) => {
+  const result = await page.evaluate(async () => window.h2f.captureFiles([new File([
+    '<style>.slide{width:800px;height:450px}h1{font:700 64px Arial}p{width:100px;font:24px Arial}</style><section class="slide"><h1>DEPROMEET 19</h1><p>This sentence wraps</p></section>'
+  ], 'title.html', {type:'text/html'})], document.querySelector('#host')));
+  const title = result.pages[0].elements.find((item) => item.kind === 'text' && item.text === 'DEPROMEET 19');
+  const paragraph = result.pages[0].elements.find((item) => item.kind === 'text' && item.text === 'This sentence wraps');
+  assert.equal(title.noWrap, true);
+  assert.equal(paragraph.noWrap, undefined);
+}));
+
+test('keeps centered text anchored to its content box', async () => browserHarness(async (page) => {
+  const result = await page.evaluate(async () => window.h2f.captureFiles([new File([
+    '<style>.slide{width:800px;height:450px}h1,h2{padding:0 50px;font:700 48px Arial}h1{text-align:center}h2{text-align:right}</style><section class="slide"><h1>Welcome</h1><h2>Right</h2></section>'
+  ], 'center.html', {type:'text/html'})], document.querySelector('#host')));
+  const title = result.pages[0].elements.find((item) => item.kind === 'text' && item.text === 'Welcome');
+  const right = result.pages[0].elements.find((item) => item.kind === 'text' && item.text === 'Right');
+  assert.equal(title.x, 50);
+  assert.equal(title.width, 700);
+  assert.equal(title.noWrap, true);
+  assert.equal(right.x, 50);
+  assert.equal(right.width, 700);
+  assert.equal(right.textAlign, 'right');
+}));
+
 test('keeps visible descendants inside display contents wrappers', async () => browserHarness(async (page) => {
   const result = await page.evaluate(async () => window.h2f.captureFiles([new File([
     '<style>.slide{width:800px;height:450px}.group{display:contents}</style><section class="slide"><div class="group">Direct text <strong>Visible nested text</strong></div></section>'
