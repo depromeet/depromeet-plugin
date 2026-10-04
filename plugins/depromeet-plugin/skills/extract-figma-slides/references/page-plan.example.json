@@ -1,0 +1,6 @@
+{
+  "segments": [
+    {"name": "introduction", "pages": [3, 4, 5]},
+    {"name": "presentation", "pages": [9, 10, 12]}
+  ]
+}

@@ -13,19 +13,29 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 │       ├── .claude-plugin/plugin.json
 │       ├── .codex-plugin/plugin.json
 │       └── skills/
+│           ├── ask-depromeet/         # 발표 작업 경로 안내와 이어서 실행
 │           ├── create-slides/
 │           │   ├── SKILL.md
 │           │   ├── agents/openai.yaml
 │           │   ├── profiles/depromeet_19/
 │           │   └── references/
-│           └── convert-html-to-figma/
-│               ├── SKILL.md
-│               └── tool/
+│           ├── convert-html-to-figma/
+│           │   ├── SKILL.md
+│           │   └── tool/
+│           └── extract-figma-slides/   # Figma 연결 검사와 PDF 순서 조립
 ├── CLAUDE.md
 └── CONTRIBUTING.md
 ```
 
 ## 제공 스킬
+
+### [`ask-depromeet`](plugins/depromeet-plugin/skills/ask-depromeet/SKILL.md)
+
+어떤 작업부터 시작할지 모르거나 여러 발표 작업을 연결하고 싶을 때 사용합니다. 요청이 분명하면 HTML 발표자료 제작, HTML의 Figma 변환, Figma 장표 PDF 조립 중 필요한 작업으로 바로 이어갑니다. 각 작업 스킬을 직접 요청해도 됩니다.
+
+```text
+Use ask-depromeet to help me choose and complete a Depromeet presentation task.
+```
 
 ### `create-slides`
 
@@ -43,6 +53,12 @@ Use create-slides to turn these notes into a Depromeet-style HTML presentation.
 ### `convert-html-to-figma`
 
 이미 만든 HTML 파일이나 ZIP을 Figma Design의 편집 가능한 프레임으로 옮깁니다. [`convert-html-to-figma`](plugins/depromeet-plugin/skills/convert-html-to-figma/SKILL.md)는 `create-slides`와 독립적이며, 빌드된 [HTML → Figma 도구](plugins/depromeet-plugin/skills/convert-html-to-figma/tool/README.md)를 안내합니다. 사용자는 로컬 플러그인을 등록한 뒤 페이지 썸네일을 확인하고, 새 가로 행과 독립 Flow로 가져올 수 있습니다.
+
+### `extract-figma-slides`
+
+Figma 개발 플러그인으로 섹션의 장표 문구와 프로토타입 연결을 JSON으로 추출합니다. Figma에서 내보낸 원본 PDF의 페이지와 대조해 발표 순서를 정한 뒤, 포함된 Python 스크립트로 구간별 PDF와 통합본을 만듭니다. 플러그인은 Figma 문서를 변경하거나 데이터를 외부로 전송하지 않습니다.
+
+Figma 데스크톱 앱에서 **Plugins → Development → Import plugin from manifest…**를 선택하고 [`manifest.json`](plugins/depromeet-plugin/skills/extract-figma-slides/figma-plugin/manifest.json)을 지정하세요. 사용 절차와 PDF 조립 명령은 [`SKILL.md`](plugins/depromeet-plugin/skills/extract-figma-slides/SKILL.md)에 있습니다. PDF 조립에는 Poppler의 `pdfinfo`, `pdfseparate`, `pdfunite`가 필요합니다.
 
 ## 새 플러그인 추가
 

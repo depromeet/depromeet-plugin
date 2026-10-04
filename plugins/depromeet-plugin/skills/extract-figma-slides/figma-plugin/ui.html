@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<style>
+  body { font: 14px system-ui, sans-serif; margin: 18px; color: #222; }
+  label, select, button { display: block; width: 100%; box-sizing: border-box; }
+  select, button { margin-top: 8px; padding: 8px; }
+  #status { min-height: 3em; line-height: 1.5; }
+</style>
+<h2>Depromeet Flow Inspector</h2>
+<label for="section">장표가 들어 있는 섹션</label>
+<select id="section"></select>
+<button id="inspect" disabled>연결과 장표 문구 읽기</button>
+<button id="download" disabled>JSON 다운로드</button>
+<p id="status">현재 페이지의 섹션을 찾는 중입니다.</p>
+<script>
+  const sectionSelect = document.getElementById('section');
+  const status = document.getElementById('status');
+  let payload = null;
+
+  onmessage = event => {
+    const message = event.data.pluginMessage;
+    if (!message) return;
+    if (message.type === 'sections') {
+      for (const section of message.sections) {
+        const option = document.createElement('option');
+        option.value = section.id;
+        option.textContent = section.name || section.id;
+        sectionSelect.appendChild(option);
+      }
+      if (message.selectedSection) sectionSelect.value = message.selectedSection;
+      document.getElementById('inspect').disabled = !message.sections.length;
+      status.textContent = message.sections.length
+        ? '섹션을 선택하고 읽기 버튼을 누르세요. 문서는 변경되지 않습니다.'
+        : '현재 페이지에서 섹션을 찾지 못했습니다.';
+    } else if (message.type === 'inspection') {
+      payload = message.payload;
+      document.getElementById('download').disabled = false;
+      status.textContent = `${payload.frames.length}개 프레임, ${payload.links.length}개 연결을 읽었습니다. 외부 전송은 하지 않습니다.`;
+    } else if (message.type === 'error') {
+      status.textContent = message.message;
+    }
+  };
+
+  sectionSelect.onchange = () => {
+    payload = null;
+    document.getElementById('download').disabled = true;
+  };
+  document.getElementById('inspect').onclick = () => {
+    status.textContent = '장표 정보를 읽는 중입니다.';
+    parent.postMessage({ pluginMessage: { type: 'inspect', sectionId: sectionSelect.value } }, '*');
+  };
+  document.getElementById('download').onclick = () => {
+    if (!payload) return;
+    const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = 'figma-slide-flow.json';
+    anchor.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  };
+</script>
+</html>
