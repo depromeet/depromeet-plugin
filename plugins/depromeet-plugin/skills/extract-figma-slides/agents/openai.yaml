@@ -1,0 +1,6 @@
+interface:
+  display_name: "Extract Figma Slides"
+  short_description: "Export Figma slide flows into ordered PDFs"
+  default_prompt: "Use $extract-figma-slides to export this Figma deck in its presentation order."
+policy:
+  allow_implicit_invocation: true
