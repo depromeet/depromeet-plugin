@@ -13,7 +13,7 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 │       ├── .claude-plugin/plugin.json
 │       ├── .codex-plugin/plugin.json
 │       └── skills/
-│           ├── ask-depromeet/         # 발표 작업 경로 안내와 이어서 실행
+│           ├── ask-depromeet/         # 발표 작업 계획 제안과 승인 후 실행
 │           ├── create-slides/
 │           │   ├── SKILL.md
 │           │   ├── agents/openai.yaml
@@ -31,11 +31,13 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 
 ### [`ask-depromeet`](plugins/depromeet-plugin/skills/ask-depromeet/SKILL.md)
 
-어떤 작업부터 시작할지 모르거나 여러 발표 작업을 연결하고 싶을 때 사용합니다. 요청이 분명하면 HTML 발표자료 제작, HTML의 Figma 변환, Figma 장표 PDF 조립 중 필요한 작업으로 바로 이어갑니다. 각 작업 스킬을 직접 요청해도 됩니다.
+어떤 작업부터 시작할지 모르거나 실행 계획을 먼저 검토하고 싶을 때 사용합니다. HTML 발표자료 제작, HTML의 Figma 변환, Figma 장표 PDF 조립 중 필요한 작업을 골라 목표, 작업 순서, 결과물, 전달 위치, 사용자 확인 시점을 제안합니다. 계획을 승인하면 각 작업으로 이어갑니다. 메뉴 선택은 계획 승인이 아니며, 각 작업 스킬을 직접 요청하는 기존 사용법도 유지합니다.
 
 ```text
-Use ask-depromeet to help me choose and complete a Depromeet presentation task.
+Use ask-depromeet to plan an HTML presentation from these notes and import it into Figma after review.
 ```
+
+예를 들어 “이 메모로 HTML 발표자료를 만들고 Figma로 옮겨줘”라고 요청하면, HTML 제작 → 내용·레이아웃 확인 → Figma 가져오기 순서를 제안하고 계획 승인을 기다립니다. “진행해”라고 승인하면 실행하며, 완성된 HTML 확인과 Figma 변경 전 승인 단계는 따로 지킵니다.
 
 ### `create-slides`
 

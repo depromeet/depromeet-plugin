@@ -1,13 +1,19 @@
 ---
 name: ask-depromeet
-description: Use when the user is unsure which Depromeet presentation workflow to use, asks for general presentation help, or combines multiple plugin tasks.
+description: Use when the user wants help choosing Depromeet presentation workflows or a reviewed execution plan covering skill roles, sequence, outputs, and participation.
 ---
 
 # Ask Depromeet
 
-Use this entrypoint to route presentation work to the smallest useful set of
-Depromeet workflows. Read the [routing guide](references/routing.md), then use
-the sibling skills' `SKILL.md` descriptions as the live catalog.
+Read the [planning and routing guide](references/routing.md). Discover the
+current workflows from sibling `SKILL.md` descriptions, excluding this entrypoint.
+
+For a task entering through `ask-depromeet`, clarify only choices that change
+the result, present a concrete execution plan, and wait for explicit approval
+before producing deliverables. A menu selection or an initial execution request
+does not approve a plan. After approval, carry inputs and decisions into the
+selected workflows without reinvocation or repeated plan approval at handoffs.
 
 Direct calls to `create-slides`, `convert-html-to-figma`, or
-`extract-figma-slides` remain valid and do not need to pass through this skill.
+`extract-figma-slides`, and task-bearing natural language outside this entrypoint,
+keep their existing execution behavior and workflow-specific review boundaries.

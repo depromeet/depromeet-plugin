@@ -1,63 +1,92 @@
-# Depromeet workflow routing
+# Depromeet: discover, plan, confirm, execute
 
-## Choose a route
+## Discover and clarify
 
-Read the names and descriptions in sibling `skills/*/SKILL.md` files when
-selecting a workflow. Exclude `ask-depromeet` itself from the destination
-catalog. Keep this file focused on routing behavior; do not copy the full skill
-catalog here.
+Read sibling `skills/*/SKILL.md` names and descriptions as the live catalog,
+excluding `ask-depromeet`. Read only plausible workflows and their required
+references to check supported actions, inputs, and completion boundaries.
 
-- A bare `ask-depromeet` request or a general request for presentation help
-  shows a short menu and invites a free-text request. Do not inspect files or
-  start a workflow until the user chooses.
-- Advice-only requests receive a recommendation and an optional ready-to-use
+- A bare invocation or general request for presentation help shows the menu
+  below and invites free text. Wait without inspecting files or choosing a task.
+- A menu selection continues the pending request; do not repeat the menu. It
+  selects an outcome and does not approve an execution plan.
+- Advice-only requests end with a recommendation and an optional ready-to-use
   prompt. Do not execute the recommended workflow.
-- A clear, single outcome routes directly to its owner without a menu or an
-  extra approval step.
-- An unclear outcome gets one focused question about the choice that changes
-  the result.
-- A request that clearly asks for multiple outcomes runs the required skills
-  in dependency order. Briefly state the sequence when it helps the user follow
-  progress; continue without asking the user to invoke each skill again.
+- A concrete single or composite task entering through `ask-depromeet` skips
+  the menu and proceeds to planning. Even “make it now” before the plan does
+  not approve that plan.
+- Ask one focused question at a time only when a missing choice changes the
+  result. Do not ask for supplied information or internal skill paths.
 
-## Carry work through handoffs
+Reading supplied material and workflow instructions to scope the plan is allowed.
+Producing deliverables, writing files, or querying external services for the
+planned task waits for confirmation. Mark external details pending verification
+when they cannot be known until execution.
 
-Pass supplied files, the user's goal, decisions, approved artifacts, and output
-locations to the next workflow. Do not ask for information already provided or
-repeat the same menu. Select only workflows needed for the stated outcome; for
-example, creating HTML slides does not imply importing them into Figma, and PDF
-export is included only when requested.
+If no sibling workflow covers the outcome, explain the gap and propose a plan
+using available tools within the user's request.
 
-Each receiving skill keeps its own review and approval rules. In particular,
-preserve the layout and content review stages in `create-slides`, and the user's
-participation and confirmation before changing a Figma document in
-`convert-html-to-figma`. A router handoff does not replace those checks.
-When a composite request creates HTML and then imports it into Figma, finish the
-HTML review and get the user's confirmation before starting the import workflow.
+## Present the plan
 
-For Figma-to-PDF work, ask the user to provide the Flow Inspector JSON and the
-native Figma PDF when they are not already available. Use both to prepare a
-page-order plan. Ask about individual slides when evidence leaves their order or
-inclusion unclear; never infer PDF page numbers from the JSON frame order.
+Show a concrete plan in the user's language. Keep a small plan to a few lines;
+use a table for multiple steps. Include:
 
-If no sibling workflow covers the requested outcome, explain the gap and use
-available tools only within the user's request.
+- Goal: the final result the user requested.
+- Skills and actions: each needed skill, its role, and the action it performs.
+- Sequence: dependencies and how each output feeds the next step.
+- Output: format and approximate size, such as HTML slides or sectioned PDFs.
+- Delivery: chat, a proposed local path, or an identified Figma document. Do not
+  add file saving or external writes beyond the request.
+- Participation: the review points and inputs needed from the user.
+
+Use plain-language action labels; do not make users choose internal paths.
+Use a short ASCII diagram only when dependencies or branches need explanation.
+End with a clear invitation to approve or revise the plan, then wait.
+
+## Confirm, revise, and continue
+
+“진행해”, “좋아, 이대로”, or equivalent explicit acceptance of the presented
+plan approves it. Silence, unrelated replies, menu choices, and pre-plan execution
+requests do not. A correction revises the plan: show the revised plan and wait
+again, unless the same message explicitly approves proceeding with that change.
+
+After approval, execute the needed workflows in dependency order. Carry supplied
+files, goals, decisions, approved artifacts, and output locations through handoffs.
+Do not request reinvocation or repeat the plan approval at every step. Keep the
+approved plan active across follow-up answers and routine choices within scope.
+If the goal, skill action, deliverable, or destination materially changes, present
+and confirm a revised plan. A failure does not authorize a substitute output or
+external action outside the approved plan.
+
+Each workflow retains its own concrete review and approval boundaries. Preserve
+`create-slides` layout and content reviews and the user's confirmation before
+`convert-html-to-figma` changes a Figma document. Initial plan approval does not
+approve an unseen final HTML artifact or replace approval before import.
+
+For Figma-to-PDF work, request missing Flow Inspector JSON and native Figma PDF.
+Use both to prepare the page-order plan; ask about uncertain order or inclusion.
+Never infer native PDF page numbers from JSON frame order.
+
+Direct skill calls and task-bearing natural language outside `ask-depromeet`
+retain their existing behavior. Do not redirect every presentation task through
+this planning gate. Select only requested outcomes: HTML creation alone does
+not imply Figma import, and PDF export is included only when requested.
 
 ## Menu wording
-
-Use plain-language outcomes rather than skill or file paths:
 
 1. Create an HTML presentation from notes or source material.
 2. Import existing HTML into editable Figma frames.
 3. Arrange a Figma deck into sectioned or combined PDFs.
 
-Invite the user to describe a different presentation task in their own words.
+Invite the user to describe another presentation task in their own words.
 
-## Examples
+## Example
 
-- “Depromeet 발표 작업 도와줘.” → show the menu; do not select a default.
-- “이 Figma 덱을 발표 순서 PDF로 만들어줘.” → route to
-  `extract-figma-slides` and request missing source files.
-- “이 메모로 HTML 발표자료를 만들고, 확인한 다음 Figma로 옮겨줘.” → run
-  `create-slides`, complete its layout and content reviews, get confirmation on
-  the finished HTML, then hand it to `convert-html-to-figma`.
+User: “ask-depromeet 이 메모로 HTML 발표자료를 만들고 Figma로 옮겨줘.”
+
+Present a plan: `create-slides` creates the HTML deck; the user reviews layout and
+content; `convert-html-to-figma` imports the approved deck after import confirmation.
+State the expected slide count and proposed HTML location from the supplied goal,
+identify the target Figma document or clarify it, and invite approval or revision.
+Do not create the deck until the user approves this plan. Once approved, continue
+through the planned reviews and import without requiring another skill invocation.

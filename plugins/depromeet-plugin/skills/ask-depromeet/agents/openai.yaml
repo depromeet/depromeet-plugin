@@ -1,6 +1,6 @@
 interface:
   display_name: "Ask Depromeet"
-  short_description: "Choose and continue a presentation workflow"
-  default_prompt: "Use $ask-depromeet to help me choose and complete a Depromeet presentation task."
+  short_description: "Review a presentation plan, then execute"
+  default_prompt: "Use $ask-depromeet to propose a Depromeet presentation execution plan for my review."
 policy:
   allow_implicit_invocation: true

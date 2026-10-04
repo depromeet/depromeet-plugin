@@ -7,7 +7,7 @@
     {
       "name": "depromeet-plugin",
       "source": "./plugins/depromeet-plugin",
-      "description": "발표 작업에 맞는 기능을 안내하고 HTML 슬라이드 제작, Figma 변환, PDF 추출을 돕는 Claude Code와 Codex용 플러그인입니다.",
+      "description": "발표 작업 계획을 제안하고 승인 후 HTML 슬라이드 제작, Figma 변환, PDF 추출을 돕는 Claude Code와 Codex용 플러그인입니다.",
       "version": "0.7.0"
     }
   ]
