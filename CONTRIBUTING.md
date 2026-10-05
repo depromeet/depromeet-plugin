@@ -18,7 +18,7 @@ Depromeet Plugin Marketplace에는 플러그인, 스킬, 문서, 버그 수정�
 
 ## 버전 올리기
 
-`plugins/<plugin-name>/` 아래의 배포 내용을 추가·변경·삭제하면 같은 PR에서 해당 플러그인의 버전을 반드시 올려야 합니다. 다음 세 위치의 버전을 기준 브랜치보다 높은 같은 값으로 변경하세요.
+`plugins/<plugin-name>/` 아래의 배포 내용 또는 연결된 `tools/figma-plugins/` 도구를 추가·변경·삭제하면 같은 PR에서 해당 플러그인의 버전을 반드시 올려야 합니다. 다음 세 위치의 버전을 기준 브랜치보다 높은 같은 값으로 변경하세요.
 
 - `plugins/<plugin-name>/.claude-plugin/plugin.json`
 - `plugins/<plugin-name>/.codex-plugin/plugin.json`
@@ -37,3 +37,5 @@ README, 매니페스트 설명, 스킬 설명은 변경한 기능과 설치 방�
 README의 Contributors 영역은 GitHub의 기본 브랜치에 반영된 커밋을 기준으로 `contrib.rocks`가 자동 생성합니다. 별도로 이름이나 프로필 이미지를 이 문서에 추가할 필요는 없습니다.
 
 이슈 제안이나 리뷰처럼 커밋으로 남지 않는 기여까지 별도로 표시해야 한다면, 프로젝트 운영 방식과 표시 기준을 먼저 합의한 뒤 수동 목록이나 All Contributors 도입을 검토합니다.
+
+버전을 변경하면 [Release 배포 규칙](CLAUDE.md#figma-도구와-release-배포)에 따라 같은 버전의 GitHub Release와 실행용 ZIP을 발행합니다. Figma 도구는 루트 `tools/figma-plugins/`에서 관리하며 스킬 패키지와 별도로 배포합니다.

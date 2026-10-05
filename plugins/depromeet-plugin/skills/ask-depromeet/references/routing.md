@@ -6,7 +6,7 @@ Read sibling `skills/*/SKILL.md` names and descriptions as the live catalog,
 excluding `ask-depromeet`. Read only plausible workflows and their required
 references to check supported actions, inputs, and completion boundaries.
 
-- A bare invocation or general request for presentation help shows the menu
+- A bare invocation or general request for presentation or plugin setup help shows the menu
   below and invites free text. Wait without inspecting files or choosing a task.
 - A menu selection continues the pending request; do not repeat the menu. It
   selects an outcome and does not approve an execution plan.
@@ -25,6 +25,28 @@ when they cannot be known until execution.
 
 If no sibling workflow covers the outcome, explain the gap and propose a plan
 using available tools within the user's request.
+
+## Route local Figma plugin setup
+
+Use [setup-figma-plugins](../../setup-figma-plugins/SKILL.md) for installation,
+updates, registration problems, and rollback of HTML → Figma or Depromeet Flow
+Inspector. Menu option 4 selects this workflow; it does not approve execution.
+If the requested plugin or operation is unknown, ask only for that missing choice.
+An advice-only installation question can end with the shared guide and an
+explanation without downloading or replacing files.
+
+For HTML import or Figma extraction, include setup as a conditional prerequisite
+in the plan when installation status is unknown. Skip it if the tool is ready.
+Carry the selected plugin, operation, known registered manifest path, source or
+version preference, approved destination, and participation into setup. Do not
+require the user to call the setup skill again. Release availability is pending
+verification until the plan is approved.
+
+Installation alone ends at registration and launch verification; it does not
+imply importing HTML or extracting a deck. After setup in an approved composite
+plan, resume only the requested workflow and preserve its review boundaries.
+If setup would require a materially different operation or destination, revise
+the plan instead of treating the handoff as broader authorization.
 
 ## Present the plan
 
@@ -77,8 +99,10 @@ not imply Figma import, and PDF export is included only when requested.
 1. Create an HTML presentation from notes or source material.
 2. Import existing HTML into editable Figma frames.
 3. Arrange a Figma deck into sectioned or combined PDFs.
+4. Install, update, or restore a local Figma plugin.
 
-Invite the user to describe another presentation task in their own words.
+Present these options in the user's language. Invite the user to describe another
+presentation or plugin setup task in their own words.
 
 ## Example
 
@@ -90,3 +114,14 @@ State the expected slide count and proposed HTML location from the supplied goal
 identify the target Figma document or clarify it, and invite approval or revision.
 Do not create the deck until the user approves this plan. Once approved, continue
 through the planned reviews and import without requiring another skill invocation.
+
+## Setup example
+
+User: “ask-depromeet Figma 플러그인 업데이트하고 싶어.”
+
+Ask which plugin only if unknown, and establish the known installation path.
+Present a plan using `setup-figma-plugins`: verify available distribution, back up
+and replace files at the agreed path, then guide relaunch. State which file work
+the agent can perform and which Figma registration/launch checks need the user.
+Wait for approval before release lookup, download, or file replacement. After
+approval, pass the context to setup without a second plan approval.

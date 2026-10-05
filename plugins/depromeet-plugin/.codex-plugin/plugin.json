@@ -1,7 +1,7 @@
 {
   "name": "depromeet-plugin",
-  "version": "0.7.0",
-  "description": "발표 작업 계획을 제안하고 승인 후 HTML 슬라이드 제작, Figma 변환, PDF 추출을 돕는 Claude Code와 Codex용 플러그인입니다.",
+  "version": "0.8.0",
+  "description": "발표 작업 계획, HTML 슬라이드 제작, Figma 플러그인 설치·업데이트, 변환과 PDF 추출을 돕는 Claude Code와 Codex용 플러그인입니다.",
   "author": {
     "name": "depromeet"
   },
@@ -9,10 +9,12 @@
   "interface": {
     "displayName": "Depromeet Plugin",
     "shortDescription": "발표 작업 계획 검토와 제작",
-    "longDescription": "ask-depromeet가 발표 요청에 맞는 실행 계획을 제안하고, 승인 후 HTML 발표 슬라이드 제작, 로컬 HTML의 Figma 변환, Figma 장표 PDF 조립을 이어서 돕습니다.",
+    "longDescription": "ask-depromeet가 발표 계획을 제안하고, setup-figma-plugins가 로컬 Figma 도구의 설치·업데이트를 안내합니다. HTML 제작, Figma 변환과 PDF 추출로 이어집니다.",
     "developerName": "depromeet",
     "category": "Productivity",
-    "capabilities": ["Interactive"],
+    "capabilities": [
+      "Interactive"
+    ],
     "defaultPrompt": [
       "Use ask-depromeet to propose a Depromeet presentation execution plan for my review."
     ]

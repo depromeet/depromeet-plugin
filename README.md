@@ -13,6 +13,7 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 │       ├── .claude-plugin/plugin.json
 │       ├── .codex-plugin/plugin.json
 │       └── skills/
+│           ├── setup-figma-plugins/ # Figma 도구 설치·업데이트 안내
 │           ├── ask-depromeet/         # 발표 작업 계획 제안과 승인 후 실행
 │           ├── create-slides/
 │           │   ├── SKILL.md
@@ -20,22 +21,42 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 │           │   ├── profiles/depromeet_19/
 │           │   └── references/
 │           ├── convert-html-to-figma/
-│           │   ├── SKILL.md
-│           │   └── tool/
+│           │   └── SKILL.md
 │           └── extract-figma-slides/   # Figma 연결 검사와 PDF 순서 조립
+├── tools/figma-plugins/
+│   ├── README.md                  # 공통 설치·업데이트 안내
+│   ├── html-to-figma/              # HTML 변환 소스·빌드 결과
+│   └── flow-inspector/             # 장표 정보 추출 도구
 ├── CLAUDE.md
 └── CONTRIBUTING.md
 ```
 
 ## 제공 스킬
 
+### [`setup-figma-plugins`](plugins/depromeet-plugin/skills/setup-figma-plugins/SKILL.md)
+
+두 로컬 Figma 플러그인의 최초 설치, 기존 설치 업데이트, 설치 위치 확인과 이전 버전 복구를 안내합니다. 실제 절차는 AI 없이도 읽을 수 있는 [공통 설치 안내](tools/figma-plugins/README.md)에 있습니다. Release ZIP이 없으면 해당 버전의 저장소 `tools/figma-plugins/`에서 실행 파일을 준비합니다. 도구는 설치된 스킬 패키지와 별도로 배포합니다.
+
+```text
+Use setup-figma-plugins to update my installed HTML to Figma plugin.
+```
+
 ### [`ask-depromeet`](plugins/depromeet-plugin/skills/ask-depromeet/SKILL.md)
 
-어떤 작업부터 시작할지 모르거나 실행 계획을 먼저 검토하고 싶을 때 사용합니다. HTML 발표자료 제작, HTML의 Figma 변환, Figma 장표 PDF 조립 중 필요한 작업을 골라 목표, 작업 순서, 결과물, 전달 위치, 사용자 확인 시점을 제안합니다. 계획을 승인하면 각 작업으로 이어갑니다. 메뉴 선택은 계획 승인이 아니며, 각 작업 스킬을 직접 요청하는 기존 사용법도 유지합니다.
+어떤 작업부터 시작할지 모르거나 실행 계획을 먼저 검토하고 싶을 때 사용합니다. HTML 발표자료 제작, HTML의 Figma 변환, Figma 장표 PDF 조립, 로컬 Figma 플러그인 설치·업데이트 중 필요한 작업을 골라 목표, 작업 순서, 결과물, 전달 위치, 사용자 확인 시점을 제안합니다. 계획을 승인하면 각 작업으로 이어갑니다. 메뉴 선택은 계획 승인이 아니며, 각 작업 스킬을 직접 요청하는 기존 사용법도 유지합니다.
 
 ```text
 Use ask-depromeet to plan an HTML presentation from these notes and import it into Figma after review.
 ```
+
+`ask-depromeet`만 호출하면 다음 네 가지 선택지를 안내합니다.
+
+1. 메모나 자료로 HTML 발표자료 만들기
+2. 기존 HTML을 Figma 프레임으로 가져오기
+3. Figma 장표를 발표 순서에 맞춰 PDF로 묶기
+4. Figma 플러그인 설치·업데이트·복구
+
+4번을 선택하면 대상 플러그인과 필요한 작업을 확인하고 계획을 제안합니다. 승인 후 `setup-figma-plugins`로 이어지며, 같은 계획 승인을 반복하거나 사용자가 스킬을 다시 호출할 필요는 없습니다. 변환·추출 요청에서는 설치가 필요한 경우에만 준비 단계를 거칩니다. 설치 안내만 요청했다면 실제 변환·추출은 진행하지 않습니다.
 
 예를 들어 “이 메모로 HTML 발표자료를 만들고 Figma로 옮겨줘”라고 요청하면, HTML 제작 → 내용·레이아웃 확인 → Figma 가져오기 순서를 제안하고 계획 승인을 기다립니다. “진행해”라고 승인하면 실행하며, 완성된 HTML 확인과 Figma 변경 전 승인 단계는 따로 지킵니다.
 
@@ -54,13 +75,13 @@ Use create-slides to turn these notes into a Depromeet-style HTML presentation.
 
 ### `convert-html-to-figma`
 
-이미 만든 HTML 파일이나 ZIP을 Figma Design의 편집 가능한 프레임으로 옮깁니다. [`convert-html-to-figma`](plugins/depromeet-plugin/skills/convert-html-to-figma/SKILL.md)는 `create-slides`와 독립적이며, 빌드된 [HTML → Figma 도구](plugins/depromeet-plugin/skills/convert-html-to-figma/tool/README.md)를 안내합니다. 사용자는 로컬 플러그인을 등록한 뒤 페이지 썸네일을 확인하고, 새 가로 행과 독립 Flow로 가져올 수 있습니다.
+이미 만든 HTML 파일이나 ZIP을 Figma Design의 편집 가능한 프레임으로 옮깁니다. [`convert-html-to-figma`](plugins/depromeet-plugin/skills/convert-html-to-figma/SKILL.md)는 `create-slides`와 독립적이며, 빌드된 [HTML → Figma 도구](tools/figma-plugins/html-to-figma/README.md)를 안내합니다. 사용자는 로컬 플러그인을 등록한 뒤 페이지 썸네일을 확인하고, 새 가로 행과 독립 Flow로 가져올 수 있습니다.
 
 ### `extract-figma-slides`
 
 Figma 개발 플러그인으로 섹션의 장표 문구와 프로토타입 연결을 JSON으로 추출합니다. Figma에서 내보낸 원본 PDF의 페이지와 대조해 발표 순서를 정한 뒤, 포함된 Python 스크립트로 구간별 PDF와 통합본을 만듭니다. 플러그인은 Figma 문서를 변경하거나 데이터를 외부로 전송하지 않습니다.
 
-Figma 데스크톱 앱에서 **Plugins → Development → Import plugin from manifest…**를 선택하고 [`manifest.json`](plugins/depromeet-plugin/skills/extract-figma-slides/figma-plugin/manifest.json)을 지정하세요. 사용 절차와 PDF 조립 명령은 [`SKILL.md`](plugins/depromeet-plugin/skills/extract-figma-slides/SKILL.md)에 있습니다. PDF 조립에는 Poppler의 `pdfinfo`, `pdfseparate`, `pdfunite`가 필요합니다.
+최초 설치와 업데이트는 [공통 설치 안내](tools/figma-plugins/README.md)를 따르세요. 사용 절차와 PDF 조립 명령은 [`SKILL.md`](plugins/depromeet-plugin/skills/extract-figma-slides/SKILL.md)에 있습니다. PDF 조립에는 Poppler의 `pdfinfo`, `pdfseparate`, `pdfunite`가 필요합니다.
 
 ## 새 플러그인 추가
 

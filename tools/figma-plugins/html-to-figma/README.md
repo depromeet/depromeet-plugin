@@ -6,9 +6,7 @@
 
 Figma Desktop이 필요합니다. 저장소에는 빌드된 `dist/code.js`와 `dist/ui.html`이 포함되어 있습니다. 사용자는 Node.js 설치나 빌드 없이 바로 등록할 수 있습니다. HTML 분석과 캡처는 Figma 플러그인 내부에서 처리합니다.
 
-Figma Desktop의 디자인 파일에서 **Plugins → Development → Import new plugin from manifest…**를 열고 이 디렉터리의 `manifest.json`을 선택합니다. 이후에는 Development 목록에서 **HTML → Figma**를 실행합니다. 개발용 등록에는 Figma 플러그인 ID 발급이나 Community 게시가 필요하지 않습니다. 등록은 처음 한 번만 하면 됩니다.
-
-컴퓨터 사용 자동화가 없다면 사용자가 Figma 안에서 등록과 가져오기를 진행합니다. 스킬은 파일 준비, 플러그인 등록, 검증 방법을 안내할 수 있습니다. Community 공개 게시나 조직 내부 게시도 가능한 배포 방식입니다.
+최초 등록, 기존 설치 업데이트와 이전 버전 복구는 [공통 설치 안내](../README.md)를 따르세요. 컴퓨터 사용 자동화가 없다면 사용자가 Figma 안에서 등록과 가져오기를 진행합니다.
 
 소스를 수정하는 유지 관리자는 Node.js 22 이상에서 `npm ci && npm test && npm run typecheck && npm run build`를 실행하고 변경된 `dist/code.js`, `dist/ui.html`도 함께 커밋합니다. CI가 빌드 결과의 최신 상태를 검사합니다.
 
