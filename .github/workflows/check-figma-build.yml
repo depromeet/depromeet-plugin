@@ -11,6 +11,9 @@ permissions:
 
 jobs:
   check-figma-build:
+    # Temporarily disabled while GitHub hosted runner allocation is unreliable.
+    # Remove this condition to re-enable CI.
+    if: ${{ false }}
     runs-on: ubuntu-24.04
     defaults:
       run:
