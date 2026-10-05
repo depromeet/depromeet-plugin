@@ -3,7 +3,10 @@
 ## Discover and clarify
 
 Read sibling `skills/*/SKILL.md` names and descriptions as the live catalog,
-excluding `ask-depromeet`. Read only plausible workflows and their required
+excluding `ask-depromeet`.
+For usage explanations and first-time documentation guidance, use
+[navigate-guide](../../navigate-guide/SKILL.md) without turning an advice-only
+question into an execution plan. It is a guide, not an artifact-producing menu option. Read only plausible workflows and their required
 references to check supported actions, inputs, and completion boundaries.
 
 - A bare invocation or general request for presentation or plugin setup help shows the menu

@@ -1,6 +1,20 @@
 # Depromeet Plugin Marketplace
 
-Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관리하기 위한 시작 템플릿입니다. 현재는 `depromeet-plugin` 하나로 시작하며, 필요할 때 같은 마켓플레이스에 플러그인을 추가할 수 있습니다.
+메모로 발표자료를 만들고, Figma에서 편집하거나 발표 순서대로 PDF를 준비하는 일을 돕는 Claude Code·Codex용 플러그인입니다.
+
+**처음 사용하시나요? [시작 안내](docs/onboarding.md)를 따라가세요.**
+
+- [전체 사용 안내](docs/README.md): 필요한 작업의 설명서 찾기
+- [AI 플러그인 설치](docs/guides/install.md): Claude Code 또는 Codex에 설치하기
+- [Figma 도구 설치](docs/guides/figma-setup.md): Figma Desktop에 도구 등록하기
+
+AI 플러그인과 Figma 도구는 각각 설치합니다. HTML 발표자료만 만들 때는 Figma 도구가 필요하지 않습니다.
+
+설치한 AI의 대화창에서 다음처럼 사용법을 물어볼 수 있습니다.
+
+```text
+navigate-guide로 안내해줘. 처음 사용하는데 메모로 발표자료를 만들고 싶어.
+```
 
 ## 구조
 
@@ -13,6 +27,7 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 │       ├── .claude-plugin/plugin.json
 │       ├── .codex-plugin/plugin.json
 │       └── skills/
+│           ├── navigate-guide/       # 사용법과 온보딩 안내
 │           ├── setup-figma-plugins/ # Figma 도구 설치·업데이트 안내
 │           ├── ask-depromeet/         # 발표 작업 계획 제안과 승인 후 실행
 │           ├── create-slides/
@@ -32,6 +47,10 @@ Depromeet 팀이 Claude Code와 Codex에서 함께 사용할 플러그인을 관
 ```
 
 ## 제공 스킬
+
+### [`navigate-guide`](plugins/depromeet-plugin/skills/navigate-guide/SKILL.md)
+
+질문에 맞는 사용 안내를 찾아 처음 시작하는 방법이나 막힌 단계의 다음 행동을 설명합니다. 문서는 `docs/`에서 관리하며, 설치된 스킬은 배포 버전의 GitHub 문서를 참조합니다. 사용법 설명은 실제 작업을 시작하지 않습니다. 작업 계획과 실행은 `ask-depromeet` 또는 해당 작업 스킬에 요청하세요.
 
 ### [`setup-figma-plugins`](plugins/depromeet-plugin/skills/setup-figma-plugins/SKILL.md)
 
