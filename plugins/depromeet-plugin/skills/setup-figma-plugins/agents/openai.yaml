@@ -1,0 +1,6 @@
+interface:
+  display_name: "Setup Figma Plugins"
+  short_description: "Install, update, or restore local Figma plugins"
+  default_prompt: "Use $setup-figma-plugins to help me install or update the Depromeet Figma plugins."
+policy:
+  allow_implicit_invocation: true

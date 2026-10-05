@@ -1,6 +1,6 @@
 ---
 name: ask-depromeet
-description: Use when the user wants help choosing Depromeet presentation workflows or a reviewed execution plan covering skill roles, sequence, outputs, and participation.
+description: Use when the user wants help choosing Depromeet presentation or local Figma plugin setup workflows or a reviewed execution plan covering skill roles, sequence, outputs, and participation.
 ---
 
 # Ask Depromeet
@@ -14,6 +14,6 @@ before producing deliverables. A menu selection or an initial execution request
 does not approve a plan. After approval, carry inputs and decisions into the
 selected workflows without reinvocation or repeated plan approval at handoffs.
 
-Direct calls to `create-slides`, `convert-html-to-figma`, or
-`extract-figma-slides`, and task-bearing natural language outside this entrypoint,
+Direct calls to `setup-figma-plugins`, `create-slides`,
+`convert-html-to-figma`, or `extract-figma-slides`, and task-bearing natural language outside this entrypoint,
 keep their existing execution behavior and workflow-specific review boundaries.
