@@ -3,7 +3,7 @@ name: Check Figma plugin build
 on:
   pull_request:
     paths:
-      - 'plugins/depromeet-plugin/skills/convert-html-to-figma/tool/**'
+      - 'tools/figma-plugins/html-to-figma/**'
       - '.github/workflows/check-figma-build.yml'
 
 permissions:
@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: plugins/depromeet-plugin/skills/convert-html-to-figma/tool
+        working-directory: tools/figma-plugins/html-to-figma
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
           cache: npm
-          cache-dependency-path: plugins/depromeet-plugin/skills/convert-html-to-figma/tool/package-lock.json
+          cache-dependency-path: tools/figma-plugins/html-to-figma/package-lock.json
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm test

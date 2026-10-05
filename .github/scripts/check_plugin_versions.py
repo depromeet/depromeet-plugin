@@ -29,12 +29,15 @@ def changed_plugins(repository, base_sha, head_sha):
         head_sha,
         "--",
         "plugins/",
+        "tools/figma-plugins/",
     )
     plugins = set()
     for line in output.splitlines():
         fields = line.split("\t")
         for changed_path in fields[1:]:
             parts = Path(changed_path).parts
+            if changed_path.startswith("tools/figma-plugins/"):
+                plugins.add("depromeet-plugin")
             if len(parts) >= 3 and parts[0] == "plugins":
                 plugins.add(parts[1])
     return sorted(plugins)

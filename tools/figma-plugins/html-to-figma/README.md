@@ -6,7 +6,7 @@
 
 Figma Desktop이 필요합니다. 저장소에는 빌드된 `dist/code.js`와 `dist/ui.html`이 포함되어 있습니다. 사용자는 Node.js 설치나 빌드 없이 바로 등록할 수 있습니다. HTML 분석과 캡처는 Figma 플러그인 내부에서 처리합니다.
 
-최초 등록, 기존 설치 업데이트와 이전 버전 복구는 [공통 설치 안내](../../../figma-plugins/README.md)를 따르세요. 컴퓨터 사용 자동화가 없다면 사용자가 Figma 안에서 등록과 가져오기를 진행합니다.
+최초 등록, 기존 설치 업데이트와 이전 버전 복구는 [공통 설치 안내](../README.md)를 따르세요. 컴퓨터 사용 자동화가 없다면 사용자가 Figma 안에서 등록과 가져오기를 진행합니다.
 
 소스를 수정하는 유지 관리자는 Node.js 22 이상에서 `npm ci && npm test && npm run typecheck && npm run build`를 실행하고 변경된 `dist/code.js`, `dist/ui.html`도 함께 커밋합니다. CI가 빌드 결과의 최신 상태를 검사합니다.
 

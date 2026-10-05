@@ -4,8 +4,8 @@ Figma Desktop에서 사용하는 두 로컬 개발 플러그인의 공통 안내
 
 | 플러그인 | 기능 | 저장소에 포함된 폴더 |
 |---|---|---|
-| HTML → Figma | HTML·ZIP을 편집 가능한 프레임으로 가져오기 | [변환 도구](../skills/convert-html-to-figma/tool/README.md) |
-| Depromeet Flow Inspector | 장표 문구·프로토타입 연결을 JSON으로 추출 | [추출 도구](../skills/extract-figma-slides/figma-plugin/manifest.json) |
+| HTML → Figma | HTML·ZIP을 편집 가능한 프레임으로 가져오기 | [변환 도구](html-to-figma/README.md) |
+| Depromeet Flow Inspector | 장표 문구·프로토타입 연결을 JSON으로 추출 | [추출 도구](flow-inspector/manifest.json) |
 
 ## ask-depromeet에서 시작하는 흐름
 
@@ -107,7 +107,7 @@ Release나 실행용 ZIP이 없으면 기존 사용자도 저장소에 포함된
 
 [GitHub Releases](https://github.com/depromeet/depromeet-plugin/releases)에서 실제 게시된 버전과 첨부 파일을 확인하세요. 실행용 ZIP이 제공되면 해당 파일을 사용합니다. GitHub의 `Source code (zip)`은 전체 저장소 압축이며, 플러그인별 실행용 ZIP과 다릅니다.
 
-Release나 실행용 ZIP이 없다면 저장소를 내려받고 위 표의 폴더를 복사하세요. HTML 변환 도구는 `manifest.json`과 `dist/` 전체가 필요하고, Flow Inspector는 `manifest.json`, `code.js`, `ui.html`이 필요합니다. 변환 도구에는 빌드된 파일이 포함돼 있어 사용자는 Node.js나 npm을 설치할 필요가 없습니다.
+Release나 실행용 ZIP이 없다면 해당 버전의 저장소를 내려받고 `tools/figma-plugins/` 아래 위 표의 폴더를 복사하세요. 도구는 Claude Code·Codex용 설치 스킬 패키지에 포함되지 않으므로 플러그인 캐시 안에서 찾지 마세요. HTML 변환 도구는 `manifest.json`과 `dist/` 전체가 필요하고, Flow Inspector는 `manifest.json`, `code.js`, `ui.html`이 필요합니다. 변환 도구에는 빌드된 파일이 포함돼 있어 사용자는 Node.js나 npm을 설치할 필요가 없습니다.
 
 설치 폴더는 버전과 무관하게 유지하세요. 예를 들어 사용자 문서 폴더 아래 다음 위치를 사용할 수 있습니다.
 
@@ -162,7 +162,7 @@ Release 게시나 Claude Code·Codex 플러그인 업데이트만으로 별도 �
 
 두 Figma 도구를 `depromeet-plugin` 배포 버전으로 함께 관리합니다. 배포 내용 변경 시 Claude·Codex 매니페스트와 Claude 마켓플레이스 항목의 버전을 동일하게 올리고, 같은 버전의 Git 태그와 Release를 준비합니다. 변경되지 않은 도구는 Release 설명에 “변경 없음”으로 표시합니다.
 
-실행용 첨부 파일명은 `html-to-figma-v<버전>.zip`, `flow-inspector-v<버전>.zip`을 권장합니다. ZIP에는 위 설치 구조에 필요한 빌드 결과와 이 안내 문서, 출처를 식별할 `VERSION.txt`를 포함하세요. 이는 배포 시 준비할 규칙이며, 이 문서 추가만으로 ZIP이나 Release가 생성되지는 않습니다. HTML 변환 소스를 수정했다면 도구 README의 검사·빌드를 먼저 완료합니다.
+실행용 첨부 파일명은 `html-to-figma-v<버전>.zip`, `flow-inspector-v<버전>.zip`을 권장합니다. ZIP에는 위 설치 구조에 필요한 빌드 결과와 이 안내 문서, 출처를 식별할 `VERSION.txt`를 포함하세요. 이는 배포 시 준비할 규칙이며, 이 문서 추가만으로 ZIP이나 Release가 생성되지는 않습니다. HTML 변환 소스를 수정했다면 도구 README의 검사·빌드를 먼저 완료합니다. 검증한 커밋에서 저장소 루트 기준 `python3 tools/figma-plugins/package_release.py --output-dir /tmp/depromeet-release`로 두 실행용 ZIP을 만들 수 있습니다. 패키징은 manifest 참조 파일과 ZIP 무결성을 검사하며 `INSTALL.md`, `VERSION.txt`를 포함합니다. Release 게시는 별도로 진행합니다.
 
 Release 설명에는 각 도구의 변경점, 설치·업데이트 절차 링크, 필요한 사용자 조치를 적습니다. 두 도구는 현재 네트워크 접근을 차단하고 있어 최신 Release 조회나 자동 업데이트를 하지 않습니다. 팀 공지와 Releases 페이지를 통해 업데이트를 안내합니다.
 

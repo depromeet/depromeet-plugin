@@ -5,7 +5,7 @@ description: Use when installing, updating, troubleshooting registration, or rol
 
 # Setup Figma Plugins
 
-Use the shared [installation and update guide](../../figma-plugins/README.md) for both local Figma plugins. This workflow prepares the tools; it does not import HTML, edit the Figma document, or assemble PDFs.
+Use the shared [installation and update guide](https://github.com/depromeet/depromeet-plugin/blob/main/tools/figma-plugins/README.md) for both local Figma plugins. For a checkout, read `tools/figma-plugins/README.md` locally. For an installed skill, check a guide at the matching release tag/commit before falling back to the main-branch guide, which may describe unreleased changes. If the guide cannot be retrieved, report that limitation rather than inventing its contents. This workflow prepares the tools; it does not import HTML, edit the Figma document, or assemble PDFs.
 
 ## Entry and handoff
 
@@ -26,7 +26,7 @@ preserving its document-change review boundaries.
 ## Setup
 
 1. Identify the requested plugin and whether this is a first install, update, missing installation path, or rollback. Reuse information already supplied. For an update, establish the currently registered manifest path before replacing files.
-2. Read the relevant section of the shared guide. Check the actual GitHub Release and its assets before providing a download link or claiming a latest version. If Releases or runnable ZIPs are absent, use the documented bundled-file route and identify the checkout version separately from any installed version.
+2. Read the relevant section of the shared guide. Check the actual GitHub Release and its assets before providing a download link or claiming a latest version. If Releases or runnable ZIPs are absent, use `tools/figma-plugins/` from a verified repository checkout or download the repository source at a known tag/commit. These tools are outside the installed skill package: do not assume the plugin cache contains them. Identify the checkout version separately from any installed version.
 3. Explain the source, target installation folder, and files to replace. Keep the target folder stable across versions. If carrying out an authorized update, preserve a backup of the old plugin folder and unrelated user files. Extract into a temporary folder, check the manifest and its referenced files, then replace the plugin distribution files. Never remove an unknown installation to guess its location.
 4. Guide Figma Desktop registration for a first install or a changed/unknown manifest path. For an update at the same registered path, close the running plugin, replace its files, and run it again. If it still loads the old copy, reimport the intended manifest and distinguish duplicate Development entries.
 5. Verify that the requested plugin opens. Use packaged version metadata or a visible version only when present; manifest `api: 1.0.0` is not the release version. Report source version, observed installation path, and verification separately. Without computer-use access, state which registration and launch checks the user still needs to perform.
