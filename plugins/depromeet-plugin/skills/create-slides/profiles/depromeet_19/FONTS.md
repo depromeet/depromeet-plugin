@@ -9,8 +9,13 @@ with the deck so its typography works offline.
 | --- | --- | --- |
 | Korean, Korean with Latin, and mixed lines: Pretendard | [Pretendard releases](https://github.com/orioncactus/pretendard/releases) | [SIL Open Font License 1.1, Pretendard LICENSE](https://github.com/orioncactus/pretendard/blob/main/LICENSE) |
 | English-only or numbers-only: Instrument Sans | [Instrument Sans](https://github.com/Instrument/instrument-sans) | [SIL Open Font License 1.1, Instrument Sans OFL.txt](https://github.com/Instrument/instrument-sans/blob/master/OFL.txt) |
-| Short English display: Space Grotesk | [Space Grotesk releases](https://github.com/floriankarsten/space-grotesk/releases) | [SIL Open Font License 1.1, Space Grotesk OFL.txt](https://github.com/floriankarsten/space-grotesk/blob/master/OFL.txt) |
-| Short English slogan: Space Mono | [Space Mono](https://github.com/googlefonts/spacemono) | [SIL Open Font License 1.1, Space Mono OFL.txt](https://github.com/googlefonts/spacemono/blob/main/OFL.txt) |
+| Cover role tags (Italic): Space Mono | [Space Mono](https://github.com/googlefonts/spacemono) | [SIL Open Font License 1.1, Space Mono OFL.txt](https://github.com/googlefonts/spacemono/blob/main/OFL.txt) |
+| Dark notes in `e20-panels-notes` only: SUIT | [SUIT releases](https://github.com/sun-typeface/SUIT/releases) | [SIL Open Font License 1.1, SUIT LICENSE](https://github.com/sun-typeface/SUIT/blob/main/LICENSE) |
+
+The `DPM` mark at the right of the header uses Helvetica Neue Medium, a
+commercial system font. Do not download or bundle it. macOS provides it; on
+other systems the CSS stack falls back to Helvetica or Arial. Record which one
+rendered in `style-profile.md`.
 
 Use an unmodified font file supplied by the original project. Do not extract a
 font from the design-guide PDFs or make a new subset or format conversion. A
