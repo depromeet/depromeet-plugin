@@ -6,6 +6,8 @@ HTML → Figma 도구는 HTML 발표자료를 Figma의 장표로 가져옵니다
 
 Figma Desktop, 가져올 HTML 자료, 설치된 HTML → Figma 도구가 필요합니다. 처음 설치한다면 [Figma 도구 관리](figma-setup.md)를 먼저 따릅니다. Figma의 ‘프레임’은 장표 한 장을 담는 영역입니다.
 
+Figma는 내 컴퓨터에 설치된 글꼴만 사용합니다. 디프만 19기 스타일(`depromeet_19`) 자료를 가져온다면 **Pretendard**, **Instrument Sans**, **Space Mono**를 먼저 설치하고 Figma를 다시 시작하세요. 자료에 SUIT를 쓰는 장표가 있으면 **SUIT**도 설치합니다. 헤더 오른쪽 `DPM` 표시는 Helvetica Neue를 쓰며, Windows에서는 Arial로 대체됩니다. 설치 파일과 라이선스는 [글꼴 안내](../../plugins/depromeet-plugin/skills/create-slides/profiles/depromeet_19/FONTS.md)에서 확인할 수 있습니다.
+
 이미지·글꼴·스타일 파일이 별도로 있는 자료는 관련 파일을 함께 ZIP으로 묶어야 합니다. ZIP은 여러 파일을 하나로 압축한 파일입니다. AI에 다음처럼 요청할 수 있습니다.
 
 ```text

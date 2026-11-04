@@ -1,5 +1,6 @@
 :root {
   color-scheme: light;
+  /* Design-guide palette: 27 visible entries. */
   --blue-100: #B9CDF2;
   --blue-200: #8BACEA;
   --blue-300: #5C8BE2;
@@ -27,6 +28,30 @@
   --gradient-black-blue: linear-gradient(180deg, #1247AA 0%, #0C0E15 100%);
   --gradient-white-blue: linear-gradient(180deg, #FFFFFF 0%, #3C7AFF 100%);
   --gradient-sky-blue-white: radial-gradient(circle, #B9CDF2 0%, #F6F9FF 100%);
+  /* PPT template colors used by the 19th OT template and its components. */
+  --darknavy: #040C23;
+  --main-blue: #5AAFFF;
+  --blue-grey-800: #333E4C;
+  --template-gray-400: #ADADB7;
+  /* PPT template spacing variables (Figma collection `Spacing`). */
+  --slide-margin-x: 80px;
+  --slide-margin-bottom: 120px;
+  --header-height: 100px;
+  --header-padding-top: 60px;
+  --title-top: 135px;
+  --title-gap: 10px;
+  --content-top: 400px;
+  --content-width: 1760px;
+  --content-column-gap: 28px;
+  --column3-margin-x: 140px;
+  --column3-gap: 40px;
+  --column3-width: 520px;
+  --card-padding-x: 42px;
+  --card-padding-y: 33px;
+  --card-gap: 10px;
+  --radius-card: 32px;
+  --radius-chip: 100px;
+  --radius-photo: 24px;
   font-family: "Pretendard Variable", "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   color: var(--gray-950);
   background: var(--gray-100);
@@ -52,29 +77,31 @@
     .layout-description { margin-top: 0; }
     .preview-window { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--white); border: 1px solid var(--gray-500); border-radius: 8px; overflow: hidden; }
     /* The specimen stage keeps the geometry that the user is reviewing. */
-    .layout-stage { position: absolute; inset: 0 auto auto 0; width: 1920px; height: 1080px; padding: 90px; display: flex; flex-direction: column; gap: 24px; transform-origin: top left; background: var(--white); }
-    .region { position: relative; border: 2px dashed var(--blue-300); background: var(--gray-50); border-radius: 16px; padding: 30px; min-width: 0; overflow: hidden; }
+    .layout-stage { position: absolute; inset: 0 auto auto 0; width: 1920px; height: 1080px; padding: var(--header-padding-top) var(--slide-margin-x) 64px; display: flex; flex-direction: column; gap: 0; transform-origin: top left; background: var(--white); }
+    .region { position: relative; border: 2px dashed var(--blue-300); background: var(--gray-50); border-radius: var(--radius-card); padding: 40px; min-width: 0; overflow: hidden; }
     .region-label { display: block; margin-bottom: 14px; font-size: 22px; font-weight: 700; line-height: 1.25; color: var(--blue-800); }
     .region-label code { margin-left: 10px; font-size: 19px; color: var(--gray-700); }
-    .region p { margin: 0; font-size: 30px; line-height: 1.5; }
-    .region .sample-title { font-size: 64px; font-weight: 750; line-height: 1.25; letter-spacing: -.025em; }
-    .context { height: 110px; flex: 0 0 auto; padding: 22px 30px; }
-    .context .region-label { margin: 0; }
-    .heading { height: 210px; flex: 0 0 auto; }
-    .body-row { display: flex; gap: 28px; flex: 1; min-height: 0; }
+    .region p { margin: 0; font-size: 30px; line-height: 1.4; }
+    .region .sample-title { font-size: 80px; font-weight: 700; line-height: 1.3; letter-spacing: -.02em; }
+    .context { height: calc(var(--header-height) - var(--header-padding-top)); flex: 0 0 auto; padding: 0; overflow: visible; }
+    .context .region-label, .heading .region-label { position: absolute; top: -30px; left: 0; margin: 0; font-size: 18px; }
+    .context .region-label code, .heading .region-label code { font-size: 16px; }
+    .heading { flex: 0 0 auto; height: calc(var(--content-top) - var(--title-top) - 35px); margin-top: calc(var(--title-top) - var(--header-height)); padding: 0; overflow: visible; }
+    .body-row { display: flex; gap: var(--content-column-gap); flex: 1; min-height: 0; margin-top: 35px; }
     .body-row > .region { flex: 1; }
     .body-row > .explanation { flex: 2; }
     .body-row > .visual { flex: 3; }
-    .visual-placeholder { display: flex; align-items: center; justify-content: center; min-height: 120px; height: calc(100% - 55px); border: 2px solid var(--gray-400); background: var(--gray-200); border-radius: 10px; font-size: 36px; color: var(--gray-700); text-align: center; }
-    .sources { height: 98px; flex: 0 0 auto; padding: 12px 30px; }
-    .sources .region-label { font-size: 22px; margin-bottom: 6px; }
-    .sources p { font-size: 23px; }
-    .takeaway { flex: 0 0 auto; height: 142px; padding: 22px 30px; }
+    .visual-placeholder { display: flex; align-items: center; justify-content: center; min-height: 120px; height: calc(100% - 55px); border: 0; background: var(--gray-300); border-radius: var(--radius-photo); font-size: 32px; color: var(--gray-700); text-align: center; }
+    .sources { height: 64px; flex: 0 0 auto; margin-top: 20px; padding: 0 30px; }
+    .sources .region-label { position: absolute; top: 2px; left: 0; margin: 0; font-size: 16px; }
+    .sources .region-label code { font-size: 14px; }
+    .sources p { font-size: 28px; }
+    .takeaway { flex: 0 0 auto; height: 120px; margin-top: var(--content-column-gap); padding: 20px 40px; }
     .takeaway p { font-size: 30px; }
     .opener-title { flex: 1; padding: 60px; display: flex; flex-direction: column; justify-content: center; }
     .opener-title .sample-title { font-size: 106px; max-width: 1500px; }
-    .subtitle { height: 170px; flex: 0 0 auto; }
-    .wide-visual { flex: 1; min-height: 0; }
+    .subtitle { height: 150px; flex: 0 0 auto; }
+    .wide-visual { flex: 1; min-height: 0; margin-top: 35px; }
     .legend { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; margin: 20px 0 0; padding: 0; }
     .legend > div { border-bottom: 1px solid var(--gray-300); padding: 0 0 12px; }
     dt { font-weight: 700; line-height: 1.6; }
@@ -104,119 +131,254 @@
     #position {font-size:14px;color:var(--gray-700);min-width:52px;}
     .layout-card {background:var(--white);padding:24px;border-radius:16px;border:1px solid var(--gray-300);}
     .variant {font-size:14px;color:var(--gray-700);padding:12px 16px;background:var(--gray-100);border-radius:8px;}
-    .layout-stage .soft {color:var(--gray-600);font-size:30px;}
+    .layout-stage .soft {color:var(--gray-600);font-size:28px;}
     #L05 .visual {flex:65;}
     #L05 .explanation {flex:35;}
-    .stack {display:flex;flex-direction:column;gap:24px;flex:1;min-height:0;}
+    .stack {display:flex;flex-direction:column;gap:var(--content-column-gap);flex:1;min-height:0;}
     .stack > .region {flex:1;}
-    .agenda-row {display:flex;gap:28px;align-items:center;border-bottom:1px solid var(--gray-400);padding:18px 0;font-size:42px;}
-    .agenda-row b {font-size:48px;color:var(--blue-500);}
+    .agenda-row {display:flex;gap:28px;align-items:center;border-bottom:1px solid var(--gray-300);padding:18px 0;font-size:40px;font-weight:600;}
+    .agenda-row b {font-size:44px;}
     .statement {flex:1;display:flex;flex-direction:column;justify-content:center;padding:40px;}
     .statement .sample-title {font-size:80px;}
-    .statement .region-label {margin-bottom:40px;}
-    .item-number {font-size:76px;font-weight:750;line-height:1.2;color:var(--blue-100);margin:18px 0 30px;}
-    .region .item-title {font-size:44px;font-weight:700;margin-bottom:24px;}
-    .metric-number {font-size:114px;line-height:1.1;font-weight:800;color:var(--blue-500);letter-spacing:-.05em;margin:10px 0;}
-    .metric-number small {font-size:60px;letter-spacing:0;}
+    .statement .region-label {margin-bottom:24px;}
+    .item-number {font-size:64px;font-weight:700;line-height:1.2;margin:8px 0 20px;}
+    .region .item-title {font-size:40px;font-weight:700;line-height:1.3;margin-bottom:20px;}
+    .metric-number {font-size:96px;line-height:1.1;font-weight:700;letter-spacing:-.02em;margin:24px 0 16px;}
+    .metric-number small {font-size:56px;letter-spacing:0;}
     .process-row {gap:16px;align-items:stretch;}
-    .connector {align-self:center;font-size:52px;color:var(--blue-500);flex:0 0 44px;text-align:center;}
-    .process-row .region {padding:28px;}
-    .timeline-row {position:relative;padding-top:48px;gap:30px;}
-    .timeline-row:before {content:"";position:absolute;top:16px;left:20px;right:20px;height:4px;background:var(--blue-200);}
+    .connector {align-self:center;font-size:52px;flex:0 0 44px;text-align:center;}
+    .process-row .region {padding:40px;}
+    .timeline-row {position:relative;padding-top:48px;gap:var(--content-column-gap);}
+    .timeline-row:before {content:"";position:absolute;top:16px;left:20px;right:20px;height:4px;background:var(--blue-100);}
     .milestone {position:relative;flex:1;display:flex;min-width:0;}
-    .milestone:before {content:"";position:absolute;top:-43px;left:36px;width:22px;height:22px;background:var(--blue-500);border:5px solid var(--white);outline:2px solid var(--blue-500);border-radius:50%;}
+    .milestone:before {content:"";position:absolute;top:-43px;left:36px;width:22px;height:22px;background:var(--main-blue);border:5px solid var(--white);outline:2px solid var(--main-blue);border-radius:50%;}
     .milestone .region {width:100%;}
-    .time-label {font-size:54px;font-weight:750;color:var(--blue-500);margin:20px 0;}
-    .tree-root {width:52%;margin:auto;height:180px;flex:none;}
-    .tree-lines {height:56px;position:relative;margin:0 16.67%;border-top:3px solid var(--blue-200);border-left:3px solid var(--blue-200);border-right:3px solid var(--blue-200);}
-    .tree-lines:before {content:"";position:absolute;left:50%;top:-24px;height:76px;border-left:3px solid var(--blue-200);}
-    .tree {display:flex;flex-direction:column;flex:1;min-height:0;gap:22px;}
-    .tree .body-row {gap:28px;}
+    .time-label {font-size:48px;font-weight:700;margin:12px 0 16px;}
+    .tree-root {width:52%;margin:auto;height:170px;flex:none;}
+    .tree-lines {height:56px;position:relative;margin:0 16.67%;border-top:3px solid var(--blue-100);border-left:3px solid var(--blue-100);border-right:3px solid var(--blue-100);}
+    .tree-lines:before {content:"";position:absolute;left:50%;top:-24px;height:76px;border-left:3px solid var(--blue-100);}
+    .tree {display:flex;flex-direction:column;flex:1;min-height:0;gap:22px;margin-top:35px;}
+    .tree .body-row {gap:var(--content-column-gap);margin-top:0;}
     .tree .region p {font-size:30px;}
     @media(max-width:640px) {nav{grid-template-columns:repeat(2,minmax(0,1fr));} .layout-card{padding:14px;} .layout-heading h2{font-size:20px;}}
     @media print {[hidden]{display:block !important;} .controls{display:none;} .layout-card{break-before:page;padding:0;border:0;}}
 
 /* Profile type roles for finished slide content. */
 .latin-only { font-family: "Instrument Sans", "Pretendard", sans-serif; }
-.display-latin { font-family: "Space Grotesk", "Instrument Sans", sans-serif; }
 .slogan-latin { font-family: "Space Mono", monospace; font-style: italic; }
 
-/* Banner-inspired presentation modes. The gradients and stars are CSS recreations. */
+/* PPT template presentation modes for the review skeleton. Values match the
+   PPT template components below; examples/ shows the finished pages. */
 :root {
-  --space-cover: radial-gradient(ellipse 76% 82% at 50% 81%, #1659d5aa, transparent 75%), linear-gradient(180deg, #0c0e15 0%, #0f1b36 64%, #092455 100%);
-  --space-chapter: radial-gradient(ellipse 70% 42% at 59% 101%, #1459d5b8 0%, #0d377580 40%, transparent 100%), radial-gradient(ellipse 65% 72% at 86% 24%, #134ab070 0%, transparent 70%), linear-gradient(180deg, #0f1422 0%, #0f1b36 56%, #06111f 100%);
-  --content-panel: #F2F4F8;
-  --content-line: #DCE3ED;
+  --slide-bg: #FBFEFF;
 }
-.layout-stage { color: var(--blue-800); background: var(--white); }
-.region { background: var(--content-panel); border-color: var(--blue-200); }
-.region .sample-title { color: var(--blue-800); font-weight: 780; letter-spacing: -.045em; }
-.context, .heading, .takeaway, .sources { background: transparent; border-color: transparent; }
-.context { border-bottom: 1px solid var(--content-line); border-radius: 0; }
-.context .region-label { color: var(--blue-500); }
-.sources { border-top: 1px solid var(--content-line); border-radius: 0; }
-.sources p { color: var(--gray-700); }
-.takeaway p { color: var(--blue-800); font-weight: 750; }
-.visual-placeholder { color: var(--blue-800); background: linear-gradient(135deg, #DCE9FF, #ABC8FA); border-color: var(--blue-200); font-weight: 700; }
-.item-number { color: var(--blue-500); }
-#L05 .explanation { background: #E8F0FF; }
-#L07 .body-row > .region { border-top: 8px solid var(--blue-500); }
-#L08 .layout-stage { background: radial-gradient(circle at 80% 15%, #D9E7FF 0%, transparent 42%), linear-gradient(145deg, #F9FBFF, #E8F0FF); }
-#L08 .body-row > .region:first-child { background: #E8F0FF; }
-#L12 .action-stack .region:first-child { color: var(--white); background: var(--blue-500); border-color: var(--blue-500); }
-#L12 .action-stack .region:first-child .region-label,
-#L12 .action-stack .region:first-child .region-label code { color: var(--white); }
+.layout-stage { color: var(--darknavy); background: var(--slide-bg); letter-spacing: -0.02em; }
+.region { background: var(--card-tint); border-color: var(--blue-100); }
+.region .sample-title { color: var(--darknavy); font-weight: 700; line-height: 1.4; }
 
-/* L01 cover, chapter, and L06 statement share the dark presentation atmosphere. */
-#L01 .layout-stage, #L06 .layout-stage { color: var(--white); background: var(--space-chapter); }
-#L01 .cover-stage { display: block; background: var(--space-cover); }
-#L01 .chapter-stage { display: block; }
-#L01 .layout-stage::before, #L06 .layout-stage::before { content: ""; position: absolute; z-index: 0; inset: 0; opacity: .37; background-image: radial-gradient(circle, #D8EEFF 0 1px, transparent 1.6px), radial-gradient(circle, #64B6FF 0 1px, transparent 1.5px), radial-gradient(circle, #EFF9FF 0 .65px, transparent 1.3px); background-size: 139px 139px, 197px 173px, 83px 127px; background-position: 19px 11px, 81px 76px, 37px 46px; mask-image: linear-gradient(180deg, #000 0%, #000b 75%, transparent 100%); }
-#L01 .layout-stage::after, #L06 .layout-stage::after { content: ""; position: absolute; z-index: 0; width: 85%; height: 31%; left: 7%; bottom: -19%; border-radius: 50%; background: #0C5FEB; filter: blur(85px); opacity: .5; }
-#L01 .layout-stage > * { position: absolute; z-index: 2; }
-#L01 .mode-kicker { color: #9ACAEF; font: 700 25px "Instrument Sans", "Pretendard", sans-serif; letter-spacing: .14em; }
-#L01 .cover-stage .mode-kicker { top: 259px; left: 90px; }
-#L01 .chapter-stage .mode-kicker { top: 268px; left: 90px; }
-#L01 .closing-stage .mode-kicker { top: 268px; left: 90px; }
-#L01 .region, #L06 .region { color: var(--white); background: transparent; border-color: var(--white-030); }
-#L01 .region-label, #L06 .region-label,
-#L01 .region-label code, #L06 .region-label code { color: #C7E1FF; }
-#L01 .sample-title, #L06 .sample-title { color: var(--white); }
-#L01 .context { top: 72px; left: 90px; right: 90px; height: 102px; border-left: 0; border-right: 0; border-top: 0; border-radius: 0; }
-#L01 .context p { font: 700 24px "Instrument Sans", "Pretendard", sans-serif; letter-spacing: .08em; }
-#L01 .sources { left: 90px; right: 90px; bottom: 54px; height: 75px; border-bottom: 0; border-left: 0; border-right: 0; }
-#L01 .sources p { color: #D0E4FF; }
-#L01 .page-marker { position: absolute; top: 21px; right: 30px; color: #B5D1F3; font: 700 24px "Instrument Sans", "Pretendard", sans-serif; letter-spacing: .08em; }
-#L01 .cover-stage .sources { z-index: 4; }
-#L01 .cover-stage .cover-halo { top: 112px; left: 422px; width: 1076px; height: 1076px; border: 2px solid #79BEFF55; border-radius: 50%; box-shadow: 0 0 0 115px #2480FF08, 0 0 80px #478DFD20; }
-#L01 .cover-stage .title-shade { z-index: 3; inset: 52% 0 0; background: linear-gradient(180deg, transparent 0%, #081831C9 38%, #07152AE8 100%); }
-#L01 .cover-stage .opener-title { z-index: 4; top: 610px; left: 90px; width: 1050px; height: 340px; padding: 20px 24px; }
-#L01 .cover-stage .opener-title .sample-title { font-size: 106px; line-height: 1.06; }
-#L01 .cover-stage .subtitle { z-index: 4; right: 90px; bottom: 200px; width: 610px; height: 110px; text-align: right; }
-#L01 .cover-stage .subtitle p { font-size: 28px; }
-#L01 .chapter-stage .opener-title { z-index: 4; top: 320px; left: 90px; width: 900px; height: 370px; padding: 40px; }
-#L01 .chapter-stage .opener-title .sample-title { font-size: 106px; line-height: 1.08; }
-#L01 .chapter-stage .subtitle { left: 90px; bottom: 180px; width: 810px; height: 120px; }
-#L01 .chapter-stage .chapter-beam { left: 90px; right: 998px; bottom: 302px; height: 2px; background: linear-gradient(90deg, #72C8FF, transparent); box-shadow: 0 0 20px #2DA8FF; }
-#L01 .hero-art { display: flex; align-items: center; justify-content: center; border: 2px solid #74B8FF88; border-radius: 50%; background: radial-gradient(circle at 50% 58%, #2979E688, #1247AA36 42%, transparent 71%); box-shadow: 0 0 0 75px #2480FF08, 0 0 90px #478DFD33; }
-#L01 .hero-art span { display: block; max-width: 500px; padding: 28px 36px; border: 2px dashed #A8D3FFAA; border-radius: 20px; background: #071B3CBB; color: var(--white); text-align: center; font-size: 30px; font-weight: 750; line-height: 1.5; }
-#L01 .hero-art code { color: #B8DBFF; font-size: 26px; }
-#L01 .hero-art small { color: #A9CDFB; font-size: 23px; font-weight: 500; }
-#L01 .cover-stage .hero-art { top: 70px; left: 560px; width: 790px; height: 790px; }
-#L01 .chapter-stage .hero-art { top: 120px; right: 10px; width: 760px; height: 760px; }
-#L01 .has-asset .hero-art { border: 0; background: none; box-shadow: none; }
-#L01 .has-asset .hero-art::before, #L01 .has-asset .hero-art span { display: none; }
-#L01 .has-asset .hero-art img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 13px 45px #1D8DFF8A); }
-#L01 .cover-stage.has-asset .hero-art { top: -43px; left: 460px; width: 1000px; height: 1000px; }
-#L01 .chapter-stage.has-asset .hero-art { top: -54px; right: -58px; width: 1130px; height: 1130px; }
-#L01 .closing-stage .opener-title { z-index: 4; top: 335px; left: 90px; width: 1170px; height: 340px; padding: 40px; }
-#L01 .closing-stage .opener-title .sample-title { font-size: 106px; line-height: 1.08; }
-#L01 .closing-stage .subtitle { left: 90px; bottom: 180px; width: 1050px; height: 120px; }
-#L01 .closing-stage .closing-orbit { top: 162px; right: 70px; width: 800px; height: 800px; border: 2px solid #72B6FF55; border-radius: 50%; box-shadow: 0 0 0 96px #2480FF08, 0 0 80px #478DFD20; }
-#L06 .statement { background: transparent; border-color: transparent; }
-#L06 .statement .sample-title { font-size: 100px; }
-#L06 .statement::after { content: ""; position: absolute; left: 40px; bottom: 54px; width: 600px; height: 2px; background: #6CC4FF; box-shadow: 0 0 18px #63C4FF; }
-#L06 .sources p { color: #C8DCFA; }
+/* Header: "DPM 19 | section name" on the left and the DPM mark on the right, 60 % opacity. */
+.context { display: flex; align-items: flex-end; justify-content: space-between; background: transparent; border-color: transparent; border-radius: 0; }
+.dpm-header { display: flex; align-items: center; gap: 18px; height: 40px; opacity: 0.6; color: var(--darknavy); font-size: 30px !important; font-weight: 400; line-height: 1.4 !important; white-space: nowrap; }
+.dpm-header .latin-only { font-weight: 500; }
+.dpm-header i { opacity: 0.5; font-style: normal; }
+.dpm-mark { opacity: 0.6; font: 500 29.4px/normal "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: -0.08em; color: #868B98; text-transform: uppercase; }
+
+/* Title block: Bold 35 label, 10 px gap, Bold 80 title (92 when English only). */
+.heading { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: var(--title-gap); text-align: center; background: transparent; border-color: transparent; }
+.heading.align-left { align-items: flex-start; text-align: left; }
+.title-label { color: var(--blue-300); font-size: 35px !important; font-weight: 700; line-height: 1.4 !important; }
+.sample-title.latin-only { font-size: 92px; }
+
+/* Cards, chips, and photo shapes. */
+.body-row > .region, .stack > .region, .milestone .region, .tree .region { background: var(--card-tint); }
+.chip { display: inline-flex; align-items: center; justify-content: center; align-self: center; padding: 18px 28px; border-radius: var(--radius-chip); background: var(--main-blue); color: var(--white); font-size: 25px; font-weight: 700; line-height: 1.44; white-space: nowrap; }
+.photo { display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 1.4 / 1; border-radius: var(--radius-photo); background: var(--photo-fill); color: var(--photo-line); font-size: 24px; }
+.takeaway { display: flex; flex-direction: column; justify-content: center; border-radius: var(--radius-card); background: var(--blue-grey-800); border-color: var(--blue-grey-800); }
+.takeaway p { color: var(--white); font-size: 30px; font-weight: 600; line-height: 1.5; letter-spacing: 0; text-align: center; }
+.takeaway .region-label, .takeaway .region-label code { color: var(--blue-100); }
+.sources { display: flex; align-items: center; justify-content: center; background: transparent; border-color: transparent; border-radius: 0; }
+.sources p { color: var(--gray-600); font-size: 28px; font-weight: 500; line-height: 1.4; text-align: center; }
+.visual-placeholder { background: var(--photo-fill); color: var(--photo-line); font-weight: 700; }
+.item-number, .metric-number, .agenda-row b, .time-label { font-family: "Instrument Sans", "Pretendard", sans-serif; }
+.item-number, .agenda-row b { color: var(--blue-300); }
+.connector { color: var(--blue-300); }
+.time-label { color: var(--blue-300); }
+#L05 .explanation { background: var(--card-component); }
+/* Two cards use 60/50 padding; three or more cards keep 40/40. */
+#L02 .body-row > .region, #L03 .body-row > .region, #L05 .body-row > .region,
+#L08 .body-row > .region, #L12 .body-row > .region, #L12 .stack > .region { padding: 50px 60px; }
+
+/* L07: PPT/card-chip-photo (3열) on the column3 grid. */
+#L07 .body-row { gap: var(--column3-gap); padding: 0 calc(var(--column3-margin-x) - var(--slide-margin-x)); }
+#L07 .body-row > .region { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 40px; background: var(--card-component); text-align: center; }
+#L07 .body-row > .region .region-label { align-self: flex-start; margin: 0; }
+#L07 .region .item-title { margin: 0; font-size: 28px; font-weight: 600; line-height: 1.4; }
+#L07 .photo { flex: 1 1 auto; min-height: 0; aspect-ratio: auto; margin-top: 16px; }
+
+/* L08: PPT/number-card. */
+#L08 .body-row > .region:first-child { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 80px 56px; text-align: center; background: var(--card-component); }
+#L08 .body-row > .region:first-child .region-label { position: absolute; top: 24px; left: 40px; }
+#L08 .body-row > .region:first-child .item-title { margin: 0; color: var(--main-blue); font-size: 56px; font-weight: 700; line-height: 1.44; }
+#L08 .metric-number { margin: 0; color: var(--darknavy); font-size: 96px; font-weight: 700; line-height: 1.44; letter-spacing: -0.02em; }
+#L08 .metric-number small { font-size: 96px; }
+
+/* L10 week-row variant: PPT/week-row in a two-column card. */
+.week-table { display: flex; gap: 80px; flex: 1; min-height: 0; margin-top: 35px; padding: 50px 60px; background: var(--card-ot); }
+.week-table .region-label { position: absolute; top: 12px; left: 40px; margin: 0; font-size: 18px; }
+.week-column { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; gap: 25px; justify-content: center; }
+.week-row { display: flex; align-items: center; gap: 24px; line-height: 1.4; }
+.week-row .week { width: 125px; flex: none; color: var(--gray-600); font-size: 24px; font-weight: 500; }
+.week-row .date { width: 92px; flex: none; color: var(--darknavy); font-size: 30px; font-weight: 500; }
+.week-row .event { width: 401px; flex: none; color: var(--darknavy); font-size: 30px; font-weight: 600; }
+.week-row .chip { padding: 4px 12px; background: var(--blue-300); font-size: 18px; font-weight: 600; line-height: normal; }
+
+/* L12: the action card uses the dark template bar color. */
+#L12 .action-stack .region:first-child { color: var(--white); background: var(--blue-grey-800); border-color: var(--blue-grey-800); }
+#L12 .action-stack .region:first-child .region-label,
+#L12 .action-stack .region:first-child .region-label code { color: var(--blue-100); }
+
+/* Title-only pages: L01 chapter and closing, L06 statement. Label 50, gap 30, title 80, centered. */
+#L01 .chapter-stage .opener-title, #L01 .closing-stage .opener-title,
+#L06 .statement { align-items: center; justify-content: center; gap: 30px; margin-top: 35px; text-align: center; background: transparent; border-color: transparent; }
+#L01 .chapter-stage .opener-title .sample-title, #L01 .closing-stage .opener-title .sample-title { font-size: 80px; max-width: none; }
+#L01 .opener-title .title-label, #L06 .statement .title-label { font-size: 50px !important; }
+#L01 .chapter-stage .opener-title .region-label, #L01 .closing-stage .opener-title .region-label, #L06 .statement .region-label { position: absolute; top: 12px; left: 20px; margin: 0; }
+#L01 .chapter-stage .subtitle, #L01 .closing-stage .subtitle, #L06 .subtitle { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: transparent; border-color: transparent; }
+#L01 .chapter-stage .subtitle p, #L01 .closing-stage .subtitle p, #L06 .subtitle p { color: var(--gray-700); }
+
+/* L01 cover: the template cover proposal. The wordmark is the cover title. */
+#L01 .cover-stage { display: block; padding: 0; background: none; }
+#L01 .cover-stage .ppt-cover { position: absolute; inset: 0; }
+#L01 .cover-stage .region { position: absolute; z-index: 3; background: transparent; border-color: var(--white-030); }
+#L01 .cover-stage .region-label, #L01 .cover-stage .region-label code { color: #C7E1FF; }
+#L01 .cover-stage .hero-art { left: 615px; top: 0; width: 724px; height: 1080px; padding: 0; }
+#L01 .cover-stage .hero-art img { display: block; width: 724px; height: auto; }
+#L01 .cover-stage .cover-title { left: 117px; top: 703px; width: 1685px; height: 310px; padding: 0; }
+#L01 .cover-stage .cover-title .region-label { position: absolute; top: -34px; left: 0; margin: 0; }
+
 .specimen-label { margin: 18px 0 8px; color: var(--blue-800); font-size: 15px; font-weight: 750; }
 .action-stack { flex: 3; }
-.metric-number, .item-number, .agenda-row b { font-family: "Instrument Sans", "Pretendard", sans-serif; }
+
+/* ==========================================================================
+   PPT template components. Values are copied from the 19th PPT template
+   (Figma: template rules, PPT components, AI templates, OT example).
+   Finished slides and examples/ use these classes; keep them exact.
+   ========================================================================== */
+:root {
+  --ink-800: #262C36;
+  --ink-600: #667080;
+  --card-tint: rgba(92, 139, 226, 0.1);
+  --card-component: rgba(71, 166, 244, 0.14);
+  --card-ot: rgba(231, 238, 251, 0.5);
+  --card-light: #F4FBFF;
+  --photo-fill: rgba(96, 101, 116, 0.2);
+  --photo-line: #606574;
+  --dpm-mark: #868B98;
+  --font-ko: "Pretendard", "Pretendard Variable", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-latin: "Instrument Sans", "Pretendard", sans-serif;
+  --font-mark: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.ppt-example { margin: 0; background: #FFFFFF; }
+/* Component catalog uses the Figma component frame size instead of a slide. */
+.ppt-slide.ppt-sheet { width: 3000px; height: 1538px; }
+.ppt-slide { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--slide-bg); color: var(--darknavy); font-family: var(--font-ko); letter-spacing: -0.02em; word-break: keep-all; }
+/* Reset the review-page paragraph rule without outranking component classes. */
+:where(.ppt-slide, .ppt-cover) p { margin: 0; line-height: inherit; overflow-wrap: normal; }
+.ppt-slide .latin-only { font-family: var(--font-latin); }
+
+/* Header: DPM 19 (or Team N) | section name, DPM mark on the right, 60 % opacity. */
+.ppt-header { position: absolute; top: 0; left: 0; width: 1920px; padding: var(--header-padding-top) var(--slide-margin-x) 0; display: flex; align-items: center; justify-content: space-between; opacity: 0.6; }
+.ppt-header-text { display: flex; align-items: center; gap: 18px; height: 40px; font-size: 30px; line-height: 1.4; white-space: nowrap; }
+.ppt-header-text .latin-only { font-weight: 500; }
+.ppt-header-sep { opacity: 0.5; }
+.ppt-dpm-mark { width: 62.483px; height: 35.529px; font: 500 29.4px/normal var(--font-mark); letter-spacing: -0.08em; color: var(--dpm-mark); text-transform: uppercase; white-space: nowrap; }
+
+/* Titles. Centered label 35 + title 80 at y 135; left variant label 35 + title 58. */
+.ppt-title { position: absolute; top: var(--title-top); left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: var(--title-gap); font-weight: 700; line-height: 1.4; text-align: center; white-space: nowrap; }
+.ppt-title-label { font-size: 35px; color: var(--blue-300); }
+.ppt-title-main { font-size: 80px; color: var(--darknavy); }
+.ppt-title--left { left: var(--slide-margin-x); top: 141px; transform: none; align-items: flex-start; text-align: left; width: var(--content-width); }
+.ppt-title--left .ppt-title-main { font-size: 58px; color: var(--ink-800); letter-spacing: 0; }
+.ppt-title-stack { display: flex; flex-direction: column; gap: 20px; }
+.ppt-title-sub { font-size: 32px; font-weight: 500; color: var(--ink-800); letter-spacing: 0; }
+/* Title-only centered page: optional label 50, gap 30, title 80 at the vertical center. */
+.ppt-center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; gap: 30px; font-weight: 700; line-height: 1.4; text-align: center; white-space: nowrap; }
+.ppt-center .ppt-title-label { font-size: 50px; }
+
+/* Content row: 1760 wide, 28 gap. Top is set per layout (400 default, 480 for 440-tall cards). */
+.ppt-content { position: absolute; left: var(--slide-margin-x); top: var(--content-top); width: var(--content-width); display: flex; gap: var(--content-column-gap); align-items: center; }
+.ppt-footnote { position: absolute; left: 50%; top: 950px; transform: translateX(-50%); font-size: 28px; font-weight: 500; line-height: 1.4; color: var(--gray-600); white-space: nowrap; }
+
+/* Text card: tint 10 %, radius 32, padding 80/56, centered Bold 48 text. */
+.ppt-card { flex: 1 0 0; min-width: 0; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 70px; padding: 80px 56px; border-radius: var(--radius-card); background: var(--card-tint); text-align: center; }
+.ppt-card-text { font-size: 48px; font-weight: 700; line-height: 1.443; }
+/* Box with a Blue/300 head bar. */
+.ppt-box { flex: 1 0 0; min-width: 0; height: 100%; display: flex; flex-direction: column; border-radius: var(--radius-card); overflow: hidden; }
+.ppt-box-head { padding: 14px; background: var(--blue-300); color: var(--white); font-size: 33px; font-weight: 700; line-height: 1.5; letter-spacing: -0.03em; text-align: center; filter: drop-shadow(0 0.748px 0.374px rgba(0, 0, 0, 0.3)); }
+.ppt-box-body { flex: 1 0 0; display: flex; align-items: center; justify-content: center; padding: 80px 56px; background: var(--card-tint); text-align: center; }
+
+/* PPT/number-card: 568x440 reference, label Pretendard Bold 56, number Instrument Sans Bold 96. */
+.ppt-number-card { flex: 1 0 0; min-width: 0; height: 440px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 80px 56px; border-radius: var(--radius-card); background: var(--card-component); line-height: 1.44; text-align: center; white-space: nowrap; }
+.ppt-number-label { font-size: 56px; font-weight: 700; color: var(--main-blue); }
+.ppt-number { font-family: var(--font-latin); font-size: 96px; font-weight: 700; color: var(--darknavy); }
+.ppt-number--four { font-size: 88px; }
+.ppt-number--ko { font-family: var(--font-ko); }
+
+/* PPT/chip: radius 100, padding 18/28, Pretendard Bold 25 white. */
+.ppt-chip { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 18px 28px; border-radius: var(--radius-chip); background: var(--main-blue); color: var(--white); font-size: 25px; font-weight: 700; line-height: 1.44; white-space: nowrap; }
+/* Small Blue/300 chip used inside schedule rows. */
+.ppt-chip--small { padding: 4px 12px; background: var(--blue-300); font-size: 18px; font-weight: 600; line-height: normal; }
+/* Gray keyword chip (WHO / HOW / WHAT). */
+.ppt-chip--key { padding: 20px 16px; background: var(--template-gray-400); font-family: var(--font-latin); font-size: 34px; font-weight: 600; line-height: 1; }
+
+/* PPT/photo (Ctrl+V): gray 20 %, radius 24, ratio 1.4:1 or wider. */
+.ppt-photo { display: flex; align-items: center; justify-content: center; border-radius: var(--radius-photo); background: var(--photo-fill); }
+.ppt-photo--fill { flex: 1 0 0; min-height: 1px; width: 100%; }
+.ppt-photo-hint { color: var(--photo-line); font-size: 50px; font-weight: 700; line-height: 1.4; text-align: center; }
+
+/* PPT/card-chip-photo: 2 columns 866x669 padding 50/60 body 36; 3 columns padding 40 body 28. */
+.ppt-card-chip-photo { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 50px 60px; border-radius: var(--radius-card); background: var(--card-component); }
+.ppt-card-chip-photo--3 { padding: 40px; }
+.ppt-chip-block { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
+.ppt-chip-body { width: 100%; font-size: 36px; font-weight: 600; line-height: 1.4; text-align: center; }
+.ppt-card-chip-photo--3 .ppt-chip-body { font-size: 28px; }
+
+/* PPT/week-row: week IS Medium 24, date IS Medium 30, name Pretendard SemiBold 30. Text : row gap = 6 : 5. */
+.ppt-week-card { display: flex; gap: 80px; padding: 50px 60px; border-radius: var(--radius-card); background: var(--card-ot); overflow: hidden; }
+.ppt-week-column { flex: 1 0 0; min-width: 0; display: flex; flex-direction: column; gap: 25px; }
+.ppt-week-row { display: flex; align-items: center; gap: 24px; }
+.ppt-week { width: 125px; flex: none; font-family: var(--font-latin); font-size: 24px; font-weight: 500; color: var(--gray-600); }
+.ppt-date { width: 92px; flex: none; font-family: var(--font-latin); font-size: 30px; font-weight: 500; }
+.ppt-event { width: 401px; flex: none; font-size: 30px; font-weight: 600; }
+.ppt-event--accent { color: var(--blue-300); }
+
+/* Dark summary bar: Blue Grey 800, radius 32, ExtraBold 35 + SemiBold 30 white. */
+.ppt-dark-bar { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: var(--radius-card); background: var(--blue-grey-800); color: var(--white); line-height: 1.5; letter-spacing: 0; text-align: center; }
+.ppt-dark-bar-title { font-size: 35px; font-weight: 800; }
+.ppt-dark-bar-body { font-size: 30px; font-weight: 600; }
+
+/* Blue pill and inline chip used in emphasis templates. */
+.ppt-pill { position: absolute; display: inline-flex; padding: 33px 42px; border-radius: 30px; background: var(--blue-300); color: var(--white); font-weight: 700; line-height: normal; letter-spacing: -0.03em; white-space: nowrap; }
+.ppt-inline-line { display: flex; align-items: center; gap: 24px; font-size: 61.635px; font-weight: 700; line-height: 1.5; letter-spacing: 0; color: var(--ink-800); white-space: nowrap; }
+.ppt-inline-chip { display: inline-flex; align-items: center; gap: 12.841px; padding: 12.841px 47.48px; border-radius: 999px; background: var(--blue-300); color: var(--white); }
+.ppt-inline-chip--dark { background: var(--ink-800); }
+
+/* Numbered step card with pointer and Blue/300 result bar. */
+.ppt-step-card { position: absolute; width: 556px; height: 380px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 80px 108px; border-radius: var(--radius-card); background: var(--card-tint); overflow: hidden; }
+.ppt-step-badge { display: flex; align-items: center; justify-content: center; width: 62.926px; height: 62.926px; border-radius: 50%; background: var(--blue-300); color: var(--white); font-family: var(--font-latin); font-size: 40.273px; font-weight: 700; line-height: 1.4; }
+.ppt-step-key { font-family: var(--font-latin); font-size: 48px; font-weight: 700; color: var(--blue-300); text-transform: uppercase; }
+.ppt-step-text { font-size: 34px; font-weight: 600; line-height: 1.4; letter-spacing: -0.03em; white-space: nowrap; }
+.ppt-step-result { position: absolute; width: 556px; height: 142px; display: flex; align-items: center; justify-content: center; border-radius: 21px; background: var(--blue-300); color: var(--white); font-size: 48px; font-weight: 700; white-space: nowrap; }
+.ppt-step-pointer { position: absolute; width: 59px; height: 36px; padding: 0 5.55px 2.9px; }
+.ppt-step-pointer img { display: block; width: 100%; height: 100%; }
+
+/* L01 cover from the template cover proposal. */
+.ppt-cover { position: relative; width: 1920px; height: 1080px; overflow: hidden; isolation: isolate; background: linear-gradient(168.84deg, #000000 4.335%, #0F1B36 53.313%, #000000 94.391%); color: var(--white); }
+.ppt-cover-stars { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; mix-blend-mode: color-dodge; }
+.ppt-cover-planet { position: absolute; left: 0; top: 615px; width: 1920px; height: 465px; mix-blend-mode: lighten; }
+.ppt-cover-wordmark-a { position: absolute; left: 117px; top: 703px; width: 721.74px; height: 309.664px; }
+.ppt-cover-wordmark-b { position: absolute; left: 1119px; top: 713.68px; width: 682.63px; height: 253.876px; }
+.ppt-cover-tag { position: absolute; display: flex; flex-direction: column; gap: 8.831px; width: 193.172px; color: var(--blue-300); font: italic 400 27.658px/1.2 "Space Mono", monospace; letter-spacing: -0.08em; }
+.ppt-cover-tag::before { content: ""; width: 13.246px; height: 13.246px; background: var(--blue-300); }
+.ppt-cover-hero { position: absolute; left: 615px; top: 0; width: 724px; height: auto; }
+.ppt-cover-glow { position: absolute; mix-blend-mode: plus-lighter; }

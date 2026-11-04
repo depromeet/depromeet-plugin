@@ -1,7 +1,8 @@
 # Slide profiles
 
-The default bundled profile is [depromeet_19](depromeet_19/PROFILE.md): a dark
-central-object cover and chapter treatment with white content pages.
+The default bundled profile is [depromeet_19](depromeet_19/PROFILE.md): the 19th
+PPT template, with gold HTML examples of every template slide, the template
+cover, and light content, chapter, and statement pages.
 Choose a profile before making a layout skeleton or page plan. A profile owns
 its visual rules, layout specimens, CSS, and asset policy. Common workflow
 documents describe the review and delivery process only.
